@@ -4,13 +4,13 @@
 This repository is configured to automatically deploy to GitHub Pages on every push to the main branch.
 
 ## Domain Configuration
-- **Domain**: oko.global
-- **Registration**: July 28, 2025
+- **Domain**: okoholding.com
+- **Registration**: Managed at Route 53
 - **Hosting**: GitHub Pages
 - **Name Servers**: AWS Route 53
 
 ## DNS Setup Required
-To connect your custom domain `oko.global` to GitHub Pages:
+To connect your custom domain `okoholding.com` to GitHub Pages:
 
 1. **In your AWS Route 53 console:**
    - Create/Update A records pointing to GitHub Pages IPs:
@@ -24,14 +24,14 @@ To connect your custom domain `oko.global` to GitHub Pages:
    - Go to Settings > Pages
    - Set Source to "Deploy from a branch"
    - Select branch: `main` and folder: `/ (root)`
-   - Add custom domain: `oko.global`
+   - Add custom domain: `okoholding.com`
    - Enable "Enforce HTTPS"
 
 ## Deployment Process
 1. Push to main branch
 2. GitHub Actions builds the Next.js app
 3. Static files are deployed to GitHub Pages
-4. Site becomes available at `https://oko.global`
+4. Site becomes available at `https://okoholding.com`
 
 ## Build Configuration
 - Next.js configured for static export
