@@ -1,29 +1,76 @@
 import React from 'react';
 
-// Animated-ready SVG hexagon (Thunderbit)
-const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size = 48, className = '' }) => (
+// Enhanced Thunderbit Hexagon with multi-layer glow effects
+const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size = 100, className = '' }) => (
   <svg
     width={size}
-    height={size}
-    viewBox="0 0 100 100"
+    height={size * 1.15}
+    viewBox="0 0 100 115"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    className={`animate-pulse-glow ${className}`}
   >
+    {/* Main hexagon - Thunderline boundary */}
     <polygon
-      points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5"
+      points="50,8 93,32 93,82 50,106 7,82 7,32"
       stroke="#00FFF7"
-      strokeWidth="4"
-      fill="#0A0A1A"
-      style={{ filter: 'drop-shadow(0 0 8px #00FFF7)' }}
+      strokeWidth="3"
+      fill="rgba(0,255,247,0.10)"
+      filter="url(#glow)"
+      className="animate-pulse"
     />
+    
+    {/* Middle layer - CORE boundary */}
+    <polygon
+      points="50,18 83,37 83,77 50,96 17,77 17,37"
+      stroke="#B026FF"
+      strokeWidth="2"
+      fill="rgba(176,38,255,0.05)"
+      filter="url(#glow)"
+      className="animate-pulse"
+      style={{ animationDelay: '0.5s' }}
+    />
+    
+    {/* Inner layer - Services/Domain */}
+    <polygon
+      points="50,28 73,42 73,72 50,86 27,72 27,42"
+      stroke="#FF8C00"
+      strokeWidth="1.5"
+      fill="rgba(255,140,0,0.03)"
+      filter="url(#glow)"
+      className="animate-pulse"
+      style={{ animationDelay: '1s' }}
+    />
+
+    {/* Central core - Domain/Entities */}
     <circle
       cx="50"
-      cy="50"
-      r="18"
-      fill="#00FFF7"
-      opacity="0.15"
+      cy="57"
+      r="15"
+      stroke="#39FF14"
+      strokeWidth="1"
+      fill="rgba(57,255,20,0.1)"
+      filter="url(#glow)"
+      className="animate-pulse"
+      style={{ animationDelay: '1.5s' }}
     />
+
+    {/* Honeycomb pattern in center */}
+    <g stroke="#0099FF" strokeWidth="0.5" fill="none" opacity="0.6">
+      <polygon points="45,52 50,49 55,52 55,57 50,60 45,57" />
+      <polygon points="40,57 45,54 50,57 50,62 45,65 40,62" />
+      <polygon points="50,57 55,54 60,57 60,62 55,65 50,62" />
+    </g>
+
+    <defs>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
   </svg>
 );
 
