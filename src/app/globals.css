@@ -23,15 +23,15 @@
 @layer components {
   .battlezone-grid {
     background-image: 
-      linear-gradient(rgba(147, 51, 234, 0.15) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(147, 51, 234, 0.15) 1px, transparent 1px);
+      linear-gradient(rgba(147, 51, 234, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(147, 51, 234, 0.2) 1px, transparent 1px);
     background-size: 20px 20px;
     animation: grid-flow 10s linear infinite;
   }
   
   .hex-pattern {
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.15) 2px, transparent 3px);
+      radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.2) 2px, transparent 3px);
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
   }
@@ -68,37 +68,78 @@
     border-top: 1px solid var(--color);
     transform: rotateX(37deg);
     top: 0;
-    opacity: 0.3;
+    opacity: 0.25;
   }
   
-  .neon-text {
-    text-shadow: 
-      0 0 2px currentColor,
-      0 0 4px currentColor,
-      0 0 8px currentColor;
-    font-weight: 600;
+  .sharp-text {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
   }
   
   .glass-panel {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(147, 51, 234, 0.4);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    background: rgba(20, 20, 30, 0.85);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-top: 1px solid rgba(147, 51, 234, 0.5);
+    border-left: 1px solid rgba(147, 51, 234, 0.4);
+    box-shadow: 
+      inset 1px 1px 0px rgba(255,255,255,0.1),
+      inset -1px -1px 0px rgba(0,0,0,0.3),
+      0 4px 8px rgba(0, 0, 0, 0.4);
   }
 
   .cyber-border {
-    border: 1px solid #9333ea;
+    border: 2px solid #9333ea;
+    border-top: 2px solid #a855f7;
+    border-left: 2px solid #a855f7;
+    border-bottom: 2px solid #7c3aed;
+    border-right: 2px solid #7c3aed;
     box-shadow: 
-      0 0 5px #9333ea,
-      inset 0 0 5px rgba(147, 51, 234, 0.1);
+      inset 1px 1px 0px rgba(168, 85, 247, 0.3),
+      inset -1px -1px 0px rgba(124, 58, 237, 0.3);
   }
 
-  .neon-glow {
-    filter: drop-shadow(0 0 10px currentColor);
+  .beveled-card {
+    background: linear-gradient(135deg, rgba(30,30,40,0.95) 0%, rgba(20,20,30,0.95) 100%);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-top: 1px solid rgba(147, 51, 234, 0.6);
+    border-left: 1px solid rgba(147, 51, 234, 0.5);
+    border-bottom: 1px solid rgba(147, 51, 234, 0.2);
+    border-right: 1px solid rgba(147, 51, 234, 0.2);
+    box-shadow: 
+      inset 2px 2px 4px rgba(255,255,255,0.05),
+      inset -2px -2px 4px rgba(0,0,0,0.2),
+      0 4px 12px rgba(0, 0, 0, 0.3);
   }
 
-  .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
+  .sharp-button {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.9) 0%, rgba(124, 58, 237, 0.8) 100%);
+    border: 2px solid #9333ea;
+    border-top: 2px solid #a855f7;
+    border-left: 2px solid #a855f7;
+    border-bottom: 2px solid #7c3aed;
+    border-right: 2px solid #7c3aed;
+    box-shadow: 
+      inset 1px 1px 0px rgba(255,255,255,0.2),
+      inset -1px -1px 0px rgba(0,0,0,0.3),
+      0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .sharp-button:hover {
+    background: linear-gradient(135deg, rgba(147, 51, 234, 1) 0%, rgba(124, 58, 237, 0.9) 100%);
+    transform: translateY(-1px);
+    box-shadow: 
+      inset 1px 1px 0px rgba(255,255,255,0.3),
+      inset -1px -1px 0px rgba(0,0,0,0.4),
+      0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .sharp-button:active {
+    transform: translateY(0px);
+    box-shadow: 
+      inset 2px 2px 4px rgba(0,0,0,0.4),
+      inset -1px -1px 0px rgba(255,255,255,0.1);
   }
 }
 
