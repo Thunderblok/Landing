@@ -35,6 +35,41 @@
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
   }
+
+  /* 3D Perspective Grid Background */
+  .container-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    overflow: hidden;
+    transform: translateX(0%);
+    animation: perspective 20s linear infinite both;
+    z-index: -1;
+  }
+
+  .container-loader .loader {
+    height: 100%;
+    width: 100%;
+    --color: #00FFF7;
+    position: absolute;
+    background: repeating-linear-gradient(
+        transparent 0 30px,
+        var(--color) 31px 32px
+      ),
+      repeating-linear-gradient(
+        to right,
+        transparent 0 30px,
+        var(--color) 31px 32px
+      );
+    border-left: 1px solid var(--color);
+    border-top: 1px solid var(--color);
+    transform: rotateX(37deg);
+    top: 0;
+    opacity: 0.3;
+  }
   
   .neon-text {
     text-shadow: 
@@ -78,5 +113,14 @@
   }
   50% { 
     filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 30px currentColor);
+  }
+}
+
+@keyframes perspective {
+  0% {
+    perspective: 1px;
+  }
+  100% {
+    perspective: 50px;
   }
 }

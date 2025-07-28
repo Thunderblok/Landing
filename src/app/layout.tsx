@@ -13,7 +13,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* 3D Perspective Grid Background */}
+        <div className="container-loader">
+          <div className="loader"></div>
+        </div>
+        {children}
+      </body>
     </html>
   )
 }

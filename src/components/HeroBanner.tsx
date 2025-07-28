@@ -3,7 +3,7 @@ import ThunderbitHex from './ThunderbitHex';
 
 const HeroBanner: React.FC = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center battlezone-grid">
+    <section className="relative min-h-screen flex items-center justify-center">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-cyan-900/20" />
       
@@ -92,9 +92,6 @@ const HeroBanner: React.FC = () => {
         </div>
         
       </div>
-      
-      {/* Animated Grid Overlay */}
-      <div className="absolute inset-0 opacity-30 hex-pattern pointer-events-none" />
     </section>
   );
 };
