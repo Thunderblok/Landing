@@ -20,9 +20,9 @@ export default function ProductSpotlight() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          style={{ textShadow: '0 0 8px rgba(0, 255, 255, 0.6)' }}
+          style={{ textShadow: '0 0 8px rgba(147, 51, 234, 0.6)' }}
         >
-          <span className="text-oko-cyan">DIOS</span>
+          <span className="text-purple-400">DIOS</span>
         </motion.h2>
         
         <motion.p 
@@ -39,7 +39,7 @@ export default function ProductSpotlight() {
           {features.map((feature, index) => (
             <motion.div
               key={index}
-              className="glass-panel rounded-lg p-6 hover:border-oko-cyan/50 transition-all duration-300"
+              className="glass-panel rounded-lg p-6 hover:border-purple-500/50 transition-all duration-300"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -59,7 +59,7 @@ export default function ProductSpotlight() {
           transition={{ duration: 1, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          <div className="hex-pattern bg-gradient-to-r from-transparent via-oko-cyan/10 to-transparent h-px w-full mb-8"></div>
+          <div className="hex-pattern bg-gradient-to-r from-transparent via-purple-400/10 to-transparent h-px w-full mb-8"></div>
           <p className="text-xl text-gray-400 font-mono">
             [ DISTRIBUTED • AUTONOMOUS • INTELLIGENT ]
           </p>

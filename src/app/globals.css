@@ -9,7 +9,7 @@
   }
   body {
     @apply bg-black text-white;
-    background: radial-gradient(ellipse at center, #1a1a2e 0%, #000000 100%);
+    background: #000000;
     font-family: var(--font-orbitron), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -23,15 +23,15 @@
 @layer components {
   .battlezone-grid {
     background-image: 
-      linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+      linear-gradient(rgba(147, 51, 234, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(147, 51, 234, 0.15) 1px, transparent 1px);
     background-size: 20px 20px;
     animation: grid-flow 10s linear infinite;
   }
   
   .hex-pattern {
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.1) 2px, transparent 3px);
+      radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.15) 2px, transparent 3px);
     background-size: 40px 40px;
     background-position: 0 0, 20px 20px;
   }
@@ -53,7 +53,7 @@
   .container-loader .loader {
     height: 100%;
     width: 100%;
-    --color: #00FFF7;
+    --color: #9333ea;
     position: absolute;
     background: repeating-linear-gradient(
         transparent 0 30px,
@@ -82,15 +82,15 @@
   .glass-panel {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+    border: 1px solid rgba(147, 51, 234, 0.4);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   .cyber-border {
-    border: 1px solid #00FFF7;
+    border: 1px solid #9333ea;
     box-shadow: 
-      0 0 5px #00FFF7,
-      inset 0 0 5px rgba(0, 255, 247, 0.1);
+      0 0 5px #9333ea,
+      inset 0 0 5px rgba(147, 51, 234, 0.1);
   }
 
   .neon-glow {
@@ -130,8 +130,8 @@
   position: relative;
   padding: 12px 24px;
   background: transparent;
-  border: 2px solid #00FFF7;
-  color: #00FFF7;
+  border: 2px solid #9333ea;
+  color: #9333ea;
   font-family: var(--font-mono), 'JetBrains Mono', monospace;
   font-weight: 700;
   text-transform: uppercase;
@@ -148,7 +148,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 255, 247, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.2), transparent);
   transition: left 0.5s;
 }
 
@@ -157,8 +157,8 @@
 }
 
 .glitch-btn:hover {
-  background: rgba(0, 255, 247, 0.1);
-  box-shadow: 0 0 20px #00FFF7;
+  background: rgba(147, 51, 234, 0.1);
+  box-shadow: 0 0 20px #9333ea;
   transform: translateY(-2px);
 }
 
@@ -169,7 +169,7 @@
 /* Glitch Text Effect */
 .glitch-text {
   position: relative;
-  color: #00FFF7;
+  color: #9333ea;
   font-family: var(--font-mono), 'JetBrains Mono', monospace;
 }
 
@@ -185,13 +185,13 @@
 
 .glitch-text::before {
   animation: glitch-anim-1 0.3s infinite linear alternate-reverse;
-  color: #ff0040;
+  color: #7c3aed;
   z-index: -1;
 }
 
 .glitch-text::after {
   animation: glitch-anim-2 0.3s infinite linear alternate-reverse;
-  color: #00ffff;
+  color: #a855f7;
   z-index: -2;
 }
 

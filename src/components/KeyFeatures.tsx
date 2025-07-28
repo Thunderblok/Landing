@@ -5,7 +5,7 @@ const KeyFeatures: React.FC = () => {
     {
       title: "DISTRIBUTED INTELLIGENCE",
       description: "Autonomous agents operating across the Thunderline network",
-      color: "cyan"
+      color: "purple"
     },
     {
       title: "THUNDERBLOCK CONSENSUS",
@@ -15,7 +15,7 @@ const KeyFeatures: React.FC = () => {
     {
       title: "QUANTUM RESILIENCE",
       description: "Future-proof architecture designed for quantum computing era",
-      color: "orange"
+      color: "purple"
     }
   ];
 
@@ -23,7 +23,7 @@ const KeyFeatures: React.FC = () => {
     <section className="py-20 px-6 relative">
       <div className="max-w-6xl mx-auto">
         
-        <h2 className="text-4xl md:text-6xl font-black text-center mb-16 neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">
+        <h2 className="text-4xl md:text-6xl font-black text-center mb-16 neon-text text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300">
           CORE FEATURES
         </h2>
         

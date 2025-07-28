@@ -13,9 +13,9 @@ const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size =
     {/* Main hexagon - Thunderline boundary */}
     <polygon
       points="50,8 93,32 93,82 50,106 7,82 7,32"
-      stroke="#00FFF7"
+      stroke="#9333ea"
       strokeWidth="3"
-      fill="rgba(0,255,247,0.10)"
+      fill="rgba(147,51,234,0.10)"
       filter="url(#glow)"
       className="animate-pulse"
     />
@@ -23,9 +23,9 @@ const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size =
     {/* Middle layer - CORE boundary */}
     <polygon
       points="50,18 83,37 83,77 50,96 17,77 17,37"
-      stroke="#B026FF"
+      stroke="#a855f7"
       strokeWidth="2"
-      fill="rgba(176,38,255,0.05)"
+      fill="rgba(168,85,247,0.05)"
       filter="url(#glow)"
       className="animate-pulse"
       style={{ animationDelay: '0.5s' }}
@@ -34,9 +34,9 @@ const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size =
     {/* Inner layer - Services/Domain */}
     <polygon
       points="50,28 73,42 73,72 50,86 27,72 27,42"
-      stroke="#FF8C00"
+      stroke="#7c3aed"
       strokeWidth="1.5"
-      fill="rgba(255,140,0,0.03)"
+      fill="rgba(124,58,237,0.03)"
       filter="url(#glow)"
       className="animate-pulse"
       style={{ animationDelay: '1s' }}
@@ -47,16 +47,16 @@ const ThunderbitHex: React.FC<{ size?: number; className?: string }> = ({ size =
       cx="50"
       cy="57"
       r="15"
-      stroke="#39FF14"
+      stroke="#c084fc"
       strokeWidth="1"
-      fill="rgba(57,255,20,0.1)"
+      fill="rgba(192,132,252,0.1)"
       filter="url(#glow)"
       className="animate-pulse"
       style={{ animationDelay: '1.5s' }}
     />
 
     {/* Honeycomb pattern in center */}
-    <g stroke="#0099FF" strokeWidth="0.5" fill="none" opacity="0.6">
+    <g stroke="#d8b4fe" strokeWidth="0.5" fill="none" opacity="0.6">
       <polygon points="45,52 50,49 55,52 55,57 50,60 45,57" />
       <polygon points="40,57 45,54 50,57 50,62 45,65 40,62" />
       <polygon points="50,57 55,54 60,57 60,62 55,65 50,62" />
