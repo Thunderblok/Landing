@@ -33,7 +33,7 @@ const Navigation: React.FC = () => {
           </div>
           
           {/* CTA Button */}
-          <button className="cyber-border px-4 py-2 text-cyan-400 font-mono text-sm font-bold hover:bg-cyan-400/10 transition-all duration-300 neon-glow">
+          <button className="glitch-btn">
             ENTER ⬢
           </button>
           

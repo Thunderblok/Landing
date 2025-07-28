@@ -1,79 +1,58 @@
-'use client'
+import React from 'react';
 
-import { motion } from 'framer-motion'
-
-export default function Footer() {
+const Footer: React.FC = () => {
   return (
-    <footer className="py-16 px-6 border-t border-oko-cyan/20">
+    <footer className="py-16 px-6 border-t border-cyan-400/20">
       <div className="max-w-6xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-oko-cyan">Contact</h3>
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-cyan-400 neon-text">Contact</h3>
             <p className="font-mono text-gray-300">
-              <a href="mailto:launch@okoholding.com" className="hover:text-oko-cyan transition-colors">
+              <a href="mailto:launch@okoholding.com" className="hover:text-cyan-400 transition-colors neon-glow">
                 launch@okoholding.com
               </a>
             </p>
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-oko-cyan">Resources</h3>
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-cyan-400 neon-text">Resources</h3>
             <ul className="space-y-2 font-mono text-gray-300">
-              <li><a href="#" className="hover:text-oko-cyan transition-colors">Legal</a></li>
-              <li><a href="#" className="hover:text-oko-cyan transition-colors">Whitepaper</a></li>
-              <li><a href="#" className="hover:text-oko-cyan transition-colors">GitHub</a></li>
+              <li><a href="#" className="hover:text-cyan-400 transition-colors hover:neon-text">Legal</a></li>
+              <li><a href="#" className="hover:text-cyan-400 transition-colors hover:neon-text">Whitepaper</a></li>
+              <li><a href="#" className="hover:text-cyan-400 transition-colors hover:neon-text">GitHub</a></li>
             </ul>
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="text-xl font-bold mb-4 text-oko-cyan">System Status</h3>
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-cyan-400 neon-text">System Status</h3>
             <div className="glass-panel rounded p-4">
               <div className="flex items-center space-x-2 mb-2">
-                <div className="w-2 h-2 bg-battlezone rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-battlezone">DIOS Online</span>
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span className="text-xs font-mono text-green-400">DIOS Online</span>
               </div>
               <div className="flex items-center space-x-2 mb-2">
-                <div className="w-2 h-2 bg-oko-cyan rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-oko-cyan">Thunderline Active</span>
+                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                <span className="text-xs font-mono text-cyan-400">Thunderline Active</span>
               </div>
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-oko-purple rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-oko-purple">Thundercrown Deployed</span>
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                <span className="text-xs font-mono text-purple-400">Thundercrown Deployed</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
         
-        <motion.div 
-          className="text-center pt-8 border-t border-oko-cyan/20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <p className="text-2xl font-bold text-battlezone neon-text mb-4">
+        <div className="text-center pt-8 border-t border-cyan-400/20">
+          <p className="text-2xl font-bold text-green-400 neon-text mb-4">
             🌩️ "An Emergent Intelligence Company"
           </p>
           <p className="text-sm font-mono text-gray-400">
             © 2025 OKO Holding Corp. All rights reserved. | Built with DIOS Technology
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
-  )
-}
+  );
+};
+
+export default Footer;
