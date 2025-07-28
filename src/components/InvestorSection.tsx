@@ -2,12 +2,12 @@ import React from 'react';
 
 const InvestorSection: React.FC = () => {
   const partners = [
-    'Google',
-    'TBD', 
-    'Cerebros',
-    'AshHQ',
-    'Phoenix LiveView',
-    'Elixir Foundation'
+    'Strategic Investors',
+    'Technology Partners', 
+    'Research Institutions',
+    'Government Agencies',
+    'Enterprise Clients',
+    'Open Source Community'
   ];
 
   return (
@@ -15,7 +15,7 @@ const InvestorSection: React.FC = () => {
       <div className="max-w-6xl mx-auto text-center">
         
         <h2 className="text-4xl md:text-6xl font-black mb-16 neon-text text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300">
-          STRATEGIC PARTNERS
+          ECOSYSTEM & INVESTORS
         </h2>
         
         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
@@ -30,7 +30,7 @@ const InvestorSection: React.FC = () => {
         </div>
         
         <p className="text-gray-300 font-mono mt-12 max-w-3xl mx-auto">
-          Building the future of distributed intelligence with <span className="text-purple-400 neon-text">industry leaders</span> and <span className="text-purple-300 neon-text">innovative technologies</span>.
+          Assembling the coalition to architect the backbone for a new era of intelligence infrastructure. <span className="text-purple-400 neon-text">Join the movement.</span> <span className="text-purple-300 neon-text">Build the future.</span>
         </p>
         
       </div>

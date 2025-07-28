@@ -3,18 +3,18 @@ import React from 'react';
 const KeyFeatures: React.FC = () => {
   const features = [
     {
-      title: "DISTRIBUTED INTELLIGENCE",
-      description: "Autonomous agents operating across the Thunderline network",
+      title: "DIOS: DISTRIBUTED INTELLIGENCE",
+      description: "The first platform to turn any network into a living, learning, self-managing organism",
       color: "purple"
     },
     {
-      title: "THUNDERBLOCK CONSENSUS",
-      description: "Immutable data infrastructure with cryptographic verification",
+      title: "THUNDERLINE: TACTICAL DASHBOARD",
+      description: "Advanced visualization layer - see the world as living code with real-time intelligence",
       color: "purple"
     },
     {
-      title: "QUANTUM RESILIENCE",
-      description: "Future-proof architecture designed for quantum computing era",
+      title: "THUNDERBLOCK: ATOMIC SERVERS",
+      description: "Run autonomous agents and orchestrate at planetary scale with modular infrastructure",
       color: "purple"
     }
   ];
@@ -24,7 +24,7 @@ const KeyFeatures: React.FC = () => {
       <div className="max-w-6xl mx-auto">
         
         <h2 className="text-4xl md:text-6xl font-black text-center mb-16 neon-text text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-purple-300">
-          CORE FEATURES
+          TECHNOLOGY PORTFOLIO
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

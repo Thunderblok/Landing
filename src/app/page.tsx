@@ -12,16 +12,16 @@ export default function Home() {
     <main className="min-h-screen">
       <Navigation />
       <HeroBanner />
-      <section id="dios">
+      <section id="about">
         <ProductSpotlight />
       </section>
-      <section id="features">
+      <section id="technology">
         <KeyFeatures />
       </section>
-      <section id="partners">
+      <section id="vision">
         <InvestorSection />
       </section>
-      <section id="contact">
+      <section id="join">
         <Footer />
       </section>
     </main>

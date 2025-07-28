@@ -8,8 +8,13 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-xl font-bold mb-4 text-purple-400 neon-text">Contact</h3>
             <p className="font-mono text-gray-300">
-              <a href="mailto:launch@okoholding.com" className="hover:text-purple-400 transition-colors neon-glow">
-                launch@okoholding.com
+              <a href="mailto:invest@okoholding.com" className="hover:text-purple-400 transition-colors neon-glow">
+                invest@okoholding.com
+              </a>
+            </p>
+            <p className="font-mono text-gray-300 mt-2">
+              <a href="mailto:partnerships@okoholding.com" className="hover:text-purple-400 transition-colors neon-glow">
+                partnerships@okoholding.com
               </a>
             </p>
           </div>
@@ -17,26 +22,27 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-xl font-bold mb-4 text-purple-400 neon-text">Resources</h3>
             <ul className="space-y-2 font-mono text-gray-300">
-              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Legal</a></li>
-              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Whitepaper</a></li>
-              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">GitHub</a></li>
+              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Investment Deck</a></li>
+              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Technology Brief</a></li>
+              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Open Source</a></li>
+              <li><a href="#" className="hover:text-purple-400 transition-colors hover:neon-text">Press Kit</a></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="text-xl font-bold mb-4 text-purple-400 neon-text">System Status</h3>
+            <h3 className="text-xl font-bold mb-4 text-purple-400 neon-text">Portfolio Status</h3>
             <div className="glass-panel rounded p-4">
               <div className="flex items-center space-x-2 mb-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-purple-400">DIOS Online</span>
+                <span className="text-xs font-mono text-purple-400">DIOS: Alpha Release</span>
               </div>
               <div className="flex items-center space-x-2 mb-2">
                 <div className="w-2 h-2 bg-purple-300 rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-purple-300">Thunderline Active</span>
+                <span className="text-xs font-mono text-purple-300">Thunderline: Production</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-purple-400">Thundercrown Deployed</span>
+                <span className="text-xs font-mono text-purple-400">Thunderblock: Scaling</span>
               </div>
             </div>
           </div>
@@ -44,10 +50,10 @@ const Footer: React.FC = () => {
         
         <div className="text-center pt-8 border-t border-purple-400/20">
           <p className="text-2xl font-bold text-purple-400 neon-text mb-4">
-            🌩️ "An Emergent Intelligence Company"
+            ⚙️ "Architecting the Future of Intelligence Infrastructure"
           </p>
           <p className="text-sm font-mono text-gray-400">
-            © 2025 OKO Holding Corp. All rights reserved. | Built with DIOS Technology
+            © 2025 OKO Holding Corporation. All rights reserved. | Intelligence. Infrastructure. Infinite Possibility.
           </p>
         </div>
       </div>

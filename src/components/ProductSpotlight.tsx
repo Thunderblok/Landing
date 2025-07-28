@@ -4,11 +4,11 @@ import { motion } from 'framer-motion'
 
 export default function ProductSpotlight() {
   const features = [
-    { icon: '🌩️', text: 'Powered by Thunderline' },
-    { icon: '🧠', text: 'Governed by Thundercrown' },
-    { icon: '⚙️', text: 'Run by Thunderblock Autonomous Clusters' },
-    { icon: '🧬', text: 'Made of Thunderbits & PAC Agents' },
-    { icon: '🔁', text: 'Orchestrated with Ash, Broadway, Oban, and Memento' },
+    { icon: '⚙️', text: 'Decentralized by Design' },
+    { icon: '🔒', text: 'Ethics-Embedded & Privacy-First' },
+    { icon: '🌐', text: 'Open-Source Core, Secure Edge' },
+    { icon: '🤖', text: 'Ready for AI, Humans & Everything Between' },
+    { icon: '🚀', text: 'Built for Planetary Scale Operations' },
   ]
 
   return (
@@ -22,7 +22,7 @@ export default function ProductSpotlight() {
           viewport={{ once: true }}
           style={{ textShadow: '0 0 8px rgba(147, 51, 234, 0.6)' }}
         >
-          <span className="text-purple-400">DIOS</span>
+          <span className="text-purple-400">OUR VISION</span>
         </motion.h2>
         
         <motion.p 
@@ -32,7 +32,7 @@ export default function ProductSpotlight() {
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          "The First AI-Native Operating System for the Distributed Era"
+          "We don't just build products—we orchestrate revolutions in how data, automation, and intelligence shape the world."
         </motion.p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-16">
@@ -61,7 +61,7 @@ export default function ProductSpotlight() {
         >
           <div className="hex-pattern bg-gradient-to-r from-transparent via-purple-400/10 to-transparent h-px w-full mb-8"></div>
           <p className="text-xl text-gray-400 font-mono">
-            [ DISTRIBUTED • AUTONOMOUS • INTELLIGENT ]
+            [ INTELLIGENCE • INFRASTRUCTURE • INFINITE POSSIBILITY ]
           </p>
         </motion.div>
       </div>
