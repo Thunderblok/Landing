@@ -11,107 +11,124 @@ const HeroBanner: React.FC = () => {
       <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
         
         {/* Main Title */}
-        <h1 className="text-6xl md:text-8xl font-black mb-8 sharp-text text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-300 to-purple-500">
-          OKO HOLDING
+        <h1 className="text-6xl md:text-8xl font-black mb-4 sharp-text text-white">
+          <span className="text-orange-400">Distributed</span>
           <br />
-          <span className="text-5xl md:text-7xl">CORPORATION</span>
+          <span className="text-white">Intelligent</span>
+          <br />
+          <span className="text-white">Operating System</span>
         </h1>
         
-        <div className="text-2xl md:text-3xl font-bold text-purple-300 mb-8 font-mono sharp-text">
-          INTELLIGENCE • INFRASTRUCTURE • AUTONOMY
+        <div className="text-lg md:text-xl text-gray-300 mb-8 font-mono max-w-2xl mx-auto leading-relaxed">
+          Powering real-time cluster orchestration and AI-driven autonomy with Thunderline.
         </div>
         
-        {/* Central Hexagon Display */}
-        <div className="flex justify-center my-16">
-          <div className="relative">
-            {/* Main Thunderbit Hex */}
-            <ThunderbitHex size={300} className="drop-shadow-2xl" />
+        {/* Hexagonal Module Layout */}
+        <div className="relative flex justify-center my-16">
+          <div className="relative w-[600px] h-[400px]">
             
-            {/* Core Pillars */}
-            <div className="absolute top-6 left-[-140px] text-purple-400 font-mono text-sm font-bold sharp-text">
-              THUNDERLINE AI
-              <div className="w-20 h-px bg-purple-400 mt-1"></div>
-              <div className="text-xs text-gray-400 mt-1">Next-Gen Platform</div>
-            </div>
-            
-            <div className="absolute top-28 left-[-160px] text-purple-300 font-mono text-sm font-bold sharp-text">
-              DISTRIBUTED SYSTEMS
-              <div className="w-6 h-6 border-2 border-purple-300 mt-2 flex items-center justify-center text-xs beveled-card">
-                OS
+            {/* Top Hexagon - Thunderline Dashboard */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+              <div className="hexagon-module w-48 h-40 bg-gradient-to-br from-blue-900/90 to-purple-900/90 border-2 border-orange-400/60 relative overflow-hidden">
+                <div className="absolute inset-2 bg-black/40 flex flex-col justify-center items-center text-center">
+                  <div className="text-orange-400 text-xs font-mono font-bold mb-1">Thunderline Dashboard</div>
+                  <div className="w-full h-16 bg-gradient-to-r from-blue-500/20 to-purple-500/20 mb-2 flex items-center justify-center">
+                    <div className="grid grid-cols-3 gap-1 w-full px-2">
+                      <div className="h-2 bg-blue-400/60 rounded"></div>
+                      <div className="h-3 bg-purple-400/60 rounded"></div>
+                      <div className="h-2 bg-blue-400/60 rounded"></div>
+                      <div className="h-1 bg-blue-300/40 rounded"></div>
+                      <div className="h-2 bg-purple-300/40 rounded"></div>
+                      <div className="h-1 bg-blue-300/40 rounded"></div>
+                    </div>
+                  </div>
+                  <div className="text-gray-300 text-xs font-mono">Real-time Intelligence</div>
+                </div>
               </div>
-              <div className="text-xs text-gray-400 mt-1">DIOS Network</div>
             </div>
-            
-            <div className="absolute bottom-28 left-[-180px] text-purple-500 font-mono text-sm font-bold sharp-text">
-              AUTONOMOUS INFRASTRUCTURE
-              <div className="text-xs text-gray-400 mt-1">ThunderBlock Chain</div>
+
+            {/* Left Hexagon - Thunderblock */}
+            <div className="absolute top-24 left-8">
+              <div className="hexagon-module w-40 h-32 bg-gradient-to-br from-gray-900/90 to-blue-900/90 border-2 border-orange-400/60 relative overflow-hidden">
+                <div className="absolute inset-2 bg-black/40 flex flex-col justify-center items-center text-center">
+                  <div className="text-orange-400 text-xs font-mono font-bold mb-2">Thunderblock</div>
+                  <div className="grid grid-cols-4 gap-1 w-full px-1 mb-2">
+                    <div className="w-full h-3 bg-gray-400/60 rounded-sm"></div>
+                    <div className="w-full h-3 bg-gray-400/60 rounded-sm"></div>
+                    <div className="w-full h-3 bg-gray-400/60 rounded-sm"></div>
+                    <div className="w-full h-3 bg-gray-400/60 rounded-sm"></div>
+                    <div className="w-full h-2 bg-gray-300/40 rounded-sm"></div>
+                    <div className="w-full h-2 bg-gray-300/40 rounded-sm"></div>
+                    <div className="w-full h-2 bg-gray-300/40 rounded-sm"></div>
+                    <div className="w-full h-2 bg-gray-300/40 rounded-sm"></div>
+                  </div>
+                  <div className="text-gray-300 text-xs font-mono">Infrastructure</div>
+                </div>
+              </div>
             </div>
-            
-            <div className="absolute top-6 right-[-140px] text-purple-400 font-mono text-sm font-bold sharp-text">
-              INVESTMENT PORTFOLIO
-              <div className="w-20 h-px bg-purple-400 mt-1"></div>
-              <div className="text-xs text-gray-400 mt-1">Strategic Holdings</div>
+
+            {/* Right Hexagon - Thunderbit (Avatar/Profile) */}
+            <div className="absolute top-24 right-8">
+              <div className="hexagon-module w-40 h-32 bg-gradient-to-br from-purple-900/90 to-blue-900/90 border-2 border-orange-400/60 relative overflow-hidden">
+                <div className="absolute inset-2 bg-black/40 flex flex-col justify-center items-center text-center">
+                  <div className="text-orange-400 text-xs font-mono font-bold mb-1">Thunderbit</div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mb-2 flex items-center justify-center">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-300 to-purple-400 rounded-full"></div>
+                  </div>
+                  <div className="text-gray-300 text-xs font-mono">AI Agent</div>
+                </div>
+              </div>
             </div>
-            
-            <div className="absolute top-48 right-[-120px] text-purple-400 font-mono text-sm font-bold sharp-text">
-              GLOBAL SCALE
-              <div className="text-xs text-gray-400 mt-1">Worldwide Operations</div>
-            </div>
-            
-            <div className="absolute bottom-6 text-purple-400 font-mono text-sm font-bold sharp-text text-center">
-              INFINITE POSSIBILITY
-              <div className="text-xs text-gray-400 mt-1">Boundless Innovation</div>
-            </div>
+
+            {/* Connection Lines */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: -1 }}>
+              <defs>
+                <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="rgb(251, 146, 60)" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="rgb(168, 85, 247)" stopOpacity="0.3" />
+                </linearGradient>
+              </defs>
+              {/* Top to Left */}
+              <line x1="300" y1="80" x2="120" y2="140" stroke="url(#connectionGradient)" strokeWidth="2" />
+              {/* Top to Right */}
+              <line x1="300" y1="80" x2="480" y2="140" stroke="url(#connectionGradient)" strokeWidth="2" />
+              {/* Left to Right */}
+              <line x1="160" y1="160" x2="440" y2="160" stroke="url(#connectionGradient)" strokeWidth="2" />
+            </svg>
           </div>
         </div>
         
-        {/* Key Value Propositions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 text-center">
-          <div className="beveled-card p-6 rounded-lg">
-            <h3 className="text-2xl font-bold text-purple-400 mb-3 sharp-text">THUNDERLINE</h3>
+        {/* Three Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-20 text-left">
+          <div>
+            <h3 className="text-2xl font-bold text-orange-400 mb-4 sharp-text">About</h3>
             <p className="text-gray-300 font-mono text-sm leading-relaxed">
-              Revolutionary AI platform driving next-generation automation, 
-              cognitive computing, and intelligent decision-making systems.
+              OKO Holding Corporation is building a future where distributed intelligence and autonomous orchestration drive innovation across multiple domains.
             </p>
           </div>
           
-          <div className="beveled-card p-6 rounded-lg">
-            <h3 className="text-2xl font-bold text-purple-300 mb-3 sharp-text">DISTRIBUTED OS</h3>
+          <div>
+            <h3 className="text-2xl font-bold text-orange-400 mb-4 sharp-text">Product</h3>
             <p className="text-gray-300 font-mono text-sm leading-relaxed">
-              DIOS powers the infrastructure backbone, enabling seamless 
-              coordination across autonomous networks and distributed computing.
+              Our flagship DIOS platform integrates Thunderline for scalable, intelligent cluster management across multiple environments and infrastructures.
             </p>
           </div>
           
-          <div className="beveled-card p-6 rounded-lg">
-            <h3 className="text-2xl font-bold text-purple-500 mb-3 sharp-text">AUTONOMOUS CHAIN</h3>
+          <div>
+            <h3 className="text-2xl font-bold text-orange-400 mb-4 sharp-text">Vision</h3>
             <p className="text-gray-300 font-mono text-sm leading-relaxed">
-              ThunderBlock provides self-governing blockchain infrastructure 
-              for decentralized applications and autonomous economic systems.
+              We're redefining server and agent autonomy to unleash new possibilities for businesses and communities worldwide.
             </p>
           </div>
         </div>
         
-        {/* Mission Statement */}
-        <div className="beveled-card p-8 mt-12 max-w-4xl mx-auto">
-          <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-mono">
-            <span className="text-purple-400 sharp-text font-bold">OKO Holding Corporation</span> is the premier investment and development platform 
-            architecting the future of <span className="text-purple-300 font-bold">autonomous intelligence</span>, 
-            <span className="text-purple-400 font-bold"> distributed infrastructure</span>, and 
-            <span className="text-purple-500 font-bold"> self-evolving digital ecosystems</span>.
-          </p>
-          <div className="mt-6 text-lg text-gray-400 font-mono">
-            We don't just invest in the future — <span className="text-purple-400 font-bold">we build it</span>.
-          </div>
-        </div>
-        
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center mt-12">
-          <button className="sharp-button px-10 py-4 text-white font-mono font-bold transition-all duration-200">
-            EXPLORE PORTFOLIO →
-          </button>
-          <button className="cyber-border px-10 py-4 text-purple-300 font-mono font-bold hover:bg-purple-300/10 transition-all duration-200">
-            STRATEGIC PARTNERSHIPS ⬡
+        {/* Call to Action */}
+        <div className="mt-20 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white sharp-text mb-8">
+            BE PART OF THE EVOLUTION
+          </h2>
+          <button className="sharp-button px-12 py-4 text-white font-mono font-bold text-lg transition-all duration-200">
+            LEARN MORE
           </button>
         </div>
         

@@ -141,6 +141,35 @@
       inset 2px 2px 4px rgba(0,0,0,0.4),
       inset -1px -1px 0px rgba(255,255,255,0.1);
   }
+
+  /* Hexagonal Module Styles */
+  .hexagon-module {
+    position: relative;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    background: linear-gradient(135deg, rgba(30,30,40,0.95) 0%, rgba(20,20,30,0.95) 100%);
+    box-shadow: 
+      0 4px 12px rgba(0, 0, 0, 0.4),
+      inset 1px 1px 0px rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .hexagon-module:hover {
+    transform: scale(1.05);
+    box-shadow: 
+      0 6px 16px rgba(0, 0, 0, 0.5),
+      inset 1px 1px 0px rgba(255,255,255,0.2);
+  }
+
+  .hexagon-module::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    background: linear-gradient(135deg, rgba(40,40,50,0.8) 0%, rgba(20,20,30,0.9) 100%);
+  }
 }
 
 @keyframes grid-flow {
