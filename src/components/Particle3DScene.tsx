@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,6 +11,17 @@ interface Particle3DSceneProps {
   repulsionStrength?: number;
   mouseInfluence?: number;
   className?: string;
+}
+
+// Check for WebGL support
+function isWebGLSupported() {
+  try {
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    return !!(context && (context as WebGLRenderingContext).getExtension);
+  } catch (e) {
+    return false;
+  }
 }
 
 // Particle system with physics simulation
@@ -60,104 +71,108 @@ function ParticleSystem({
     return geometry;
   }, [count]);
 
-  // Physics animation loop
+  // Physics animation loop with error handling
   useFrame((state) => {
-    if (!mesh.current || !lines.current) return;
-    
-    const positions = mesh.current.geometry.attributes.position.array as Float32Array;
-    const time = state.clock.getElapsedTime();
-    const mouse = state.mouse;
-    
-    // Update particle positions with physics
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
+    try {
+      if (!mesh.current || !lines.current) return;
       
-      // Apply mouse repulsion
-      const mouseX = mouse.x * 50;
-      const mouseY = mouse.y * 50;
-      const dx = positions[i3] - mouseX;
-      const dy = positions[i3 + 1] - mouseY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+      const positions = mesh.current.geometry.attributes.position.array as Float32Array;
+      const time = state.clock.getElapsedTime();
+      const mouse = state.mouse;
       
-      if (distance < mouseInfluence) {
-        const force = (mouseInfluence - distance) / mouseInfluence;
-        particles.velocities[i3] += dx * force * 0.01;
-        particles.velocities[i3 + 1] += dy * force * 0.01;
-      }
-      
-      // Apply particle-to-particle repulsion
-      for (let j = i + 1; j < count; j++) {
-        const j3 = j * 3;
-        const dx = positions[i3] - positions[j3];
-        const dy = positions[i3 + 1] - positions[j3 + 1];
-        const dz = positions[i3 + 2] - positions[j3 + 2];
-        const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-        
-        if (distance < repulsionStrength && distance > 0) {
-          const force = (repulsionStrength - distance) / (repulsionStrength * distance);
-          particles.velocities[i3] += dx * force * 0.001;
-          particles.velocities[i3 + 1] += dy * force * 0.001;
-          particles.velocities[i3 + 2] += dz * force * 0.001;
-          particles.velocities[j3] -= dx * force * 0.001;
-          particles.velocities[j3 + 1] -= dy * force * 0.001;
-          particles.velocities[j3 + 2] -= dz * force * 0.001;
-        }
-      }
-      
-      // Add subtle orbital motion
-      positions[i3] += particles.velocities[i3] + Math.sin(time + i * 0.1) * 0.1;
-      positions[i3 + 1] += particles.velocities[i3 + 1] + Math.cos(time + i * 0.15) * 0.1;
-      positions[i3 + 2] += particles.velocities[i3 + 2] + Math.sin(time * 0.5 + i * 0.05) * 0.05;
-      
-      // Apply damping
-      particles.velocities[i3] *= 0.98;
-      particles.velocities[i3 + 1] *= 0.98;
-      particles.velocities[i3 + 2] *= 0.98;
-      
-      // Boundary constraints
-      const boundary = 80;
-      if (Math.abs(positions[i3]) > boundary) particles.velocities[i3] *= -0.5;
-      if (Math.abs(positions[i3 + 1]) > boundary) particles.velocities[i3 + 1] *= -0.5;
-      if (Math.abs(positions[i3 + 2]) > 25) particles.velocities[i3 + 2] *= -0.5;
-    }
-    
-    // Update connection lines
-    const linePositions = lines.current.geometry.attributes.position.array as Float32Array;
-    let lineIndex = 0;
-    
-    for (let i = 0; i < count && lineIndex < linePositions.length - 6; i++) {
-      for (let j = i + 1; j < count && lineIndex < linePositions.length - 6; j++) {
+      // Update particle positions with physics
+      for (let i = 0; i < count; i++) {
         const i3 = i * 3;
-        const j3 = j * 3;
-        const dx = positions[i3] - positions[j3];
-        const dy = positions[i3 + 1] - positions[j3 + 1];
-        const dz = positions[i3 + 2] - positions[j3 + 2];
-        const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
         
-        if (distance < connectionDistance) {
-          linePositions[lineIndex] = positions[i3];
-          linePositions[lineIndex + 1] = positions[i3 + 1];
-          linePositions[lineIndex + 2] = positions[i3 + 2];
-          linePositions[lineIndex + 3] = positions[j3];
-          linePositions[lineIndex + 4] = positions[j3 + 1];
-          linePositions[lineIndex + 5] = positions[j3 + 2];
-          lineIndex += 6;
+        // Apply mouse repulsion
+        const mouseX = mouse.x * 50;
+        const mouseY = mouse.y * 50;
+        const dx = positions[i3] - mouseX;
+        const dy = positions[i3 + 1] - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouseInfluence) {
+          const force = (mouseInfluence - distance) / mouseInfluence;
+          particles.velocities[i3] += dx * force * 0.01;
+          particles.velocities[i3 + 1] += dy * force * 0.01;
+        }
+        
+        // Apply particle-to-particle repulsion
+        for (let j = i + 1; j < count; j++) {
+          const j3 = j * 3;
+          const dx = positions[i3] - positions[j3];
+          const dy = positions[i3 + 1] - positions[j3 + 1];
+          const dz = positions[i3 + 2] - positions[j3 + 2];
+          const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          
+          if (distance < repulsionStrength && distance > 0) {
+            const force = (repulsionStrength - distance) / (repulsionStrength * distance);
+            particles.velocities[i3] += dx * force * 0.001;
+            particles.velocities[i3 + 1] += dy * force * 0.001;
+            particles.velocities[i3 + 2] += dz * force * 0.001;
+            particles.velocities[j3] -= dx * force * 0.001;
+            particles.velocities[j3 + 1] -= dy * force * 0.001;
+            particles.velocities[j3 + 2] -= dz * force * 0.001;
+          }
+        }
+        
+        // Add subtle orbital motion
+        positions[i3] += particles.velocities[i3] + Math.sin(time + i * 0.1) * 0.1;
+        positions[i3 + 1] += particles.velocities[i3 + 1] + Math.cos(time + i * 0.15) * 0.1;
+        positions[i3 + 2] += particles.velocities[i3 + 2] + Math.sin(time * 0.5 + i * 0.05) * 0.05;
+        
+        // Apply damping
+        particles.velocities[i3] *= 0.98;
+        particles.velocities[i3 + 1] *= 0.98;
+        particles.velocities[i3 + 2] *= 0.98;
+        
+        // Boundary constraints
+        const boundary = 80;
+        if (Math.abs(positions[i3]) > boundary) particles.velocities[i3] *= -0.5;
+        if (Math.abs(positions[i3 + 1]) > boundary) particles.velocities[i3 + 1] *= -0.5;
+        if (Math.abs(positions[i3 + 2]) > 25) particles.velocities[i3 + 2] *= -0.5;
+      }
+      
+      // Update connection lines
+      const linePositions = lines.current.geometry.attributes.position.array as Float32Array;
+      let lineIndex = 0;
+      
+      for (let i = 0; i < count && lineIndex < linePositions.length - 6; i++) {
+        for (let j = i + 1; j < count && lineIndex < linePositions.length - 6; j++) {
+          const i3 = i * 3;
+          const j3 = j * 3;
+          const dx = positions[i3] - positions[j3];
+          const dy = positions[i3 + 1] - positions[j3 + 1];
+          const dz = positions[i3 + 2] - positions[j3 + 2];
+          const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          
+          if (distance < connectionDistance) {
+            linePositions[lineIndex] = positions[i3];
+            linePositions[lineIndex + 1] = positions[i3 + 1];
+            linePositions[lineIndex + 2] = positions[i3 + 2];
+            linePositions[lineIndex + 3] = positions[j3];
+            linePositions[lineIndex + 4] = positions[j3 + 1];
+            linePositions[lineIndex + 5] = positions[j3 + 2];
+            lineIndex += 6;
+          }
         }
       }
+      
+      // Fill remaining positions with zeros
+      for (let i = lineIndex; i < linePositions.length; i += 6) {
+        linePositions[i] = 0;
+        linePositions[i + 1] = 0;
+        linePositions[i + 2] = 0;
+        linePositions[i + 3] = 0;
+        linePositions[i + 4] = 0;
+        linePositions[i + 5] = 0;
+      }
+      
+      mesh.current.geometry.attributes.position.needsUpdate = true;
+      lines.current.geometry.attributes.position.needsUpdate = true;
+    } catch (error) {
+      console.warn('3D animation frame error:', error);
     }
-    
-    // Fill remaining positions with zeros
-    for (let i = lineIndex; i < linePositions.length; i += 6) {
-      linePositions[i] = 0;
-      linePositions[i + 1] = 0;
-      linePositions[i + 2] = 0;
-      linePositions[i + 3] = 0;
-      linePositions[i + 4] = 0;
-      linePositions[i + 5] = 0;
-    }
-    
-    mesh.current.geometry.attributes.position.needsUpdate = true;
-    lines.current.geometry.attributes.position.needsUpdate = true;
   });
 
   return (
@@ -210,7 +225,7 @@ function FloatingHexagons() {
   );
 }
 
-// Main 3D Scene Component
+// Main 3D Scene Component with error handling
 export const Particle3DScene: React.FC<Particle3DSceneProps> = ({
   particleCount = 800,
   particleSize = 2,
@@ -220,29 +235,72 @@ export const Particle3DScene: React.FC<Particle3DSceneProps> = ({
   mouseInfluence = 40,
   className = ""
 }) => {
-  return (
-    <div className={`w-full h-full ${className}`}>
-      <Canvas
-        camera={{ position: [0, 0, 80], fov: 60 }}
-        gl={{ alpha: true, antialias: true }}
-        style={{ background: 'transparent' }}
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
-        
-        <ParticleSystem
-          count={particleCount}
-          particleSize={particleSize}
-          particleColor={particleColor}
-          connectionDistance={connectionDistance}
-          repulsionStrength={repulsionStrength}
-          mouseInfluence={mouseInfluence}
-        />
-        
-        <FloatingHexagons />
-      </Canvas>
-    </div>
-  );
+  const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Check WebGL support on client side only
+    setWebglSupported(isWebGLSupported());
+  }, []);
+
+  // Don't render during SSR
+  if (typeof window === 'undefined') {
+    return <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`} />;
+  }
+
+  // Show fallback if WebGL is not supported
+  if (webglSupported === false) {
+    return (
+      <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`}>
+        <div className="absolute inset-0 cyberpunk-grid opacity-20"></div>
+      </div>
+    );
+  }
+
+  // Show loading during WebGL check
+  if (webglSupported === null) {
+    return <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 animate-pulse ${className}`} />;
+  }
+
+  try {
+    return (
+      <div className={`w-full h-full ${className}`}>
+        <Canvas
+          camera={{ position: [0, 0, 80], fov: 60 }}
+          gl={{ 
+            alpha: true, 
+            antialias: true,
+            powerPreference: "high-performance"
+          }}
+          style={{ background: 'transparent' }}
+          onCreated={({ gl }) => {
+            // Additional WebGL context setup if needed
+            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          }}
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} />
+          
+          <ParticleSystem
+            count={particleCount}
+            particleSize={particleSize}
+            particleColor={particleColor}
+            connectionDistance={connectionDistance}
+            repulsionStrength={repulsionStrength}
+            mouseInfluence={mouseInfluence}
+          />
+          
+          <FloatingHexagons />
+        </Canvas>
+      </div>
+    );
+  } catch (error) {
+    console.warn('Failed to render 3D scene:', error);
+    return (
+      <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`}>
+        <div className="absolute inset-0 cyberpunk-grid opacity-20"></div>
+      </div>
+    );
+  }
 };
 
 export default Particle3DScene;
