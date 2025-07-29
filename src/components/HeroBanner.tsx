@@ -3,37 +3,21 @@
 import React, { Suspense } from 'react';
 import { SVGAssets } from './SVGAssets';
 import { LiveViewComponents } from './LiveViewComponents';
-import { Safe3DScene } from './Safe3DScene';
-import dynamic from 'next/dynamic';
-
-// Dynamically load 3D component with better error handling
-const Particle3DScene = dynamic(() => import('./Particle3DScene'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-full bg-gradient-to-b from-slate-900/50 to-slate-800/50">
-      <div className="absolute inset-0 cyberpunk-grid opacity-20"></div>
-      <div className="absolute bottom-4 right-4 text-orange-400/60 text-xs font-mono animate-pulse">
-        Initializing 3D Environment...
-      </div>
-    </div>
-  )
-});
+import { DynamicParticle3DScene } from './DynamicThreeComponents';
 
 const HeroBanner: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Safe 3D Background Scene */}
+      {/* Safe 3D Background Scene with Enhanced SSR Protection */}
       <div className="absolute inset-0 z-0">
-        <Safe3DScene>
-          <Particle3DScene 
-            particleCount={600}
-            particleSize={2.5}
-            particleColor="#FB9260"
-            connectionDistance={40}
-            repulsionStrength={25}
-            mouseInfluence={50}
-          />
-        </Safe3DScene>
+        <DynamicParticle3DScene 
+          particleCount={600}
+          particleSize={2.5}
+          particleColor="#FB9260"
+          connectionDistance={40}
+          repulsionStrength={25}
+          mouseInfluence={50}
+        />
       </div>
 
       {/* CSS 3D Grid Overlay - Always present as fallback */}

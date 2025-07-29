@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
+import { NoSSRWrapper } from './NoSSRWrapper';
 
 interface Particle3DSceneProps {
   particleCount?: number;
@@ -11,17 +14,6 @@ interface Particle3DSceneProps {
   repulsionStrength?: number;
   mouseInfluence?: number;
   className?: string;
-}
-
-// Check for WebGL support
-function isWebGLSupported() {
-  try {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    return !!(context && (context as WebGLRenderingContext).getExtension);
-  } catch (e) {
-    return false;
-  }
 }
 
 // Particle system with physics simulation
@@ -225,7 +217,7 @@ function FloatingHexagons() {
   );
 }
 
-// Main 3D Scene Component with error handling
+// Main 3D Scene Component with enhanced SSR protection
 export const Particle3DScene: React.FC<Particle3DSceneProps> = ({
   particleCount = 800,
   particleSize = 2,
@@ -235,72 +227,100 @@ export const Particle3DScene: React.FC<Particle3DSceneProps> = ({
   mouseInfluence = 40,
   className = ""
 }) => {
-  const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
-
-  useEffect(() => {
-    // Check WebGL support on client side only
-    setWebglSupported(isWebGLSupported());
-  }, []);
-
-  // Don't render during SSR
-  if (typeof window === 'undefined') {
-    return <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`} />;
-  }
-
-  // Show fallback if WebGL is not supported
-  if (webglSupported === false) {
-    return (
-      <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`}>
-        <div className="absolute inset-0 cyberpunk-grid opacity-20"></div>
-      </div>
-    );
-  }
-
-  // Show loading during WebGL check
-  if (webglSupported === null) {
-    return <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 animate-pulse ${className}`} />;
-  }
-
-  try {
-    return (
-      <div className={`w-full h-full ${className}`}>
-        <Canvas
-          camera={{ position: [0, 0, 80], fov: 60 }}
-          gl={{ 
-            alpha: true, 
-            antialias: true,
-            powerPreference: "high-performance"
-          }}
-          style={{ background: 'transparent' }}
-          onCreated={({ gl }) => {
-            // Additional WebGL context setup if needed
-            gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-          }}
-        >
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} />
-          
-          <ParticleSystem
-            count={particleCount}
-            particleSize={particleSize}
-            particleColor={particleColor}
-            connectionDistance={connectionDistance}
-            repulsionStrength={repulsionStrength}
-            mouseInfluence={mouseInfluence}
+  // Fallback component for SSR and WebGL issues
+  const Fallback = () => (
+    <div className={`w-full h-full bg-gradient-to-b from-slate-900/50 to-slate-800/50 relative overflow-hidden ${className}`}>
+      <div className="absolute inset-0 cyberpunk-grid opacity-20 animate-pulse-slow"></div>
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 15 }, (_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-orange-400/60 rounded-full animate-ping"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${2 + Math.random() * 2}s`
+            }}
           />
-          
-          <FloatingHexagons />
-        </Canvas>
+        ))}
       </div>
-    );
-  } catch (error) {
-    console.warn('Failed to render 3D scene:', error);
-    return (
-      <div className={`w-full h-full bg-gradient-to-b from-slate-900 to-slate-800 ${className}`}>
-        <div className="absolute inset-0 cyberpunk-grid opacity-20"></div>
+      <div className="absolute bottom-4 right-4 text-orange-400/60 text-xs font-mono animate-pulse">
+        3D Particles Loading...
       </div>
-    );
-  }
+    </div>
+  );
+
+  // The actual 3D Canvas component - only renders client-side
+  const ThreeDCanvas = () => {
+    const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
+
+    useEffect(() => {
+      // Check WebGL support on client side only
+      try {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        setWebglSupported(!!(context && (context as WebGLRenderingContext).getExtension));
+      } catch (e) {
+        setWebglSupported(false);
+      }
+    }, []);
+
+    // Show fallback if WebGL is not supported
+    if (webglSupported === false) {
+      return <Fallback />;
+    }
+
+    // Show loading during WebGL check
+    if (webglSupported === null) {
+      return <Fallback />;
+    }
+
+    try {
+      return (
+        <div className={`w-full h-full ${className}`}>
+          <Canvas
+            camera={{ position: [0, 0, 80], fov: 60 }}
+            gl={{ 
+              alpha: true, 
+              antialias: true,
+              powerPreference: "high-performance"
+            }}
+            style={{ background: 'transparent' }}
+            onCreated={({ gl }) => {
+              // Additional WebGL context setup if needed
+              gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            }}
+            dpr={[1, 2]}
+          >
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} />
+            
+            <ParticleSystem
+              count={particleCount}
+              particleSize={particleSize}
+              particleColor={particleColor}
+              connectionDistance={connectionDistance}
+              repulsionStrength={repulsionStrength}
+              mouseInfluence={mouseInfluence}
+            />
+            
+            <FloatingHexagons />
+          </Canvas>
+        </div>
+      );
+    } catch (error) {
+      console.warn('Failed to render 3D scene:', error);
+      return <Fallback />;
+    }
+  };
+
+  // Wrap the entire component in NoSSRWrapper to prevent any SSR issues
+  return (
+    <NoSSRWrapper fallback={<Fallback />}>
+      <ThreeDCanvas />
+    </NoSSRWrapper>
+  );
 };
 
 export default Particle3DScene;

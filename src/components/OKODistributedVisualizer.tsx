@@ -3,6 +3,7 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { NoSSRWrapper } from './NoSSRWrapper';
 
 interface OKODistributedVisualizerProps {
   nodeCount?: number;
@@ -277,69 +278,93 @@ export const OKODistributedVisualizer: React.FC<OKODistributedVisualizerProps> =
   }, [nodes]);
 
   return (
-    <div className={`w-full h-full ${className}`}>
-      <Canvas
-        camera={{ position: [0, 0, 120], fov: 60 }}
-        gl={{ 
-          alpha: true, 
-          antialias: true,
-          powerPreference: "high-performance"
-        }}
-        style={{ background: 'transparent' }}
-      >
-        {/* Dynamic lighting */}
-        <ambientLight intensity={0.4} />
-        <pointLight position={[50, 50, 50]} intensity={0.8} color="#FB9260" />
-        <pointLight position={[-50, -50, 50]} intensity={0.6} color="#3B82F6" />
-        <pointLight position={[0, 0, 100]} intensity={0.4} color="#22C55E" />
-        
-        {/* AI Nodes */}
-        {nodes.map((position, index) => (
-          <AINode
-            key={index}
-            position={position}
-            type={index === 0 ? 'core' : index < 4 ? 'coordinator' : 'worker'}
-            active={true}
-            processingLoad={0.3 + Math.random() * 0.7}
-          />
-        ))}
-        
-        {/* Neural network connections */}
-        {showConnections && <NeuralConnections nodes={nodes} />}
-        
-        {/* Data flow particles */}
-        {showDataFlow && <DataFlowParticles paths={dataFlowPaths} />}
-        
-        {/* Background hex grid for context */}
-        <group position={[0, 0, -30]} scale={[0.5, 0.5, 0.5]}>
-          <lineSegments>
-            <bufferGeometry>
-              <bufferAttribute
-                attach="attributes-position"
-                array={new Float32Array(
-                  Array.from({ length: 100 }, () => {
-                    const angle = Math.random() * Math.PI * 2;
-                    const radius = Math.random() * 150;
-                    return [
-                      Math.cos(angle) * radius,
-                      Math.sin(angle) * radius,
-                      0
-                    ];
-                  }).flat()
-                )}
-                count={100}
-                itemSize={3}
-              />
-            </bufferGeometry>
-            <lineBasicMaterial
-              color="#1E293B"
-              transparent
-              opacity={0.1}
+    <NoSSRWrapper fallback={
+      <div className={`w-full h-full bg-gradient-to-b from-slate-900/50 to-slate-800/50 relative overflow-hidden ${className}`}>
+        <div className="absolute inset-0 cyberpunk-grid opacity-30 animate-pulse-slow"></div>
+        <div className="absolute inset-0 pointer-events-none">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div
+              key={i}
+              className="absolute w-3 h-3 bg-orange-400/40 rounded-full animate-ping"
+              style={{
+                left: `${25 + Math.random() * 50}%`,
+                top: `${25 + Math.random() * 50}%`,
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
             />
-          </lineSegments>
-        </group>
-      </Canvas>
-    </div>
+          ))}
+        </div>
+        <div className="absolute bottom-4 right-4 text-orange-400/60 text-xs font-mono animate-pulse">
+          OKO Network Loading...
+        </div>
+      </div>
+    }>
+      <div className={`w-full h-full ${className}`}>
+        <Canvas
+          camera={{ position: [0, 0, 120], fov: 60 }}
+          gl={{ 
+            alpha: true, 
+            antialias: true,
+            powerPreference: "high-performance"
+          }}
+          style={{ background: 'transparent' }}
+          dpr={[1, 2]}
+        >
+          {/* Dynamic lighting */}
+          <ambientLight intensity={0.4} />
+          <pointLight position={[50, 50, 50]} intensity={0.8} color="#FB9260" />
+          <pointLight position={[-50, -50, 50]} intensity={0.6} color="#3B82F6" />
+          <pointLight position={[0, 0, 100]} intensity={0.4} color="#22C55E" />
+          
+          {/* AI Nodes */}
+          {nodes.map((position, index) => (
+            <AINode
+              key={index}
+              position={position}
+              type={index === 0 ? 'core' : index < 4 ? 'coordinator' : 'worker'}
+              active={true}
+              processingLoad={0.3 + Math.random() * 0.7}
+            />
+          ))}
+          
+          {/* Neural network connections */}
+          {showConnections && <NeuralConnections nodes={nodes} />}
+          
+          {/* Data flow particles */}
+          {showDataFlow && <DataFlowParticles paths={dataFlowPaths} />}
+          
+          {/* Background hex grid for context */}
+          <group position={[0, 0, -30]} scale={[0.5, 0.5, 0.5]}>
+            <lineSegments>
+              <bufferGeometry>
+                <bufferAttribute
+                  attach="attributes-position"
+                  array={new Float32Array(
+                    Array.from({ length: 100 }, () => {
+                      const angle = Math.random() * Math.PI * 2;
+                      const radius = Math.random() * 150;
+                      return [
+                        Math.cos(angle) * radius,
+                        Math.sin(angle) * radius,
+                        0
+                      ];
+                    }).flat()
+                  )}
+                  count={100}
+                  itemSize={3}
+                />
+              </bufferGeometry>
+              <lineBasicMaterial
+                color="#1E293B"
+                transparent
+                opacity={0.1}
+              />
+            </lineSegments>
+          </group>
+        </Canvas>
+      </div>
+    </NoSSRWrapper>
   );
 };
 

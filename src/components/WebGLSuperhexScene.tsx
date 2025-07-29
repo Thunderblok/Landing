@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import { NoSSRWrapper } from './NoSSRWrapper';
 
 interface SuperHexGridProps {
   superhexRadius?: number;
@@ -257,9 +258,33 @@ function AIAgentNodes({ count = 5, radius = 50 }: { count?: number; radius?: num
   );
 }
 
-// Main WebGL Superhex Scene
+// Main WebGL Superhex Scene with SSR Protection
 export const WebGLSuperhexScene: React.FC<SuperHexGridProps> = (props) => {
-  return (
+  // Fallback component for SSR and WebGL issues
+  const Fallback = () => (
+    <div className={`w-full h-full bg-gradient-to-b from-slate-900/50 to-slate-800/50 relative overflow-hidden ${props.className || ''}`}>
+      <div className="absolute inset-0 cyberpunk-grid opacity-30 animate-pulse-slow"></div>
+      <div className="absolute inset-0 pointer-events-none">
+        {Array.from({ length: 12 }, (_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 border border-orange-400/40 rotate-45"
+            style={{
+              left: `${20 + Math.random() * 60}%`,
+              top: `${20 + Math.random() * 60}%`,
+              animationDelay: `${i * 0.4}s`,
+            }}
+          />
+        ))}
+      </div>
+      <div className="absolute bottom-4 right-4 text-orange-400/60 text-xs font-mono animate-pulse">
+        Superhex Grid Loading...
+      </div>
+    </div>
+  );
+
+  // The actual 3D Canvas component - only renders client-side
+  const ThreeDCanvas = () => (
     <div className={`w-full h-full ${props.className || ''}`}>
       <Canvas
         camera={{ position: [0, 0, 150], fov: 60 }}
@@ -269,6 +294,7 @@ export const WebGLSuperhexScene: React.FC<SuperHexGridProps> = (props) => {
           powerPreference: "high-performance"
         }}
         style={{ background: 'transparent' }}
+        dpr={[1, 2]}
       >
         {/* Lighting */}
         <ambientLight intensity={0.4} />
@@ -305,6 +331,13 @@ export const WebGLSuperhexScene: React.FC<SuperHexGridProps> = (props) => {
         </group>
       </Canvas>
     </div>
+  );
+
+  // Wrap the entire component in NoSSRWrapper to prevent any SSR issues
+  return (
+    <NoSSRWrapper fallback={<Fallback />}>
+      <ThreeDCanvas />
+    </NoSSRWrapper>
   );
 };
 
