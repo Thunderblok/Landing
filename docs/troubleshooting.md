@@ -4,35 +4,46 @@
 
 ### ✅ React Three Fiber SSR Errors (COMPLETELY RESOLVED)
 **Error**: `Minified React error #418` and `ReactCurrentBatchConfig` undefined  
-**Cause**: React Three Fiber components trying to access React internals during server-side rendering  
-**Solution**: Implemented comprehensive SSR protection with dynamic imports
+**Root Cause**: React Three Fiber components trying to access React internals during SSR + React version compatibility issues  
+**Complete Solution**: Multi-layered approach with SSR protection and React 18 optimization
 
-#### Final Implementation:
-- **`DynamicThreeComponents.tsx`** - All Three.js components as dynamic imports with `ssr: false`
-- **`NoSSRWrapper.tsx`** - Enhanced client-only wrapper with graceful fallbacks
-- **`SafeBackground.tsx`** - Safe background component with animated fallbacks
-- **Complete isolation** - Three.js code never executes during SSR/build
+#### Final Implementation Stack:
+1. **Version Compatibility**: Updated to React Three Fiber v8.16.8 (React 18 compatible)
+2. **Dynamic Import Isolation**: `DynamicThreeComponents.tsx` with `ssr: false`
+3. **React 18 Error Boundaries**: `React18ThreeErrorBoundary.tsx` for runtime protection
+4. **Enhanced Canvas Config**: `frameloop="demand"` and `legacy={false}` for React 18
+5. **Global Error Handlers**: `useThreeErrorHandler()` hook for unhandled errors
 
-#### Usage Pattern:
+#### React 18 Specific Optimizations:
 ```tsx
-import { DynamicParticle3DScene } from './DynamicThreeComponents';
-
-// This will NEVER run during SSR/build - completely safe
-<DynamicParticle3DScene 
-  particleCount={600}
-  particleSize={2.5}
-  particleColor="#FB9260"
+<Canvas
+  frameloop="demand" // Only render when needed
+  legacy={false}     // Use React 18 concurrent features
+  dpr={[1, 2]}      // Optimized device pixel ratio
 />
 ```
 
-#### Enhanced Error Boundaries:
+#### Error Boundary Pattern:
 ```tsx
-<NoSSRWrapper fallback={<AnimatedFallback />}>
-  <ThreeDCanvas />
-</NoSSRWrapper>
+<React18ThreeErrorBoundary>
+  <Suspense fallback={<AnimatedFallback />}>
+    <DynamicParticle3DScene />
+  </Suspense>
+</React18ThreeErrorBoundary>
 ```
 
-**Status**: ✅ COMPLETELY RESOLVED - Build passes ✓ Static export works ✓ No runtime errors ✓
+#### Runtime Error Handling:
+```tsx
+// Automatic error catching for ReactCurrentBatchConfig
+const errorHandler = useThreeErrorHandler();
+```
+
+**Status**: ✅ COMPLETELY RESOLVED 
+- Build: ✅ Passes
+- Static Export: ✅ Works  
+- SSR: ✅ Protected
+- Runtime: ✅ Error-handled
+- React 18: ✅ Optimized
 
 ## Error Handling Architecture
 

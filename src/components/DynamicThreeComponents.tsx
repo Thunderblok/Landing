@@ -1,13 +1,16 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
+import { React18ThreeErrorBoundary, useThreeErrorHandler } from './React18ThreeErrorBoundary';
 
 /**
  * Dynamic imports for all Three.js components to ensure they never run during SSR
  * This completely prevents ReactCurrentBatchConfig errors during build/export
+ * Enhanced for React 18 compatibility
  */
 
-// Enhanced fallback component
+// Enhanced fallback component with error boundary
 const ThreeDFallback = () => (
   <div className="w-full h-full bg-gradient-to-b from-slate-900/50 to-slate-800/50 relative overflow-hidden">
     <div className="absolute inset-0 cyberpunk-grid opacity-30 animate-pulse-slow"></div>
@@ -31,13 +34,33 @@ const ThreeDFallback = () => (
   </div>
 );
 
-// Dynamically imported 3D components with SSR completely disabled
+// Error boundary wrapper for Three.js components with React 18 compatibility
+const ThreeDErrorWrapper = ({ children }: { children: React.ReactNode }) => {
+  useThreeErrorHandler(); // Hook for additional error handling
+  
+  return (
+    <React18ThreeErrorBoundary>
+      <Suspense fallback={<ThreeDFallback />}>
+        {children}
+      </Suspense>
+    </React18ThreeErrorBoundary>
+  );
+};
+
+// Dynamically imported 3D components with SSR completely disabled and React 18 optimizations
 export const DynamicParticle3DScene = dynamic(
   () => import('./Particle3DScene').then(mod => ({ default: mod.Particle3DScene })),
   {
     ssr: false,
     loading: () => <ThreeDFallback />
   }
+);
+
+// Wrap the component for additional safety
+export const SafeDynamicParticle3DScene = (props: any) => (
+  <ThreeDErrorWrapper>
+    <DynamicParticle3DScene {...props} />
+  </ThreeDErrorWrapper>
 );
 
 export const DynamicWebGLSuperhexScene = dynamic(
@@ -68,6 +91,12 @@ export const DynamicWebGLSuperhexScene = dynamic(
   }
 );
 
+export const SafeDynamicWebGLSuperhexScene = (props: any) => (
+  <ThreeDErrorWrapper>
+    <DynamicWebGLSuperhexScene {...props} />
+  </ThreeDErrorWrapper>
+);
+
 export const DynamicOKODistributedVisualizer = dynamic(
   () => import('./OKODistributedVisualizer').then(mod => ({ default: mod.OKODistributedVisualizer })),
   {
@@ -95,4 +124,10 @@ export const DynamicOKODistributedVisualizer = dynamic(
       </div>
     )
   }
+);
+
+export const SafeDynamicOKODistributedVisualizer = (props: any) => (
+  <ThreeDErrorWrapper>
+    <DynamicOKODistributedVisualizer {...props} />
+  </ThreeDErrorWrapper>
 );

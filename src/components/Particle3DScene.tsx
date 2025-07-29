@@ -292,6 +292,8 @@ export const Particle3DScene: React.FC<Particle3DSceneProps> = ({
               gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             }}
             dpr={[1, 2]}
+            frameloop="demand" // React 18 optimization - only render when needed
+            legacy={false} // Ensure React 18 concurrent features are used properly
           >
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} />

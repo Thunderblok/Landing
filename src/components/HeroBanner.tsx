@@ -3,14 +3,14 @@
 import React, { Suspense } from 'react';
 import { SVGAssets } from './SVGAssets';
 import { LiveViewComponents } from './LiveViewComponents';
-import { DynamicParticle3DScene } from './DynamicThreeComponents';
+import { SafeDynamicParticle3DScene } from './DynamicThreeComponents';
 
 const HeroBanner: React.FC = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Safe 3D Background Scene with Enhanced SSR Protection */}
       <div className="absolute inset-0 z-0">
-        <DynamicParticle3DScene 
+        <SafeDynamicParticle3DScene 
           particleCount={600}
           particleSize={2.5}
           particleColor="#FB9260"
