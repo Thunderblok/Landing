@@ -12,25 +12,38 @@ interface LiveViewModuleProps {
 
 // Real-time Dashboard Module
 export const LiveDashboard: React.FC<LiveViewModuleProps> = ({
-  title,
-  type,
-  data,
-  className = "",
+  title = "Live Dashboard",
+  type = "dashboard",
   size = "medium",
-  updateInterval = 2000
+  updateInterval = 2000,
+  className = ""
 }) => {
+  // Initialize with fixed values to prevent hydration mismatch
   const [liveData, setLiveData] = useState({
-    throughput: Math.floor(Math.random() * 1000),
-    connections: Math.floor(Math.random() * 500),
-    latency: Math.floor(Math.random() * 100),
-    uptime: 99.8 + Math.random() * 0.2
+    throughput: 750,  // Fixed initial values
+    connections: 250,
+    latency: 45,
+    uptime: 99.9
   });
 
   const [isActive, setIsActive] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure client-side only randomization
+  useEffect(() => {
+    setMounted(true);
+    // Initialize with random values only on client side
+    setLiveData({
+      throughput: Math.floor(Math.random() * 1000),
+      connections: Math.floor(Math.random() * 500),
+      latency: Math.floor(Math.random() * 100),
+      uptime: 99.8 + Math.random() * 0.2
+    });
+  }, []);
 
   // Simulate live data updates
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive || !mounted) return;
     
     const interval = setInterval(() => {
       setLiveData(prev => ({
@@ -42,7 +55,7 @@ export const LiveDashboard: React.FC<LiveViewModuleProps> = ({
     }, updateInterval);
 
     return () => clearInterval(interval);
-  }, [isActive, updateInterval]);
+  }, [isActive, updateInterval, mounted]);
 
   const sizeClasses = {
     small: "w-48 h-32",
@@ -175,6 +188,11 @@ export const InteractiveHexModule: React.FC<HexModuleProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -264,7 +282,8 @@ export const InteractiveHexModule: React.FC<HexModuleProps> = ({
       </div>
 
       {/* Floating Particles */}
-      {isHovered && (
+      {/* Client-only hover particles to prevent hydration mismatch */}
+      {isHovered && mounted && (
         <div className="absolute -inset-4 pointer-events-none">
           {Array.from({ length: 6 }, (_, i) => (
             <div

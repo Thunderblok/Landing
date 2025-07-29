@@ -1,11 +1,44 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { SVGAssets } from './SVGAssets';
 import { LiveViewComponents } from './LiveViewComponents';
 import { SafeDynamicParticle3DScene } from './DynamicThreeComponents';
 
 const HeroBanner: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Client-only floating particles to prevent hydration mismatch
+  const FloatingParticles = () => {
+    if (!mounted) return null; // Prevent SSR rendering
+    
+    return (
+      <div className="absolute inset-0 pointer-events-none z-5">
+        {Array.from({ length: 8 }, (_, i) => (
+          <div
+            key={i}
+            className="absolute animate-particle-drift"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: `${6 + Math.random() * 4}s`
+            }}
+          >
+            <SVGAssets.ParticleHex 
+              width={4 + Math.random() * 8} 
+              height={4 + Math.random() * 8} 
+              color={Math.random() > 0.5 ? "#FB9260" : "#3B82F6"}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Safe 3D Background Scene with Enhanced SSR Protection */}
@@ -24,10 +57,10 @@ const HeroBanner: React.FC = () => {
       <div className="absolute inset-0 z-1 cyberpunk-grid opacity-10"></div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center pt-16 md:pt-20">
         
-        {/* Live Dashboard Modules - Top Row */}
-        <div className="absolute top-8 left-8 hidden lg:block">
+        {/* Live Dashboard Modules - Top Row with better spacing */}
+        <div className="absolute top-4 left-4 md:top-8 md:left-8 hidden lg:block">
           <LiveViewComponents.LiveDashboard
             title="Network Status"
             type="dashboard"
@@ -36,7 +69,7 @@ const HeroBanner: React.FC = () => {
           />
         </div>
         
-        <div className="absolute top-8 right-8 hidden lg:block">
+        <div className="absolute top-4 right-4 md:top-8 md:right-8 hidden lg:block">
           <LiveViewComponents.LiveDashboard
             title="Live Metrics"
             type="metrics"
@@ -45,16 +78,16 @@ const HeroBanner: React.FC = () => {
           />
         </div>
 
-        {/* Hero Content */}
-        <div className="space-y-8">
+        {/* Hero Content with proper spacing */}
+        <div className="space-y-8 mt-8 md:mt-12">
           
-          {/* Logo and Brand */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+          {/* Logo and Brand - with better spacing from top */}
+          <div className="flex items-center justify-center gap-4 mb-8 mt-8">
             <div className="animate-float">
               <SVGAssets.OKOHex width={80} height={80} className="drop-shadow-lg" />
             </div>
             <div className="text-left">
-              <h1 className="text-5xl md:text-7xl font-bold text-white font-mono tracking-tight">
+              <h1 className="text-5xl md:text-7xl font-bold text-white font-mono tracking-tight leading-tight">
                 OKO
                 <span className="text-orange-400 glitch-text" data-text="HOLDING">HOLDING</span>
               </h1>
@@ -169,27 +202,8 @@ const HeroBanner: React.FC = () => {
         />
       </div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 pointer-events-none z-5">
-        {Array.from({ length: 8 }, (_, i) => (
-          <div
-            key={i}
-            className="absolute animate-particle-drift"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              animationDuration: `${6 + Math.random() * 4}s`
-            }}
-          >
-            <SVGAssets.ParticleHex 
-              width={4 + Math.random() * 8} 
-              height={4 + Math.random() * 8} 
-              color={Math.random() > 0.5 ? "#FB9260" : "#3B82F6"}
-            />
-          </div>
-        ))}
-      </div>
+      {/* Client-Only Floating Particles */}
+      <FloatingParticles />
 
     </section>
   );

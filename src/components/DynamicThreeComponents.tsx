@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { React18ThreeErrorBoundary, useThreeErrorHandler } from './React18ThreeErrorBoundary';
 
 /**
@@ -41,7 +41,9 @@ const ThreeDErrorWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
     <React18ThreeErrorBoundary>
       <Suspense fallback={<ThreeDFallback />}>
-        {children}
+        <div style={{ isolation: 'isolate' }}>
+          {children}
+        </div>
       </Suspense>
     </React18ThreeErrorBoundary>
   );
@@ -56,12 +58,35 @@ export const DynamicParticle3DScene = dynamic(
   }
 );
 
-// Wrap the component for additional safety
-export const SafeDynamicParticle3DScene = (props: any) => (
-  <ThreeDErrorWrapper>
-    <DynamicParticle3DScene {...props} />
-  </ThreeDErrorWrapper>
-);
+// Temporarily disable Three.js to test if the issue is resolved
+// This will show only the CSS fallback for debugging
+export const SafeDynamicParticle3DScene = (props: any) => {
+  // Always return fallback for testing
+  return <ThreeDFallback />;
+  
+  /* Commented out for testing
+  const [shouldLoad, setShouldLoad] = useState(false);
+  
+  useEffect(() => {
+    // Small delay to ensure React is fully mounted
+    const timer = setTimeout(() => {
+      setShouldLoad(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+  
+  if (!shouldLoad) {
+    return <ThreeDFallback />;
+  }
+  
+  return (
+    <ThreeDErrorWrapper>
+      <DynamicParticle3DScene {...props} />
+    </ThreeDErrorWrapper>
+  );
+  */
+};
 
 export const DynamicWebGLSuperhexScene = dynamic(
   () => import('./WebGLSuperhexScene').then(mod => ({ default: mod.WebGLSuperhexScene })),
@@ -129,5 +154,76 @@ export const DynamicOKODistributedVisualizer = dynamic(
 export const SafeDynamicOKODistributedVisualizer = (props: any) => (
   <ThreeDErrorWrapper>
     <DynamicOKODistributedVisualizer {...props} />
+  </ThreeDErrorWrapper>
+);
+
+export const DynamicNeonWireGrid = dynamic(
+  () => import('./NeonWireGrid').then(mod => ({ default: mod.NeonWireGrid })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full h-full bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden">
+        <div className="absolute inset-0">
+          {/* Animated wireframe grid fallback */}
+          <div className="absolute inset-0 opacity-30">
+            {Array.from({ length: 20 }, (_, i) => (
+              <div
+                key={`h-${i}`}
+                className="absolute w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"
+                style={{
+                  top: `${(i / 19) * 100}%`,
+                  animationDelay: `${i * 0.1}s`,
+                  animationDuration: '3s'
+                }}
+              />
+            ))}
+            {Array.from({ length: 20 }, (_, i) => (
+              <div
+                key={`v-${i}`}
+                className="absolute w-px h-full bg-gradient-to-b from-transparent via-pink-400 to-transparent animate-pulse"
+                style={{
+                  left: `${(i / 19) * 100}%`,
+                  animationDelay: `${i * 0.1 + 1}s`,
+                  animationDuration: '3s'
+                }}
+              />
+            ))}
+          </div>
+          
+          {/* Floating neon particles */}
+          {Array.from({ length: 15 }, (_, i) => (
+            <div
+              key={i}
+              className="absolute w-2 h-2 border border-cyan-400 animate-ping"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.2}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+          
+          {/* Corner tech accents */}
+          <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-cyan-400 opacity-60"></div>
+          <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-pink-400 opacity-60"></div>
+          <div className="absolute bottom-0 left-0 w-20 h-20 border-b-2 border-l-2 border-pink-400 opacity-60"></div>
+          <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-cyan-400 opacity-60"></div>
+        </div>
+        
+        <div className="absolute top-4 left-4 text-cyan-400 font-mono text-sm opacity-70 animate-pulse">
+          NEON.GRID.INIT...
+        </div>
+        <div className="absolute bottom-4 right-4 text-pink-400 font-mono text-xs opacity-60 animate-pulse">
+          REAKTOR.LOADING...
+        </div>
+      </div>
+    )
+  }
+);
+
+export const SafeDynamicNeonWireGrid = (props: any) => (
+  <ThreeDErrorWrapper>
+    <DynamicNeonWireGrid {...props} />
   </ThreeDErrorWrapper>
 );

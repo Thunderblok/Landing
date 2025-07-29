@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { GlobalErrorHandler } from '@/components/GlobalErrorHandler'
 
 export const metadata: Metadata = {
   title: 'OKO Holding Corp - A New Dawn in Distributed Intelligence',
@@ -14,6 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        {/* Global error handler for React Three Fiber issues */}
+        <GlobalErrorHandler />
+        
         {/* 3D Perspective Grid Background */}
         <div className="container-loader">
           <div className="loader"></div>
