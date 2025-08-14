@@ -1,52 +1,18 @@
-# OKO | Thunderline Landing — Project DIOS_Gate
+# Cbpdash
 
-A next-gen parallax cyber-landing for OKO Holding Corp & Thunderline.
+To start your Phoenix server:
 
-## 🚀 Vision
-This is not a brochure — it’s an interactive manifesto. Every asset, line, and click reflects living intelligence. Accessibility, mobile-responsiveness, and modularity are core. We design for public transparency, future extensibility, and present awe.
+* Run `mix setup` to install and setup dependencies
+* Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-## 🧭 Quickstart
-```bash
-npm install
-npm run dev
-```
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## 🧩 Structure
-- **HeroSection**: Animated grid, logo, thunderbit cluster
-- **AboutOko**: Our vision
-- **ThunderlineShowcase**: Thunderbit/Thunderblock interactive
-- **DAGVisualizer**: Animated DAG relationships
-- **Governance**: DAO & dashboard (placeholder)
-- **TerminalFeed**: Live event demo/log
-- **ContactSection**: Get in touch
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## 🎨 Theming
-- Electric cyan, neon magenta, dark navy, gold
-- Orbitron or JetBrains Mono font
-- Glow/gradient material
+## Learn more
 
-## 🛠️ Tech Stack
-- Next.js (React)
-- Tailwind CSS (custom theme)
-- Framer Motion (animation)
-- Three.js/R3F (3D, parallax)
-
-## 🗺️ Roadmap
-- [x] Repo cleanup & structure
-- [ ] Parallax hero & Thunderbit grid
-- [ ] Section scaffolding
-- [ ] Neon theme & fonts
-- [ ] Advanced visuals & interactivity
-- [ ] Documentation & Codex
-
----
-
-### Handoff
-- Main dev: backend API/socket integration
-- Art: SVG/image asset drops
-- Codex: component boilerplates
-
----
-
-**THUNDERLINE IS GO.**
-# Trigger deployment Mon Jul 28 03:57:22 PM EDT 2025
+* Official website: https://www.phoenixframework.org/
+* Guides: https://hexdocs.pm/phoenix/overview.html
+* Docs: https://hexdocs.pm/phoenix
+* Forum: https://elixirforum.com/c/phoenix-forum
+* Source: https://github.com/phoenixframework/phoenix
