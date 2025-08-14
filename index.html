@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OKO Holding Corporation - Rewiring Cognition for the Decentralized Future</title>
+    <meta name="description" content="OKO Holding Corporation - Empowering autonomous intelligence for humanity and beyond. Veteran-owned technology corporation.">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            color: #e5e5e5;
+            background: #0a0a0a;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --oko-black: #0a0a0a;
+            --oko-gold: #d4af37;
+            --oko-platinum: #e5e4e2;
+            --oko-dark-gold: #b8941f;
+        }
+
+        .oko-serif {
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .oko-gold-text {
+            color: var(--oko-gold);
+        }
+
+        .oko-platinum-text {
+            color: var(--oko-platinum);
+        }
+
+        .oko-raised {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .oko-hero {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(212, 175, 55, 0.1) 50%, rgba(10, 10, 10, 0.9) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .oko-section {
+            padding: 5rem 2rem;
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .oko-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(229, 228, 226, 0.05) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .oko-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .oko-btn-primary {
+            background: linear-gradient(135deg, var(--oko-gold) 0%, var(--oko-dark-gold) 100%);
+            color: var(--oko-black);
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0.5rem;
+        }
+
+        .oko-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .oko-btn-secondary {
+            background: transparent;
+            color: var(--oko-gold);
+            border: 2px solid var(--oko-gold);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 22px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0.5rem;
+        }
+
+        .oko-btn-secondary:hover {
+            background: var(--oko-gold);
+            color: var(--oko-black);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            width: 160px;
+            height: 160px;
+            border-radius: 12px;
+            border: 4px solid var(--oko-gold);
+            background: #000;
+            margin: 0 auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin: 1rem 0;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            margin: 1rem 0;
+            font-weight: 300;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin: 2rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid var(--oko-gold);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--oko-gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--oko-platinum);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            background: rgba(229, 228, 226, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            color: var(--oko-platinum);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--oko-gold);
+        }
+
+        @media (max-width: 768px) {
+            .oko-hero {
+                min-height: 80vh;
+                padding: 1rem;
+            }
+            
+            .oko-section {
+                padding: 3rem 1rem;
+            }
+
+            .grid-cols-2,
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <!-- Hero Section -->
+        <section class="oko-hero">
+            <div class="container">
+                <div class="logo-container">
+                    <img src="oko-logo.png" alt="OKO Holding Corporation Logo" class="logo" />
+                </div>
+
+                <div class="quote oko-serif oko-platinum-text">
+                    "There's a way to do it better – find it."
+                    <br><small>— Thomas Edison</small>
+                </div>
+
+                <h1 class="oko-serif oko-gold-text oko-raised">
+                    Rewiring Cognition for the Decentralized Future
+                </h1>
+                
+                <h2 class="oko-platinum-text">
+                    Empowering autonomous intelligence for humanity and beyond
+                </h2>
+
+                <div style="margin-top: 2rem;">
+                    <a href="#about" class="oko-btn-primary">Learn More</a>
+                    <button onclick="showContact()" class="oko-btn-secondary">Get Involved</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="oko-section">
+            <div class="container">
+                <h2 class="oko-serif oko-gold-text text-center oko-raised">
+                    About OKO Holding Corporation
+                </h2>
+                
+                <div class="grid grid-cols-2" style="margin-top: 3rem;">
+                    <div>
+                        <p class="oko-platinum-text" style="font-size: 1.1rem; line-height: 1.8;">
+                            OKO Holding Corporation stands at the vanguard of autonomous intelligence, architecting the cognitive infrastructure that will define the next epoch of human-machine collaboration.
+                        </p>
+                        <p class="oko-platinum-text" style="font-size: 1.1rem; line-height: 1.8;">
+                            Founded by veterans with deep operational experience, we bring military precision to technological innovation, ensuring every system we develop meets the highest standards of reliability, security, and performance.
+                        </p>
+                    </div>
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Leadership Principles</h3>
+                        <ul class="oko-platinum-text" style="list-style: none; padding: 0;">
+                            <li>✓ Mission-First Mentality</li>
+                            <li>✓ Technical Excellence</li>
+                            <li>✓ Ethical AI Development</li>
+                            <li>✓ Veteran Leadership</li>
+                            <li>✓ Open Source Collaboration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="oko-section">
+            <div class="container">
+                <h2 class="oko-serif oko-gold-text text-center oko-raised">
+                    Flagship Projects
+                </h2>
+                
+                <div class="grid grid-cols-3" style="margin-top: 3rem;">
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Thunderline</h3>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem; margin-bottom: 1rem;">Autonomous Political Action Networks</p>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem;">
+                            Revolutionary platform enabling distributed political engagement through autonomous coordination protocols.
+                        </p>
+                    </div>
+
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">RedactDAO</h3>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem; margin-bottom: 1rem;">Finite Autonomous Collective</p>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem;">
+                            Pioneering decentralized governance structure combining human insight with algorithmic precision.
+                        </p>
+                    </div>
+
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Federal Autonomous Network</h3>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem; margin-bottom: 1rem;">Government-Grade AI Systems</p>
+                        <p class="oko-platinum-text" style="font-size: 0.9rem;">
+                            Next-generation infrastructure for federal agencies with military-grade security.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why OKO Section -->
+        <section class="oko-section">
+            <div class="container">
+                <h2 class="oko-serif oko-gold-text text-center oko-raised">
+                    Why OKO Holding
+                </h2>
+                
+                <div class="grid grid-cols-2" style="margin-top: 3rem;">
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">AI-Native Architecture</h3>
+                        <p class="oko-platinum-text">Built from the ground up for autonomous intelligence, not retrofitted legacy systems.</p>
+                    </div>
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Mission-Driven Leadership</h3>
+                        <p class="oko-platinum-text">Veteran-founded with unwavering commitment to ethical AI and human values.</p>
+                    </div>
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Security & Compliance</h3>
+                        <p class="oko-platinum-text">Military-grade security protocols with constitutional compliance built into every system.</p>
+                    </div>
+                    <div class="oko-card">
+                        <h3 class="oko-serif oko-gold-text">Veteran-Owned & Operated</h3>
+                        <p class="oko-platinum-text">Bringing military precision and operational excellence to cutting-edge technology.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="oko-section" style="border-top: 1px solid var(--oko-gold);">
+            <div class="container text-center">
+                <h3 class="oko-serif oko-gold-text">Ready to Shape the Future?</h3>
+                <p class="oko-platinum-text" style="font-size: 1.1rem; margin: 2rem 0;">
+                    Join us in building the autonomous intelligence infrastructure that will define the next century of human progress.
+                </p>
+                <button onclick="showContact()" class="oko-btn-primary">Start the Conversation</button>
+                
+                <div style="border-top: 1px solid var(--oko-gold); padding-top: 2rem; margin-top: 2rem;">
+                    <p class="oko-platinum-text">
+                        <em class="oko-serif">"Aut viam inveniam aut faciam"</em> — I shall either find a way or make one
+                    </p>
+                    <p class="oko-platinum-text" style="font-size: 0.8rem;">
+                        © 2025 OKO Holding Corporation. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideContact()">&times;</span>
+            <h3 class="oko-serif oko-gold-text">Get Involved</h3>
+            
+            <form onsubmit="submitContact(event)">
+                <input type="text" name="name" placeholder="Full Name" class="form-input" required>
+                <input type="email" name="email" placeholder="Email Address" class="form-input" required>
+                <select name="interest" class="form-input" required>
+                    <option value="">Select Interest Area</option>
+                    <option value="partnership">Strategic Partnership</option>
+                    <option value="investment">Investment Opportunity</option>
+                    <option value="careers">Career Opportunities</option>
+                    <option value="press">Press & Media</option>
+                </select>
+                <textarea name="message" placeholder="Your Message" class="form-input" rows="4" required></textarea>
+                <button type="submit" class="oko-btn-primary" style="width: 100%;">Send Secure Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function showContact() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function hideContact() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        function submitContact(event) {
+            event.preventDefault();
+            alert('Thank you for your interest! We will respond within 24 hours through our secure communication channels.');
+            hideContact();
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target == modal) {
+                hideContact();
+            }
+        }
+    </script>
+</body>
+</html>
