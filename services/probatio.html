@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROBATIO — Closeout Review Engine · OKO / ATLAS</title>
+<meta name="description" content="PROBATIO turns a closeout workbook plus photo bundle into a requirement-bound evidence graph. Deterministic rules recommend pass, fail, or needs-human. Every package seals a receipt. Machine recommends. Human decides.">
+<meta property="og:title" content="PROBATIO — Closeout Review Engine">
+<meta property="og:description" content="Workbook plus photo bundle becomes a requirement-bound evidence graph. The supervisor still signs.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../assets/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PROBATIO — Closeout Review Engine">
+<meta name="twitter:description" content="Machine recommends. Human decides.">
+<meta name="twitter:image" content="../assets/og-image.svg">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="alternate icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<style>
+  :root {
+    --c-bg: #ffffff;
+    --c-bg-alt: #fafafa;
+    --c-bg-dark: #07101f;
+    --c-bg-darker: #050a14;
+    --c-text: #0a0a0a;
+    --c-text-soft: #525252;
+    --c-text-on-dark: #f5f5f5;
+    --c-text-on-dark-soft: #a8b3c4;
+    --c-border: #e5e5e5;
+    --c-border-dark: #1a2942;
+    --c-accent: #c9a961;
+    --c-accent-warm: #d4b876;
+    --c-accent-glow: #e6c98b;
+    --c-blue-glow: #5b8cc7;
+    --max-w: 1280px;
+    --max-w-prose: 760px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  h1 { font-size: clamp(2.75rem, 6vw, 5rem); }
+  h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 1rem; }
+  h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  h4 { font-size: 1.05rem; font-family: -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; }
+  p { margin-bottom: 1rem; color: var(--c-text-soft); }
+  p.lead { font-size: 1.2rem; color: var(--c-text); line-height: 1.55; }
+  a { color: var(--c-text); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 3px; transition: color 0.2s ease; }
+  a:hover { color: var(--c-accent-warm); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+  .container-prose { max-width: var(--max-w-prose); margin: 0 auto; padding: 0 2rem; }
+  section { padding: 6rem 0; border-bottom: 1px solid var(--c-border); position: relative; }
+  section.dark {
+    background: var(--c-bg-dark);
+    color: var(--c-text-on-dark);
+    border-bottom-color: var(--c-border-dark);
+  }
+  section.dark p { color: var(--c-text-on-dark-soft); }
+  section.dark a { color: var(--c-text-on-dark); text-decoration-color: var(--c-accent); }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .accent { color: var(--c-accent); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* NAV */
+  nav.top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 10, 20, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    color: var(--c-text-on-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  nav.top .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  nav.top .brand {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+    color: var(--c-text-on-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.top .brand-mark {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 4px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.5);
+  }
+  nav.top ul {
+    display: flex;
+    list-style: none;
+    gap: 2.25rem;
+  }
+  nav.top ul a {
+    color: var(--c-text-on-dark-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  nav.top ul a:hover { color: var(--c-accent); }
+  nav.top .cta {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.25);
+  }
+  nav.top .cta-secondary {
+    color: var(--c-text-on-dark-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    margin-right: 0.75rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  nav.top .cta-secondary:hover { border-color: var(--c-accent); color: var(--c-accent); }
+  @media (max-width: 720px) {
+    nav.top .cta-secondary { display: none; }
+  }
+
+  nav.top .cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201, 169, 97, 0.4); color: #1a1208; }
+
+  /* Mobile hamburger */
+  nav.top .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    width: 42px; height: 42px;
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease;
+  }
+  nav.top .nav-toggle:hover { border-color: var(--c-accent); }
+  nav.top .nav-toggle .bar {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--c-text-on-dark);
+    border-radius: 2px;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+  nav.top .nav-toggle .bar::before,
+  nav.top .nav-toggle .bar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px; height: 2px;
+    background: var(--c-text-on-dark);
+    border-radius: 2px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), top 0.25s ease;
+  }
+  nav.top .nav-toggle .bar::before { top: -6px; }
+  nav.top .nav-toggle .bar::after { top: 6px; }
+  body.nav-open nav.top .nav-toggle .bar { background: transparent; }
+  body.nav-open nav.top .nav-toggle .bar::before { top: 0; transform: rotate(45deg); }
+  body.nav-open nav.top .nav-toggle .bar::after { top: 0; transform: rotate(-45deg); }
+  body.nav-open nav.top .nav-toggle { border-color: var(--c-accent); }
+
+  /* Mobile menu overlay */
+  nav.top .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(5, 10, 20, 0.96);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 2rem 2rem;
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99;
+  }
+  body.nav-open nav.top .mobile-menu {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  nav.top .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  nav.top .mobile-menu ul a {
+    display: block;
+    color: var(--c-text-on-dark);
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    letter-spacing: 0.01em;
+  }
+  nav.top .mobile-menu ul a:hover { color: var(--c-accent); }
+  nav.top .mobile-menu .cta {
+    display: inline-block;
+    margin-top: 1.25rem;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    padding: 0.75rem 1.4rem;
+    border-radius: 100px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* PAGE HERO (deep-dive variant — no R3F canvas) */
+  .page-hero {
+    background: var(--c-bg-darker);
+    color: var(--c-text-on-dark);
+    border-bottom: 1px solid var(--c-border-dark);
+    position: relative;
+    overflow: hidden;
+    padding: 10rem 0 7rem;
+  }
+  .page-hero::before {
+    content: "";
+    position: absolute;
+    top: -10%; right: -10%;
+    width: 60%; height: 120%;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.10) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    bottom: -20%; left: -10%;
+    width: 50%; height: 80%;
+    background: radial-gradient(circle, rgba(91, 140, 199, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page-hero .container { position: relative; z-index: 1; }
+  .page-hero h1 {
+    color: var(--c-text-on-dark);
+    margin-bottom: 1.25rem;
+    max-width: 900px;
+    font-size: clamp(3.5rem, 9vw, 6.5rem);
+    letter-spacing: -0.02em;
+  }
+  .page-hero h1 .accent-text {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-hero .subtitle {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--c-accent);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+  }
+  .page-hero p.lead {
+    color: var(--c-text-on-dark-soft);
+    max-width: 720px;
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .page-hero .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .page-hero .breadcrumb {
+    font-size: 0.82rem;
+    color: var(--c-text-on-dark-soft);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+  .page-hero .breadcrumb a { color: var(--c-text-on-dark-soft); text-decoration: none; }
+  .page-hero .breadcrumb a:hover { color: var(--c-accent); }
+  .page-hero .breadcrumb .sep { margin: 0 0.6rem; color: var(--c-border-dark); }
+
+  /* BTN */
+  .btn {
+    display: inline-block;
+    padding: 0.95rem 1.8rem;
+    font-weight: 600;
+    font-size: 0.98rem;
+    border-radius: 100px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    box-shadow: 0 8px 24px rgba(201, 169, 97, 0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201, 169, 97, 0.45); color: #1a1208; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.18);
+    color: var(--c-text-on-dark);
+    backdrop-filter: blur(8px);
+  }
+  .btn-ghost:hover { border-color: var(--c-accent); color: var(--c-accent); background: rgba(201, 169, 97, 0.08); }
+
+  /* SECTION HEADER */
+  .section-header { max-width: 820px; margin-bottom: 4rem; }
+  .section-header p.lead { color: var(--c-text-soft); }
+  section.dark .section-header p.lead { color: var(--c-text-on-dark-soft); }
+
+  /* MATURITY BADGE */
+  .maturity-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 100px;
+    background: rgba(201, 169, 97, 0.12);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    color: var(--c-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .maturity-banner::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    box-shadow: 0 0 8px var(--c-accent-glow);
+  }
+
+  /* DEFINITION BLOCKS */
+  .definition-block {
+    border-left: 2px solid var(--c-accent);
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .definition-block h4 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.3rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* ROLE GRID — four columns of separation-of-duties */
+  .role-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .role-card {
+    border: 1px solid var(--c-border-dark);
+    background: rgba(255,255,255,0.03);
+    padding: 1.75rem 1.5rem;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .role-card:hover { border-color: var(--c-accent); background: rgba(201, 169, 97, 0.04); }
+  .role-card .role-name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--c-accent);
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.02em;
+  }
+  .role-card .role-tag {
+    font-size: 0.72rem;
+    color: var(--c-text-on-dark-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+  }
+  .role-card ul {
+    list-style: none;
+    margin: 0;
+  }
+  .role-card ul li {
+    font-size: 0.88rem;
+    color: var(--c-text-on-dark-soft);
+    padding: 0.55rem 0;
+    border-top: 1px solid var(--c-border-dark);
+    line-height: 1.45;
+  }
+  .role-card ul li:first-child { border-top: none; padding-top: 0; }
+  .role-card.signing {
+    border-color: var(--c-accent);
+    background: rgba(201, 169, 97, 0.06);
+    box-shadow: 0 0 32px rgba(201, 169, 97, 0.08);
+  }
+  .role-card.signing .role-name { color: var(--c-accent-glow); }
+  .role-card .signing-flag {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--c-accent);
+    font-size: 0.76rem;
+    color: var(--c-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  /* PIPELINE */
+  .pipeline-list {
+    list-style: none;
+    counter-reset: pcount;
+    margin-top: 2rem;
+  }
+  .pipeline-list li {
+    counter-increment: pcount;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--c-border);
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .pipeline-list li:last-child { border-bottom: 1px solid var(--c-border); }
+  .pipeline-list li::before {
+    content: counter(pcount, decimal-leading-zero);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2.2rem;
+    color: var(--c-accent);
+    line-height: 1;
+    font-weight: 400;
+  }
+  .pipeline-list li h4 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .pipeline-list li code {
+    font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    font-size: 0.92rem;
+    color: var(--c-accent-warm);
+    background: var(--c-bg-alt);
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    border: 1px solid var(--c-border);
+    margin-right: 0.5rem;
+  }
+  .pipeline-list li p { margin-bottom: 0; }
+
+  /* COCKPIT DESCRIPTOR — three-column visual */
+  .cockpit-frame {
+    margin-top: 2.5rem;
+    border: 1px solid var(--c-border-dark);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.02);
+    overflow: hidden;
+  }
+  .cockpit-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.85rem 1.25rem;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--c-border-dark);
+    font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+    font-size: 0.78rem;
+    color: var(--c-text-on-dark-soft);
+    letter-spacing: 0.04em;
+  }
+  .cockpit-bar .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c-border-dark); display: inline-block; }
+  .cockpit-bar .dot.live { background: var(--c-accent); box-shadow: 0 0 8px var(--c-accent-glow); }
+  .cockpit-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr 320px;
+    min-height: 340px;
+  }
+  .cockpit-col {
+    padding: 1.5rem 1.25rem;
+    border-right: 1px solid var(--c-border-dark);
+  }
+  .cockpit-col:last-child { border-right: none; }
+  .cockpit-col h5 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--c-accent);
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .cockpit-col ul { list-style: none; }
+  .cockpit-col ul li {
+    font-size: 0.85rem;
+    color: var(--c-text-on-dark-soft);
+    padding: 0.45rem 0;
+    border-top: 1px solid var(--c-border-dark);
+    line-height: 1.45;
+  }
+  .cockpit-col ul li:first-child { border-top: none; padding-top: 0; }
+  .cockpit-col.signing-surface {
+    background: rgba(201, 169, 97, 0.05);
+    border-left: 1px solid rgba(201, 169, 97, 0.3);
+  }
+  .cockpit-col.signing-surface h5 { color: var(--c-accent-glow); }
+  .signing-stamp {
+    margin-top: 1rem;
+    padding: 0.7rem 0.85rem;
+    background: rgba(201, 169, 97, 0.08);
+    border: 1px dashed rgba(201, 169, 97, 0.4);
+    border-radius: 3px;
+    font-size: 0.76rem;
+    color: var(--c-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  /* BUYER-SAFE TABLE */
+  .buyer-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2rem;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .buyer-col {
+    padding: 2rem;
+  }
+  .buyer-col.sell {
+    background: var(--c-bg);
+    border-right: 1px solid var(--c-border);
+  }
+  .buyer-col.dont {
+    background: var(--c-bg-alt);
+  }
+  .buyer-col h4 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.01em;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .buyer-col.sell h4 { color: var(--c-text); }
+  .buyer-col.sell h4::before {
+    content: "✓";
+    color: var(--c-accent);
+    font-family: -apple-system, sans-serif;
+    margin-right: 0.6rem;
+    font-weight: 700;
+  }
+  .buyer-col.dont h4 { color: var(--c-text-soft); }
+  .buyer-col.dont h4::before {
+    content: "✕";
+    color: #b04a4a;
+    font-family: -apple-system, sans-serif;
+    margin-right: 0.6rem;
+    font-weight: 700;
+  }
+  .buyer-col ul { list-style: none; }
+  .buyer-col ul li {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--c-border);
+    font-size: 0.95rem;
+    color: var(--c-text-soft);
+    line-height: 1.5;
+  }
+  .buyer-col ul li:first-child { border-top: none; padding-top: 0; }
+  .buyer-col ul li strong { color: var(--c-text); font-weight: 600; }
+
+  /* PILOT METRICS */
+  .pilot-shape {
+    margin-top: 2rem;
+    padding: 2rem;
+    background: rgba(255,255,255,0.04);
+    border-left: 2px solid var(--c-accent);
+    border-radius: 4px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.5rem;
+    color: var(--c-text-on-dark);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+  .pilot-shape .dot-sep {
+    color: var(--c-accent);
+    margin: 0 0.6rem;
+    font-weight: 600;
+  }
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .metric {
+    padding: 1.5rem;
+    border: 1px solid var(--c-border-dark);
+    background: rgba(255,255,255,0.02);
+    border-radius: 4px;
+  }
+  .metric .metric-label {
+    font-size: 0.72rem;
+    color: var(--c-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.85rem;
+    font-weight: 600;
+  }
+  .metric h4 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--c-text-on-dark);
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
+  }
+  .metric p { font-size: 0.88rem; color: var(--c-text-on-dark-soft); margin: 0; line-height: 1.5; }
+
+  /* COMPANION CARDS */
+  .companion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .companion-card {
+    border: 1px solid var(--c-border);
+    padding: 2rem;
+    background: var(--c-bg);
+    text-decoration: none;
+    color: var(--c-text);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
+  .companion-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--c-accent), var(--c-accent-warm));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .companion-card:hover { border-color: var(--c-accent); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); color: var(--c-text); }
+  .companion-card:hover::before { transform: scaleX(1); }
+  .companion-card .name {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.85rem;
+    font-weight: 500;
+    color: var(--c-text);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .companion-card .tagline {
+    font-size: 0.83rem;
+    color: var(--c-accent-warm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .companion-card p { font-size: 0.95rem; margin-bottom: 1rem; }
+  .companion-card .arrow {
+    color: var(--c-accent);
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+
+  /* DOCTRINE CALLOUTS */
+  .doctrine-callout {
+    margin-top: 2.5rem;
+    padding: 1.5rem 1.75rem;
+    border-left: 3px solid var(--c-accent);
+    background: rgba(201, 169, 97, 0.04);
+    border-radius: 0 4px 4px 0;
+  }
+  section.dark .doctrine-callout {
+    background: rgba(201, 169, 97, 0.06);
+  }
+  .doctrine-callout p {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--c-text);
+    margin: 0;
+    line-height: 1.45;
+  }
+  section.dark .doctrine-callout p { color: var(--c-text-on-dark); }
+
+  /* CTA */
+  .cta-block {
+    background: linear-gradient(135deg, var(--c-bg-darker) 0%, var(--c-bg-dark) 100%);
+    color: var(--c-text-on-dark);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-block > * { position: relative; z-index: 1; }
+  .cta-block h2 { color: var(--c-text-on-dark); }
+  .cta-block p { color: var(--c-text-on-dark-soft); max-width: 640px; margin: 1rem auto 2.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--c-bg-darker);
+    color: var(--c-text-on-dark-soft);
+    padding: 5rem 0 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--c-border-dark);
+  }
+  footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--c-border-dark);
+  }
+  footer h5 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--c-text-on-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  footer h5 .brand-mark {
+    width: 16px; height: 16px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 3px;
+    transform: rotate(45deg);
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.5rem; }
+  footer ul a { color: var(--c-text-on-dark-soft); text-decoration: none; }
+  footer ul a:hover { color: var(--c-accent); }
+  footer .footer-bottom {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--c-text-on-dark-soft);
+    font-size: 0.83rem;
+  }
+  footer .legal-line { max-width: 700px; line-height: 1.5; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .role-grid { grid-template-columns: repeat(2, 1fr); }
+    .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    .cockpit-grid { grid-template-columns: 1fr; }
+    .cockpit-col { border-right: none; border-bottom: 1px solid var(--c-border-dark); }
+    .cockpit-col:last-child { border-bottom: none; }
+  }
+  @media (max-width: 960px) {
+    nav.top ul { display: none; }
+    nav.top .nav-toggle { display: inline-flex; }
+    nav.top .mobile-menu { display: block; }
+    .grid-2 { grid-template-columns: 1fr; gap: 2rem; }
+    .buyer-table { grid-template-columns: 1fr; }
+    .buyer-col.sell { border-right: none; border-bottom: 1px solid var(--c-border); }
+    footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    section { padding: 4.5rem 0; }
+    .pipeline-list li { grid-template-columns: 60px 1fr; gap: 1.25rem; }
+    .page-hero { padding: 8rem 0 5rem; }
+    .pilot-shape { font-size: 1.2rem; }
+  }
+  @media (max-width: 600px) {
+    .role-grid { grid-template-columns: 1fr; }
+    .metric-grid { grid-template-columns: 1fr; }
+    footer .footer-grid { grid-template-columns: 1fr; }
+    .container, .container-prose { padding: 0 1.25rem; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="container">
+    <a href="../index.html#top" class="brand">
+      <span class="brand-mark"></span>
+      OKO
+    </a>
+    <ul>
+      <li><a href="../index.html#atlas">ATLAS</a></li>
+      <li><a href="../index.html#thunderline">Thunderline</a></li>
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#industries">Industries</a></li>
+      <li><a href="../index.html#integrations">Integrations</a></li>
+      <li><a href="../index.html#global">Global</a></li>
+      <li><a href="../index.html#company">Company</a></li>
+    </ul>
+    <a href="https://thunderline.net/sign-in" target="_blank" rel="noopener" class="cta-secondary">Sign in</a>
+    <a href="#contact" class="cta">Talk to ATLAS</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="bar"></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul>
+      <li><a href="../index.html#atlas">ATLAS</a></li>
+      <li><a href="../index.html#thunderline">Thunderline</a></li>
+      <li><a href="../index.html#services">Services</a></li>
+      <li><a href="../index.html#industries">Industries</a></li>
+      <li><a href="../index.html#integrations">Integrations</a></li>
+      <li><a href="../index.html#global">Global</a></li>
+      <li><a href="../index.html#company">Company</a></li>
+      <li><a href="https://thunderline.net/sign-in" target="_blank" rel="noopener">Sign in to live platform</a></li>
+    </ul>
+    <a href="#contact" class="cta">Talk to ATLAS</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header id="top" class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../index.html#top">OKO</a>
+      <span class="sep">/</span>
+      <a href="../index.html#services">Services</a>
+      <span class="sep">/</span>
+      <span>PROBATIO</span>
+    </div>
+    <span class="eyebrow">Closeout Review Engine</span>
+    <h1><span class="accent-text">PROBATIO</span></h1>
+    <div class="subtitle">probatio operis &mdash; proof of work</div>
+    <p class="lead">
+      A closeout workbook arrives with a photo bundle. PROBATIO turns it into a requirement-bound evidence graph; deterministic rules recommend pass, fail, or needs-human; the supervisor still signs. Every package seals a receipt.
+    </p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#contact">Request a working session</a>
+      <a class="btn btn-ghost" href="#pipeline">See the pipeline</a>
+    </div>
+  </div>
+</header>
+
+<!-- THE PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">What this actually is</span>
+      <h2>The closeout problem in 90 seconds</h2>
+      <p class="lead">Closeout review is the gate between a field crew finishing the work and the operator getting paid for it. The artifacts are mundane. The discipline is not.</p>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div>
+        <div class="definition-block">
+          <h4>The package</h4>
+          <p>A workbook (Excel-shaped, sometimes PDF-embedded) and a photo bundle. The workbook describes the Method of Procedure (MOP), the Work Breakdown Structure (WBS) line items, and the rows the field crew was supposed to evidence. Telco Ready, photo-required, AAV captures, DC meter readings around &minus;54V, equipment serials on a Nokia 7250 IXR-e shelf — that level of specificity, on a row-by-row basis.</p>
+        </div>
+        <div class="definition-block">
+          <h4>The review</h4>
+          <p>A supervisor opens the package and walks every requirement: was the photo taken, does it match the row, is the reading legible, is the serial captured, was a returns-to-stock label visible, did the foreman initial the page. Pass, fail, or return for rework. One package can be hundreds of requirements deep.</p>
+        </div>
+      </div>
+      <div>
+        <div class="definition-block">
+          <h4>The audit trail</h4>
+          <p>Every decision needs to be defensible later. Who reviewed what, when, on what evidence, against what rule, with what outcome. If the operator gets pulled into a dispute six months from now, the closeout package and its review record are the artifact that gets pulled.</p>
+        </div>
+        <div class="definition-block">
+          <h4>Why this is worth automating carefully</h4>
+          <p>The cost is not the photo. The cost is the hours of skilled-supervisor time spent matching photos to rows, the rework cycles when something is missed, and the disputes when the audit trail isn&apos;t tight. PROBATIO compresses the matching, surfaces the gaps early, and produces an evidence graph the supervisor can sign with one motion instead of fifty clicks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="doctrine-callout reveal">
+      <p>&ldquo;Machine recommends. Human decides.&rdquo; PROBATIO never closes a package. PROBATIO prepares the package so the supervisor can.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOUR ROLES -->
+<section id="roles" class="dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Separation of duties</span>
+      <h2>Four roles, deliberately separated</h2>
+      <p class="lead">PROBATIO is not one agent that does everything. It is four roles with four jobs and four receipts. The same separation auditors expect under SOX, ISO 9001, and any defensible quality program: the party that prepares evidence is not the party that judges it; the party that judges evidence is not the party that signs it.</p>
+    </div>
+
+    <div class="role-grid reveal">
+      <div class="role-card">
+        <div class="role-name">FOREMAN</div>
+        <div class="role-tag">Ingest &middot; parse &middot; map</div>
+        <ul>
+          <li>Hashes and inventories the package</li>
+          <li>Parses the workbook into a requirement graph</li>
+          <li>Indexes the photo bundle (EXIF, dimensions, scene)</li>
+          <li>Maps requirements to candidate evidence with confidence scores</li>
+        </ul>
+      </div>
+      <div class="role-card">
+        <div class="role-name">PM</div>
+        <div class="role-tag">Orchestrate &middot; queue &middot; seal</div>
+        <ul>
+          <li>Sequences the eight-step pipeline</li>
+          <li>Holds the durable queue and retry policy</li>
+          <li>Fails closed when context is incomplete</li>
+          <li>Seals the MLflow artifact bundle and Postgres projection row at the end</li>
+        </ul>
+      </div>
+      <div class="role-card">
+        <div class="role-name">INSPECTOR</div>
+        <div class="role-tag">Evaluate &middot; rationale &middot; recommend</div>
+        <ul>
+          <li>Runs deterministic rules against the evidence graph</li>
+          <li>Writes the rationale for each finding in plain language</li>
+          <li>Surfaces confidence and unresolved gaps</li>
+          <li>Recommends pass, fail, or needs-human &mdash; never decides</li>
+        </ul>
+      </div>
+      <div class="role-card signing">
+        <div class="role-name">HUMAN APPROVER</div>
+        <div class="role-tag">The only signing surface</div>
+        <ul>
+          <li>Reviews each requirement with PROBATIO&apos;s recommendation in view</li>
+          <li>Accepts, returns for rework, or overrides the recommendation</li>
+          <li>Records a reason for every override</li>
+          <li>Is the only role with authority to close the package</li>
+        </ul>
+        <div class="signing-flag">Sole signing authority</div>
+      </div>
+    </div>
+
+    <div class="doctrine-callout reveal">
+      <p>The same discipline auditors already require. Plan-acceptance is not implementation-authorization &mdash; and machine-recommendation is not human-approval. We hold the line at every layer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">How it runs</span>
+      <h2>The 8-step pipeline</h2>
+      <p class="lead">Eight stages, each with a name, a contract, a receipt, and a defined failure mode. Rules first. Models second. The deterministic stages run before the probabilistic ones; the model output is evidence, not authority.</p>
+    </div>
+
+    <ol class="pipeline-list reveal">
+      <li>
+        <div>
+          <h4><code>package_ingest</code></h4>
+          <p>Hash every artifact in the bundle, build a content-addressed inventory, reject duplicates, and fail closed when the manifest references a file that isn&apos;t in the package. No workbook, no run. No photo bundle, no run. The fail-closed boundary is here, before any model touches anything.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>workbook_parse</code></h4>
+          <p>Read the workbook, extract the MOP requirement graph: WBS lines, photo-required rows, signature rows, reading rows, serial-capture rows. Output is a structured graph of requirements with explicit types, expected evidence kinds, and pass-condition predicates. This is parser code with explicit branches, not a prompt.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>photo_index</code></h4>
+          <p>Hash, dimensions, EXIF (timestamp, GPS where present, device, orientation), and a short scene summary. The scene summary is a model output and is recorded as such &mdash; it does not vote on pass/fail directly, it informs candidate-mapping in the next stage.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>requirement_map</code></h4>
+          <p>For each requirement in the graph, link the candidate photos that plausibly evidence it, with a confidence score and the reasoning behind the link. A requirement may have zero candidates (a flagged gap), one (a clean line), or several (the inspector chooses among them, or the human disambiguates).</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>ocr_extract</code> + <code>vision_review</code></h4>
+          <p>Run in parallel. OCR pulls printed text &mdash; serials, meter readings, label content, page initials. Vision review produces scene labels and feature flags &mdash; presence of equipment, presence of a person, environmental context. Both write to the evidence graph as labeled findings; neither decides.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>rules_eval</code></h4>
+          <p>The deterministic core. For every requirement, evaluate the pass-condition against the linked evidence: did OCR find the expected serial pattern? Does the meter reading parse as a number near &minus;54V? Did the AAV capture come back? Output is a per-requirement finding (pass / fail / insufficient-evidence) with a machine-written rationale and the rule ID it fired against.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>human_approval</code></h4>
+          <p>The cockpit. The supervisor walks the requirement list with PROBATIO&apos;s recommendation, the linked evidence, and the rationale all in view. Accept, return for rework, or override. Every action is logged with an actor, a timestamp, a reason, and a receipt. This is the only stage with signing authority.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h4><code>seal_receipt</code></h4>
+          <p>The PM seals an MLflow artifact bundle (every model input, every model output, every rule fire, every human action) and writes the projection row to Postgres for the dashboard. The receipt is content-addressed, immutable, and replayable. If a dispute lands six months later, the receipt is the artifact.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="doctrine-callout reveal">
+      <p>Machine recommends. Human decides. The pipeline is engineered to enforce that line at every stage, not to apologize for it at the end.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COCKPIT -->
+<section id="cockpit" class="dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">What the supervisor sees</span>
+      <h2>One cockpit, one signing surface</h2>
+      <p class="lead">PROBATIO&apos;s reviewer surface is laid out around a discipline: the package is on the left, the requirements run down the middle, the human-decision panel stands clearly apart on the right. Every click is logged. Every override carries a reason. The signing surface is visually and functionally separated from the recommendation surface.</p>
+    </div>
+
+    <div class="cockpit-frame reveal">
+      <div class="cockpit-bar">
+        <span class="dot live"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span style="margin-left: 0.5rem;">probatio &middot; package&nbsp;P-2026-04-7821 &middot; reviewer&nbsp;active</span>
+      </div>
+      <div class="cockpit-grid">
+        <div class="cockpit-col">
+          <h5>Package</h5>
+          <ul>
+            <li>P-2026-04-7821</li>
+            <li>WBS: T-MOB Site 4471</li>
+            <li>MOP: Nokia 7250 IXR-e cutover</li>
+            <li>Inventory: 1 workbook, 142 photos</li>
+            <li>Hash: sha256:9f4c&hellip;</li>
+            <li>Status: ready for review</li>
+          </ul>
+        </div>
+        <div class="cockpit-col">
+          <h5>Requirements &middot; evidence &middot; finding</h5>
+          <ul>
+            <li><strong>Row 14 &middot; Telco Ready signature</strong> &mdash; 2 candidate photos &middot; OCR matched &middot; rule TR-01 &middot; <em>recommend: pass</em></li>
+            <li><strong>Row 22 &middot; AAV capture</strong> &mdash; 1 candidate &middot; scene-label confidence 0.91 &middot; <em>recommend: pass</em></li>
+            <li><strong>Row 31 &middot; DC meter reading</strong> &mdash; 1 candidate &middot; OCR &minus;53.8V &middot; rule DC-04 &middot; <em>recommend: pass</em></li>
+            <li><strong>Row 47 &middot; Returns label</strong> &mdash; 0 candidates &middot; <em>recommend: needs-human</em></li>
+            <li><strong>Row 58 &middot; Serial 7250-IXR-e</strong> &mdash; 3 candidates &middot; OCR ambiguous &middot; <em>recommend: needs-human</em></li>
+          </ul>
+        </div>
+        <div class="cockpit-col signing-surface">
+          <h5>Human decision</h5>
+          <ul>
+            <li>Accept recommendation</li>
+            <li>Return for rework (with reason)</li>
+            <li>Override to fail (with reason)</li>
+            <li>Override to pass (with reason)</li>
+            <li>Defer requirement</li>
+          </ul>
+          <div class="signing-stamp">Sole signing surface &middot; every action logged</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="doctrine-callout reveal">
+      <p>The supervisor finishes faster because the matching is done. The supervisor finishes <em>defensibly</em> because every action they took, and every recommendation they overrode, lives in the receipt.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUYER-SAFE -->
+<section id="buyer-safe">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Discipline on what we sell</span>
+      <h2>Buyer-safe by design</h2>
+      <p class="lead">We are explicit about what PROBATIO is and what it isn&apos;t. Operators who have lived through a few model demos appreciate the line being held. The buyer-safe table is the same one we put in our pitch deck and the same one we hold ourselves to in working sessions.</p>
+    </div>
+
+    <div class="buyer-table reveal">
+      <div class="buyer-col sell">
+        <h4>What we sell</h4>
+        <ul>
+          <li><strong>Faster, more consistent closeout review</strong> &mdash; matching, gap-flagging, and rationale prep that compresses supervisor time per package.</li>
+          <li><strong>A defensible audit trail</strong> &mdash; every action, every recommendation, every override sealed in a content-addressed, replayable receipt.</li>
+          <li><strong>Deterministic rules surfaced to the reviewer</strong> &mdash; the rule that fired, the evidence it fired against, the confidence behind the link.</li>
+          <li><strong>A separation-of-duties workflow</strong> &mdash; foreman / PM / inspector / human-approver, with the signing surface visually and functionally distinct.</li>
+          <li><strong>An MLflow artifact bundle per package</strong> &mdash; inputs, outputs, model versions, prompt versions, rule versions, human actions.</li>
+          <li><strong>A pilot scoped to one package family and one operating unit</strong> &mdash; with success metrics agreed before we start.</li>
+        </ul>
+      </div>
+      <div class="buyer-col dont">
+        <h4>What we don&apos;t sell</h4>
+        <ul>
+          <li><strong>Autonomous closeout</strong> &mdash; PROBATIO does not close packages. The human approver does.</li>
+          <li><strong>Regulator-approved compliance</strong> &mdash; we produce defensible records. Regulators approve operators, not vendors.</li>
+          <li><strong>Enterprise-ready guarantees we have not built</strong> &mdash; PROBATIO is pilot-ready. Production hardening is a roadmap conversation, not a sticker.</li>
+          <li><strong>OSHA, NEC, or legal-compliance certifications</strong> &mdash; those live with the operator, the inspector, and the regulator. We do not insert ourselves into that chain.</li>
+          <li><strong>Replacement of the supervisor</strong> &mdash; the supervisor is the customer of the system, not the cost we are removing.</li>
+          <li><strong>A model that &ldquo;just gets smarter over time&rdquo;</strong> &mdash; we ship deterministic rules and evidence-grade models. We do not sell mystery.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="doctrine-callout reveal">
+      <p>Plan-acceptance is not implementation-authorization. Capability is not authority. A recommendation is not a decision. We hold all three lines, on every package.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PILOT SHAPE -->
+<section id="pilot" class="dark">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">How a pilot is shaped</span>
+      <h2>Pilot shape</h2>
+      <p class="lead">PROBATIO pilots are deliberately bounded. We don&apos;t want a wide-open scope; we want one package family, one operating unit, one reviewer in the loop, and four success metrics agreed before we run the first package. Discipline at the start makes the receipts worth reading at the end.</p>
+    </div>
+
+    <div class="pilot-shape reveal">
+      8&ndash;12 weeks <span class="dot-sep">&middot;</span> 1 package family <span class="dot-sep">&middot;</span> 1 operating unit <span class="dot-sep">&middot;</span> 1 reviewer in the loop
+    </div>
+
+    <div class="metric-grid reveal">
+      <div class="metric">
+        <div class="metric-label">Metric 01</div>
+        <h4>Time-to-review</h4>
+        <p>Median minutes from package-arrival to supervisor-signed close. Before and after PROBATIO, on the same reviewer, on the same package family.</p>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Metric 02</div>
+        <h4>Missing-evidence catch rate</h4>
+        <p>Rate at which PROBATIO flags a real gap (a missing photo, an unread serial, an unsigned page) before the reviewer would have. False-positive rate tracked alongside.</p>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Metric 03</div>
+        <h4>Override rate</h4>
+        <p>Frequency at which the reviewer overrides PROBATIO&apos;s recommendation, broken down by direction (recommend-pass overridden to fail vs. the reverse) and by rule. The override rate is a signal, not a defect &mdash; it tells us where the rules need work.</p>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Metric 04</div>
+        <h4>Receipt completeness</h4>
+        <p>Percentage of packages whose sealed receipt replays cleanly: every input present, every model output recorded, every rule version pinned, every human action logged with a reason. The bar is 100%. Anything less is a finding.</p>
+      </div>
+    </div>
+
+    <div class="reveal" style="margin-top: 4rem; padding: 2rem; background: rgba(201, 169, 97, 0.06); border-left: 2px solid var(--c-accent); border-radius: 4px;">
+      <h4 style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.4rem; color: var(--c-accent); margin-bottom: 0.6rem; letter-spacing: -0.01em;">Maturity reality</h4>
+      <p style="color: var(--c-text-on-dark-soft);">The PROBATIO concept doc was merged onto Thunderblok / Thunderline:main as PR #79. The product is pilot-ready, not yet production. We say that out loud because we expect operators to ask, and because plan-acceptance is not implementation-authorization. Built on the BEAM &mdash; the runtime telecom-grade systems already trust. That is a credibility lever, not an availability claim.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANION SERVICES -->
+<section id="companions">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Inside the family</span>
+      <h2>Companion services</h2>
+      <p class="lead">PROBATIO is one surface in the ATLAS family. Each companion handles a different layer of the same operating reality &mdash; vision before packages exist, agent service across surfaces, dashboards that aggregate posture. Adopt one, two, or all.</p>
+    </div>
+
+    <div class="companion-grid reveal">
+      <a class="companion-card" href="wave.html">
+        <div class="name">WAVE</div>
+        <div class="tagline">Worksite Autonomous Vision</div>
+        <p>Continuous CV pipeline that covers everything between packages &mdash; ongoing site capture, change detection, and feature extraction. WAVE feeds candidate evidence into PROBATIO before a package is ever built.</p>
+        <span class="arrow">Read the WAVE page &rarr;</span>
+      </a>
+      <a class="companion-card" href="../index.html#atlas">
+        <div class="name">ATLAS</div>
+        <div class="tagline">Agent Service</div>
+        <p>The unified operator-facing brand. ATLAS is the agent surface above PROBATIO, COCC, ACE, DORIS, and ATLAS Voice &mdash; one identity, one receipt trail, one policy boundary across every workflow.</p>
+        <span class="arrow">See ATLAS &rarr;</span>
+      </a>
+      <a class="companion-card" href="../index.html#services">
+        <div class="name">COCC</div>
+        <div class="tagline">Compliance &amp; Control Console</div>
+        <p>Aggregates PROBATIO receipts and adjacent evidence streams into operational posture. Where PROBATIO answers <em>&ldquo;is this package right?&rdquo;</em> COCC answers <em>&ldquo;is the operation healthy?&rdquo;</em></p>
+        <span class="arrow">See COCC &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="contact" class="cta-block">
+  <div class="container-prose">
+    <span class="eyebrow">Ready to talk specifics?</span>
+    <h2>Walk through a real package</h2>
+    <p>The fastest way to see PROBATIO is to walk a real closeout package end-to-end with your reviewer in the room. We bring the cockpit; you bring the workbook and the photo bundle. We pause at every signing surface. You see exactly where the machine recommends and exactly where you decide.</p>
+    <div class="actions" style="justify-content: center; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a class="btn btn-primary" href="mailto:atlas@aliveadvisor.com?subject=PROBATIO%20working%20session">atlas@aliveadvisor.com</a>
+    </div>
+    <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--c-text-on-dark-soft);">We sell the application. We explain the substrate. We gesture at the family. The receipts are the artifact.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5><span class="brand-mark"></span>OKO</h5>
+        <p style="color: var(--c-text-on-dark-soft); font-size: 0.9rem; line-height: 1.6;">OKO Holding Corporation operates ATLAS &mdash; a global AI operations service &mdash; on the Thunderline substrate. Sovereign-deployable. Receipt-grounded. Built on the runtime telecom already trusts.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <ul>
+          <li><a href="probatio.html">PROBATIO</a></li>
+          <li><a href="wave.html">WAVE</a></li>
+          <li><a href="../index.html#services">DORIS</a></li>
+          <li><a href="../index.html#services">COCC</a></li>
+          <li><a href="../index.html#services">ACE</a></li>
+          <li><a href="../index.html#services">ATLAS Voice</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="https://thunderline.net/sign-in" target="_blank" rel="noopener">Live platform ↗</a></li>
+          <li><a href="../index.html#thunderline">Thunderline substrate</a></li>
+          <li><a href="../index.html#integrations">Integrations</a></li>
+          <li><a href="../index.html#industries">Industries</a></li>
+          <li><a href="../index.html#global">Global reach</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="../index.html#company">About OKO</a></li>
+          <li><a href="../index.html#company">Leadership</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="mailto:atlas@aliveadvisor.com">atlas@aliveadvisor.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 OKO Holding Corporation. All rights reserved.</div>
+      <div class="legal-line">ATLAS, PROBATIO, WAVE, DORIS, COCC, ACE, and Thunderline are services of OKO Holding Corporation. We do not sell autonomous compliance, regulator-approved decisioning, or enterprise-ready guarantees we have not built. Plan-acceptance is not implementation-authorization.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cormorant Garamond from Google Fonts (loaded async, non-blocking) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+<!-- Scroll-reveal animations via IntersectionObserver + mobile menu toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Scroll reveal
+    const els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(el => el.classList.add('visible'));
+    }
+
+    // Mobile hamburger toggle
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    if (toggle && menu) {
+      const closeMenu = () => {
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+      };
+      toggle.addEventListener('click', () => {
+        const isOpen = document.body.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        menu.setAttribute('aria-hidden', String(!isOpen));
+      });
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('nav-open')) closeMenu();
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
