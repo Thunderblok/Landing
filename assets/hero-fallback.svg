@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="hbg" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#050a14"/>
+      <stop offset="100%" stop-color="#07101f"/>
+    </linearGradient>
+    <linearGradient id="hgold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9a961" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#d4b876" stop-opacity="0.95"/>
+    </linearGradient>
+    <radialGradient id="hglow" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#c9a961" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#c9a961" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#c9a961" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#hbg)"/>
+  <rect width="1600" height="900" fill="url(#hglow)"/>
+
+  <g opacity="0.6" fill="#a8b3c4">
+    <circle cx="80" cy="90" r="1.2"/>
+    <circle cx="220" cy="50" r="0.7"/>
+    <circle cx="400" cy="120" r="1.3"/>
+    <circle cx="540" cy="70" r="0.9"/>
+    <circle cx="700" cy="140" r="1.0"/>
+    <circle cx="880" cy="60" r="1.2"/>
+    <circle cx="1050" cy="100" r="0.8"/>
+    <circle cx="1200" cy="50" r="1.4"/>
+    <circle cx="1380" cy="130" r="1.0"/>
+    <circle cx="1500" cy="80" r="0.9"/>
+    <circle cx="100" cy="260" r="1.0"/>
+    <circle cx="1480" cy="280" r="1.3"/>
+    <circle cx="60" cy="450" r="0.9"/>
+    <circle cx="1540" cy="470" r="1.1"/>
+    <circle cx="120" cy="640" r="1.2"/>
+    <circle cx="280" cy="820" r="0.8"/>
+    <circle cx="460" cy="780" r="1.4"/>
+    <circle cx="640" cy="850" r="0.9"/>
+    <circle cx="820" cy="800" r="1.1"/>
+    <circle cx="1020" cy="840" r="1.3"/>
+    <circle cx="1200" cy="790" r="0.8"/>
+    <circle cx="1380" cy="820" r="1.0"/>
+    <circle cx="1500" cy="650" r="0.9"/>
+    <circle cx="1450" cy="850" r="1.2"/>
+  </g>
+
+  <g transform="translate(800, 450)" opacity="0.85">
+    <g stroke="url(#hgold)" stroke-width="1.4" fill="none">
+      <polygon points="0,-180 156,-90 156,90 0,180 -156,90 -156,-90"/>
+      <polygon points="0,-180 0,180 -156,90 -156,-90"/>
+      <polygon points="0,-180 0,180 156,90 156,-90"/>
+      <line x1="-156" y1="-90" x2="156" y2="-90"/>
+      <line x1="-156" y1="90" x2="156" y2="90"/>
+      <line x1="-156" y1="-90" x2="156" y2="90"/>
+      <line x1="156" y1="-90" x2="-156" y2="90"/>
+      <line x1="0" y1="-180" x2="-156" y2="90"/>
+      <line x1="0" y1="-180" x2="156" y2="90"/>
+      <line x1="0" y1="180" x2="-156" y2="-90"/>
+      <line x1="0" y1="180" x2="156" y2="-90"/>
+    </g>
+    <circle r="180" stroke="url(#hgold)" stroke-width="0.6" fill="none" opacity="0.25"/>
+
+    <g>
+      <circle cx="280" cy="-120" r="9" fill="url(#hgold)" opacity="0.95"/>
+      <circle cx="280" cy="-120" r="18" fill="url(#hgold)" opacity="0.15"/>
+    </g>
+    <g>
+      <circle cx="-300" cy="60" r="8" fill="#5b8cc7" opacity="0.95"/>
+      <circle cx="-300" cy="60" r="16" fill="#5b8cc7" opacity="0.15"/>
+    </g>
+    <g>
+      <circle cx="80" cy="290" r="8" fill="url(#hgold)" opacity="0.95"/>
+      <circle cx="80" cy="290" r="16" fill="url(#hgold)" opacity="0.15"/>
+    </g>
+    <g>
+      <circle cx="-180" cy="-260" r="7" fill="#a8b3c4" opacity="0.9"/>
+      <circle cx="-180" cy="-260" r="14" fill="#a8b3c4" opacity="0.15"/>
+    </g>
+    <g>
+      <circle cx="320" cy="200" r="8" fill="#5b8cc7" opacity="0.95"/>
+      <circle cx="320" cy="200" r="16" fill="#5b8cc7" opacity="0.15"/>
+    </g>
+    <g>
+      <circle cx="-40" cy="-310" r="7" fill="url(#hgold)" opacity="0.95"/>
+      <circle cx="-40" cy="-310" r="14" fill="url(#hgold)" opacity="0.15"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OKO × Circet — The AI Wave</title>
+<meta name="description" content="The AI wave is here. The question is how Circet uses it safely, practically, and measurably.">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap">
+
+<style>
+  :root {
+    --c-bg: #ffffff;
+    --c-bg-alt: #fafaf7;
+    --c-bg-dark: #07101f;
+    --c-bg-darker: #050a14;
+    --c-text: #0a0a0a;
+    --c-text-soft: #4a4a4a;
+    --c-text-mute: #7a7a7a;
+    --c-text-on-dark: #f5f5f5;
+    --c-text-on-dark-soft: #a8b3c4;
+    --c-text-on-dark-mute: #6a7689;
+    --c-border: #e5e0d6;
+    --c-border-dark: #1a2942;
+    --c-accent: #c9a961;
+    --c-accent-warm: #d4b876;
+    --c-accent-glow: #e6c98b;
+
+    --t-ease: cubic-bezier(0.7, 0, 0.3, 1);
+    --t-fast: 380ms;
+    --t-slide: 700ms;
+
+    --pad-h: clamp(2.5rem, 9vw, 9rem);
+    --pad-v: clamp(2rem, 9vh, 7rem);
+    --max-w: 1200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--c-text);
+    font-size: clamp(15px, 1.05vw, 18px);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ===== STAGE ===== */
+  .stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    perspective: 2000px;
+  }
+
+  .track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    transition: transform var(--t-slide) var(--t-ease);
+    will-change: transform;
+  }
+
+  .slide {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--c-bg);
+    color: var(--c-text);
+  }
+
+  .slide.dark {
+    background: var(--c-bg-dark);
+    color: var(--c-text-on-dark);
+  }
+
+  /* Subtle texture on dark slides */
+  .slide.dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(201,169,97,0.06), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(91,140,199,0.04), transparent 55%);
+    pointer-events: none;
+  }
+  .slide.light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 0% 100%, rgba(201,169,97,0.04), transparent 60%);
+    pointer-events: none;
+  }
+
+  .slide-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: var(--pad-v) var(--pad-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: calc(var(--max-w) + var(--pad-h) * 2);
+    margin: 0 auto;
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.75rem;
+    display: block;
+  }
+
+  h1, h2, h3 {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.02;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.2vw, 3.6rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  .subhead {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+    line-height: 1.35;
+    color: var(--c-text-soft);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+  }
+  .slide.dark .subhead { color: var(--c-text-on-dark-soft); }
+
+  .body-text {
+    font-size: clamp(1rem, 1.15vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--c-text-soft);
+    max-width: 56ch;
+  }
+  .slide.dark .body-text { color: var(--c-text-on-dark-soft); }
+
+  .accent { color: var(--c-accent); }
+  .accent-strong { color: var(--c-accent); font-weight: 600; }
+
+  em, .italic {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ===== LISTS ===== */
+  .lede-list {
+    list-style: none;
+    margin-top: 1.5rem;
+  }
+  .lede-list li {
+    position: relative;
+    padding: 0.65rem 0 0.65rem 2rem;
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--c-text);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .lede-list li:last-child { border-bottom: none; }
+  .lede-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    width: 14px;
+    height: 1px;
+    background: var(--c-accent);
+  }
+  .slide.dark .lede-list li {
+    color: var(--c-text-on-dark);
+    border-bottom-color: var(--c-border-dark);
+  }
+
+  .rhythm-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+  .rhythm-list li {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+    line-height: 1.35;
+    color: var(--c-text);
+    padding: 0.5rem 0;
+  }
+  .rhythm-list li .accent { font-style: normal; font-weight: 600; }
+
+  .stylized-list {
+    list-style: none;
+    counter-reset: rules;
+    margin-top: 2rem;
+  }
+  .stylized-list li {
+    counter-increment: rules;
+    position: relative;
+    padding: 1rem 0 1rem 4rem;
+    font-size: clamp(1.05rem, 1.4vw, 1.45rem);
+    line-height: 1.5;
+    border-top: 1px solid var(--c-border);
+  }
+  .stylized-list li:last-child { border-bottom: 1px solid var(--c-border); }
+  .stylized-list li::before {
+    content: counter(rules, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.4rem;
+    color: var(--c-accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .slide.dark .stylized-list li { border-top-color: var(--c-border-dark); }
+  .slide.dark .stylized-list li:last-child { border-bottom-color: var(--c-border-dark); }
+
+  .numbered-list {
+    list-style: none;
+    counter-reset: nums;
+    margin-top: 2rem;
+    max-width: 720px;
+  }
+  .numbered-list li {
+    counter-increment: nums;
+    position: relative;
+    padding: 1.1rem 0 1.1rem 4rem;
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    line-height: 1.4;
+    border-top: 1px solid var(--c-border-dark);
+    color: var(--c-text-on-dark);
+  }
+  .numbered-list li:last-child { border-bottom: 1px solid var(--c-border-dark); }
+  .numbered-list li::before {
+    content: counter(nums);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 2.6rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  /* ===== GRIDS / COLUMNS ===== */
+  .four-col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .four-col .col {
+    border-top: 1px solid var(--c-border-dark);
+    padding-top: 1.25rem;
+  }
+  .slide.light .four-col .col { border-top-color: var(--c-border); }
+  .four-col .col h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1rem;
+  }
+  .four-col .col ul {
+    list-style: none;
+  }
+  .four-col .col ul li {
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.5;
+    padding: 0.4rem 0;
+    color: var(--c-text-on-dark-soft);
+  }
+  .slide.light .four-col .col ul li { color: var(--c-text-soft); }
+  .four-col .col em {
+    color: var(--c-accent);
+    font-weight: 600;
+    display: block;
+    margin-top: 0.6rem;
+    font-style: italic;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 2.5rem;
+  }
+  .two-col h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.25rem;
+  }
+  .two-col ul {
+    list-style: none;
+  }
+  .two-col ul li {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    line-height: 1.5;
+    padding: 0.45rem 0;
+    color: var(--c-text-soft);
+  }
+  .slide.dark .two-col ul li { color: var(--c-text-on-dark-soft); }
+
+  .compare-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--c-border-dark);
+  }
+  .compare-table .cell {
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    border-bottom: 1px solid var(--c-border-dark);
+  }
+  .compare-table .cell:nth-child(odd) { padding-right: 2rem; }
+  .compare-table .cell:nth-child(even) {
+    padding-left: 2rem;
+    border-left: 1px solid var(--c-border-dark);
+  }
+  .compare-table h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .compare-table .sell h3 { color: var(--c-accent); }
+  .compare-table .dont h3 { color: #b85a5a; opacity: 0.95; }
+  .compare-table ul {
+    list-style: none;
+  }
+  .compare-table ul li {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    line-height: 1.5;
+    padding: 0.4rem 0;
+    color: var(--c-text-on-dark-soft);
+  }
+
+  /* ===== Slide-specific blocks ===== */
+  .footer-note {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-border);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    color: var(--c-text-mute);
+    max-width: 60ch;
+  }
+  .slide.dark .footer-note {
+    border-top-color: var(--c-border-dark);
+    color: var(--c-text-on-dark-mute);
+  }
+
+  .closing-line {
+    margin-top: 3rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+    color: var(--c-accent);
+    line-height: 1.3;
+  }
+
+  /* Tree (slide 12) */
+  .tree {
+    margin-top: 2rem;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: clamp(0.9rem, 1.05vw, 1.1rem);
+    line-height: 1.85;
+    color: var(--c-text-on-dark-soft);
+  }
+  .tree .root {
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+  .tree .branch { color: var(--c-text-on-dark-mute); }
+  .tree .name { color: var(--c-text-on-dark); font-weight: 600; }
+  .tree .desc { color: var(--c-text-on-dark-soft); }
+
+  /* Brand mark */
+  .brand-mark {
+    width: 18px; height: 18px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 3px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 14px rgba(201, 169, 97, 0.45);
+    display: inline-block;
+    margin-right: 0.7rem;
+    vertical-align: middle;
+  }
+
+  /* Title-slide flourish */
+  .title-flourish {
+    width: 60px;
+    height: 1px;
+    background: var(--c-accent);
+    margin: 2rem 0;
+  }
+
+  /* ===== ENTRY ANIMATIONS ===== */
+  .slide .anim {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 750ms var(--t-ease), transform 750ms var(--t-ease);
+  }
+  .slide.is-active .anim { opacity: 1; transform: none; }
+  .slide.is-active .anim.d1 { transition-delay: 120ms; }
+  .slide.is-active .anim.d2 { transition-delay: 240ms; }
+  .slide.is-active .anim.d3 { transition-delay: 360ms; }
+  .slide.is-active .anim.d4 { transition-delay: 480ms; }
+  .slide.is-active .anim.d5 { transition-delay: 600ms; }
+  .slide.is-active .anim.d6 { transition-delay: 720ms; }
+
+  /* ===== CHROME (counter, progress, hint) ===== */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--c-accent);
+    z-index: 50;
+    transition: width var(--t-slide) var(--t-ease);
+    box-shadow: 0 0 8px rgba(201,169,97,0.5);
+  }
+
+  .counter {
+    position: fixed;
+    bottom: 1.6rem;
+    right: 2rem;
+    z-index: 50;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    color: var(--c-text-mute);
+    font-variant-numeric: tabular-nums;
+    transition: color 400ms var(--t-ease);
+  }
+  .counter .num {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+  body.is-dark .counter { color: var(--c-text-on-dark-mute); }
+  body.is-dark .counter .num { color: var(--c-text-on-dark); }
+
+  .brand-tag {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 2rem;
+    z-index: 50;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: var(--c-text-mute);
+    display: flex;
+    align-items: center;
+    transition: color 400ms var(--t-ease);
+  }
+  body.is-dark .brand-tag { color: var(--c-text-on-dark-mute); }
+
+  .hint {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-text-mute);
+    opacity: 0.7;
+    transition: opacity 600ms ease, color 400ms var(--t-ease);
+    pointer-events: none;
+  }
+  body.is-dark .hint { color: var(--c-text-on-dark-mute); }
+  .hint.faded { opacity: 0; }
+
+  /* ===== NAV BUTTONS (back / next) ===== */
+  .nav-buttons {
+    position: fixed;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--c-border);
+    color: var(--c-text-mute);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: color 280ms var(--t-ease), border-color 280ms var(--t-ease), background 280ms var(--t-ease), opacity 280ms var(--t-ease);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+  }
+  .nav-btn:hover:not(:disabled) {
+    color: var(--c-accent);
+    border-color: var(--c-accent);
+    background: rgba(201,169,97,0.06);
+  }
+  .nav-btn:focus-visible {
+    outline: 2px solid var(--c-accent);
+    outline-offset: 2px;
+  }
+  .nav-btn:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+  body.is-dark .nav-btn {
+    border-color: var(--c-border-dark);
+    color: var(--c-text-on-dark-mute);
+  }
+  body.is-dark .nav-btn:hover:not(:disabled) {
+    color: var(--c-accent);
+    border-color: var(--c-accent);
+    background: rgba(201,169,97,0.08);
+  }
+  @media (max-width: 480px) {
+    .nav-btn { padding: 0.4rem 0.75rem; font-size: 0.72rem; letter-spacing: 0.1em; }
+  }
+
+  /* ===== SPEAKER NOTES (presenter mode) ===== */
+  .speaker-notes { display: none; }
+  body.notes-mode .speaker-notes {
+    display: block;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-height: 30vh;
+    overflow-y: auto;
+    background: rgba(7,16,31,0.96);
+    color: #d4d4d4;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    padding: 1.25rem 2rem 2rem;
+    border-top: 1px solid var(--c-accent);
+    z-index: 60;
+    backdrop-filter: blur(10px);
+  }
+  body.notes-mode .speaker-notes::before {
+    content: "SPEAKER NOTES";
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: var(--c-accent);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+  body.notes-mode .speaker-notes:not(.is-active-notes) { display: none; }
+
+  /* ===== RESPONSIVE GUARD ===== */
+  @media (max-width: 768px) {
+    .four-col { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .compare-table { grid-template-columns: 1fr; }
+    .compare-table .cell:nth-child(even) {
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid var(--c-border-dark);
+    }
+    :root { --pad-h: 2rem; --pad-v: 3rem; }
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .track { transition: none; }
+    .slide .anim { transition: opacity 200ms; transform: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="counter"><span class="num" id="counter-num">1</span> <span style="opacity:0.5;">/</span> <span id="counter-total">17</span></div>
+<div class="brand-tag"><span class="brand-mark"></span> OKO Holding Corporation · Circet 2026</div>
+<div class="nav-buttons">
+  <button class="nav-btn" id="btn-prev" type="button" aria-label="Previous slide" title="Previous (←)">← Back</button>
+  <button class="nav-btn" id="btn-next" type="button" aria-label="Next slide" title="Next (→ or space)">Next →</button>
+</div>
+
+<div class="stage" id="stage">
+  <div class="track" id="track">
+
+    <!-- ============ SLIDE 1 (DARK) — The AI Wave Is Here ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 1">
+      <div class="slide-inner">
+        <span class="eyebrow anim">OKO × Circet · 2026</span>
+        <h1 class="anim d1">The AI Wave Is Here.</h1>
+        <div class="title-flourish anim d2"></div>
+        <p class="subhead anim d3">AI is everywhere. The question is how Circet uses it — safely, practically, and measurably.</p>
+        <p class="body-text anim d4" style="margin-top:1rem; color:var(--c-text-on-dark-mute); font-size:0.95rem; letter-spacing:0.04em;">
+          For the Circet review · 2026
+        </p>
+      </div>
+      <aside class="speaker-notes" hidden>The wave is here. Every vendor and every consultant is offering you something AI-shaped. The question that matters is not whether AI works — it's whether it works the way Circet actually operates: at the cabinet, on the package, in the supervisor's hand. We're here to talk about that, and only that.</aside>
+    </section>
+
+    <!-- ============ SLIDE 2 (LIGHT) — Why Circet Is the Right Environment ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 2">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Why Circet</span>
+        <h2 class="anim d1">The right environment for practical AI.</h2>
+        <p class="subhead anim d2">Circet runs the operations where AI delivers measurable value — at scale, with stakes, with structure.</p>
+        <ul class="lede-list anim d3">
+          <li><span class="accent-strong">Field work</span> — thousands of crews, daily reports, site-level evidence</li>
+          <li><span class="accent-strong">Documentation</span> — workbooks, photos, closeout packages</li>
+          <li><span class="accent-strong">Approvals</span> — supervisor sign-off at every gate</li>
+          <li><span class="accent-strong">Safety</span> — incidents, near-misses, equipment checks</li>
+          <li><span class="accent-strong">HR</span> — onboarding, training records, certifications</li>
+          <li><span class="accent-strong">Training</span> — manuals, policies, role-specific knowledge</li>
+          <li><span class="accent-strong">Customer requirements</span> — SLAs, audits, contractual evidence</li>
+        </ul>
+      </div>
+      <aside class="speaker-notes" hidden>Seven domains, every one of them already running inside Circet today. Each one is a place where the right kind of AI removes a real bottleneck — without removing a human from the decision. We're going to talk about how to start with one and expand from there.</aside>
+    </section>
+
+    <!-- ============ SLIDE 3 (DARK) — The Opportunity ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 3">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The opportunity</span>
+        <h1 class="anim d1" style="font-size: clamp(2.5rem, 5.5vw, 5rem);">
+          Start with one.<br>
+          Prove value.<br>
+          <span class="accent">Expand.</span>
+        </h1>
+        <div class="four-col anim d3" style="grid-template-columns: repeat(5, 1fr); gap: 1.5rem;">
+          <div class="col">
+            <h3>Purchase orders &amp; job costing</h3>
+            <ul>
+              <li>purchase order creation</li>
+              <li>purchase order validation</li>
+              <li>job costing</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Closeout review</h3>
+            <ul>
+              <li>workbook ingest</li>
+              <li>evidence match</li>
+              <li>reviewer cockpit</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>HR workflows</h3>
+            <ul>
+              <li>onboarding</li>
+              <li>training records</li>
+              <li>certifications</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Safety / compliance</h3>
+            <ul>
+              <li>incident triage</li>
+              <li>MOP adherence</li>
+              <li>audit prep</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Training assistant</h3>
+            <ul>
+              <li>policy Q&amp;A</li>
+              <li>role-aware answers</li>
+              <li>manual lookup</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>One useful workflow. Prove the value with real numbers on real packages. Then choose the next one. We're not asking Circet to bet on a platform — we're asking you to choose one demo lane, run it for ninety days, and decide from there.</aside>
+    </section>
+
+    <!-- ============ SLIDE 4 (LIGHT) — Generic AI Is Not Enough ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 4">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Why specialization</span>
+        <h2 class="anim d1">Generic AI doesn't know how Circet works.</h2>
+        <p class="subhead anim d2">Circet needs AI shaped around its own policies, documents, examples, and workflows.</p>
+        <div class="compare-table anim d3" style="border-top-color: var(--c-border);">
+          <div class="cell sell">
+            <h3>Shaped around Circet</h3>
+            <ul style="color: var(--c-text-soft);">
+              <li>Your policies and standards</li>
+              <li>Your workbook structures</li>
+              <li>Your real (redacted) examples</li>
+              <li>Your end-to-end workflows</li>
+              <li>Your reviewers in the loop</li>
+            </ul>
+          </div>
+          <div class="cell dont" style="border-left-color: var(--c-border);">
+            <h3>Generic, off-the-shelf</h3>
+            <ul style="color: var(--c-text-soft);">
+              <li>Public-internet trained</li>
+              <li>No operational context</li>
+              <li>No traceability</li>
+              <li>No audit trail</li>
+              <li>No customer fit</li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note anim d4">AI built for the way Circet actually operates — not the way the rest of the internet talks about work.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Generic models are trained on the open internet. They don't know the structure of a closeout MOP, what a clean cabinet photo should show, or how a Circet supervisor signs off on rework. Specialization isn't a feature — it's the difference between answering a question and answering Circet's question.</aside>
+    </section>
+
+    <!-- ============ SLIDE 5 (DARK) — Cerebros Intelligence Layer ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 5">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The intelligence layer · Lead: David Thrower</span>
+        <h1 class="anim d1">Cerebros</h1>
+        <div class="title-flourish anim d2"></div>
+        <p class="subhead anim d3">Focused model training for Circet-specific operations.</p>
+        <p class="body-text anim d4" style="font-size:clamp(1.05rem,1.25vw,1.25rem); max-width:64ch;">
+          Small, specialized models — trained on Circet's policies, manuals, and operational records.
+          <span style="color:var(--c-text-on-dark);">Run inside Circet's perimeter. Audited end-to-end.</span>
+        </p>
+        <p class="footer-note anim d5">Local model on your hardware. Trained with receipts you can audit.</p>
+      </div>
+      <aside class="speaker-notes" hidden>David Thrower leads Cerebros. The discipline: small recurrent-graph language models, trained on a manifest-locked run envelope, kept inside the customer perimeter. Not fine-tune-and-pray. Not a vendor's cloud you've never seen the inside of. Cerebros is research-grade, on your hardware, with a receipt for every training step.</aside>
+    </section>
+
+    <!-- ============ SLIDE 6 (LIGHT) — How the Model Learns Circet's Work ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 6">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Training inputs · David Thrower</span>
+        <h2 class="anim d1">How the model learns Circet's work.</h2>
+        <ol class="stylized-list anim d2">
+          <li><strong style="color:var(--c-text);">Policies</strong> — governance documents, standards, procedures</li>
+          <li><strong style="color:var(--c-text);">Manuals</strong> — workbook structures, MOP rows, equipment specs</li>
+          <li><strong style="color:var(--c-text);">Examples</strong> — closeout packages, supervisor decisions, real workflows</li>
+          <li><strong style="color:var(--c-text);">Redacted records</strong> — historical reviews with PII and customer IP stripped</li>
+          <li><strong style="color:var(--c-text);">Synthetic data</strong> — generated cases that fill gaps and stress-test edges</li>
+        </ol>
+        <p class="footer-note anim d3">Five inputs. All Circet's. None leaving the perimeter.</p>
+      </div>
+      <aside class="speaker-notes" hidden>The model isn't trained on the internet pretending to know Circet. It's trained on Circet — the actual policies, manuals, examples, and redacted records. Synthetic data fills the gaps where real records are too sensitive or too thin. Every input is auditable. Nothing leaves the perimeter.</aside>
+    </section>
+
+    <!-- ============ SLIDE 7 (LIGHT) — Cerebros · By the numbers ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 7">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Cerebros · By the numbers</span>
+        <h2 class="anim d1">What you get for the model layer.</h2>
+        <div class="anim d2" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:2rem; margin-top:2.75rem;">
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">5</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-soft); line-height:1.5;">Training input categories — policies, manuals, examples, redacted records, synthetic data.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">0</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-soft); line-height:1.5;">Customer artifacts cross the perimeter — local deployment, your hardware.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">100<span style="font-size:0.55em; vertical-align:0.3em; color:var(--c-accent-warm);">%</span></div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-soft); line-height:1.5;">Training steps signed and audit-sealed — manifest-locked run envelope.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">6</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-soft); line-height:1.5;">Sibling-head architecture — specialized heads, not a monolith.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">1</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-soft); line-height:1.5;">Enterprise license. Not usage-metered. Predictable line item.</div>
+          </div>
+        </div>
+        <p class="footer-note anim d3">Small, focused models — trained on Circet's own operational corpus, run inside Circet's perimeter, audited end-to-end. The opposite of a generic cloud LLM.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Five numbers tell the Cerebros story. Five training input categories — that's the operational corpus, drawn from Circet's own materials, never from the public internet. Zero customer artifacts cross the perimeter — the model lives where your data lives. One hundred percent of training steps signed and sealed — every gradient step is in a receipt; the model can be audited end-to-end. Six sibling heads — specialized heads beat a monolith on operational tasks. One enterprise license, not metered — your CFO doesn't get a surprise bill the month after a usage spike.</aside>
+    </section>
+
+    <!-- ============ SLIDE 8 (DARK) — SiteVision: the closeout product ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 8">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The closeout product</span>
+        <h1 class="anim d1">SiteVision</h1>
+        <div class="title-flourish anim d2"></div>
+        <p class="subhead anim d3">Where the field's evidence becomes the supervisor's signature.</p>
+        <ol class="stylized-list anim d4">
+          <li>The deterministic checklist is the source of truth.</li>
+          <li>Models extract evidence. They do not judge.</li>
+          <li>The final decision stays human.</li>
+        </ol>
+        <p class="footer-note anim d5">Built on the BEAM — the runtime Ericsson invented for carrier-grade telecom.</p>
+      </div>
+      <aside class="speaker-notes" hidden>SiteVision is the closeout review product — the first concrete workflow the platform ships against. Three rules carry through to the code: the workbook is the source of truth, the model only extracts evidence, and the supervisor remains the only signer. One technical note: built on the BEAM, the runtime Ericsson invented for carrier-grade telecom. Same VM that powers WhatsApp and most of the world's call routing. Your senior engineers already deploy it.</aside>
+    </section>
+
+    <!-- ============ SLIDE 9 (LIGHT) — Separation of duties ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 9">
+      <div class="slide-inner">
+        <span class="eyebrow anim">How it works</span>
+        <h2 class="anim d1">Separation of duties, in code.</h2>
+        <div class="four-col anim d2">
+          <div class="col">
+            <h3>Foreman</h3>
+            <ul>
+              <li>ingest</li>
+              <li>parse workbook</li>
+              <li>index photos</li>
+              <li>OCR + scene</li>
+              <li>map evidence</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>PM</h3>
+            <ul>
+              <li>orchestrate</li>
+              <li>queue</li>
+              <li>audit trail</li>
+              <li>seal receipt</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Inspector</h3>
+            <ul>
+              <li>rules evaluate</li>
+              <li>recommend</li>
+              <li>write rationale</li>
+              <li>needs-human</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Human Approver</h3>
+            <ul>
+              <li>approve</li>
+              <li>reject</li>
+              <li>return for rework</li>
+            </ul>
+            <em>The only signer.</em>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>Same separation Circet already uses for audit, SOX, ISO 9001. Foreman organizes evidence. PM tracks chain of custody. Inspector applies the standard. Human Approver signs. The machine recommends. The human signs.</aside>
+    </section>
+
+    <!-- ============ SLIDE 10 (DARK) — The cockpit ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 10">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The cockpit</span>
+        <h2 class="anim d1">One screen. <span class="accent">Every decision logged.</span></h2>
+        <ul class="lede-list anim d2">
+          <li>Package hash + provenance</li>
+          <li>Requirements pulled from the workbook</li>
+          <li>Candidate evidence per requirement</li>
+          <li>Machine finding · confidence · rationale</li>
+          <li>Human decision panel — <span class="accent-strong">the only signing surface</span></li>
+          <li>Sealed receipt at the end</li>
+        </ul>
+        <p class="footer-note anim d3">Faster review. More defensible decision. Same supervisor.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Everything the supervisor needs is on one screen. Provenance left, requirements middle, evidence right, decision panel below. Every action sealed in a receipt at the end. The supervisor stays the only signing surface — the machine is faster, the receipt is better, the decision is still theirs.</aside>
+    </section>
+
+    <!-- ============ SLIDE 11 (LIGHT) — See it run: the live demo ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 11">
+      <div class="slide-inner">
+        <span class="eyebrow anim">See it run</span>
+        <h2 class="anim d1">The pipeline runs <span class="accent">end-to-end</span>.</h2>
+        <p class="subhead anim d2">A live demo on synthetic data — fictional carrier, zero customer IP, the same shape SiteVision applies in production.</p>
+        <ul class="rhythm-list anim d3">
+          <li>Workbook <span class="accent">ingested</span>.</li>
+          <li>Photos <span class="accent">detected</span>.</li>
+          <li>Vision <span class="accent">reads</span>.</li>
+          <li>Evidence <span class="accent">matches</span>.</li>
+          <li>Recommendation <span class="accent">lands</span>.</li>
+          <li>Supervisor <span class="accent">signs</span>.</li>
+        </ul>
+        <p class="footer-note anim d4">Live · <code style="font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:0.95em; color:var(--c-accent); font-style:normal; letter-spacing:0.01em;">app.aliveadvisor.com/oko/demo/closeout</code></p>
+      </div>
+      <aside class="speaker-notes" hidden>The pipeline isn't slideware — it's running. Open the URL in your browser: synthetic workbook, six PIL-generated photos, YOLOv8n detection running on COCO (deliberately not fine-tuned, so the misses are visible), Claude vision-language extraction, photo-to-requirement matching, six PRESENT and two MISSING verdicts, sealed receipt placeholder for the supervisor's signature. Every page carries a synthetic-public-demo banner. No customer data. No autonomous compliance decision. The demo is the shape; production is the same shape against your real artifacts, inside your perimeter.</aside>
+    </section>
+
+    <!-- ============ SLIDE 12 (DARK) — Thunderline Governance Layer ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 12">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Governance</span>
+        <h1 class="anim d1">Thunderline</h1>
+        <div class="title-flourish anim d2"></div>
+        <p class="subhead anim d3">AI prepares and flags. Humans approve. Thunderline keeps the record.</p>
+        <p class="body-text anim d4" style="font-size:clamp(1rem,1.2vw,1.2rem); max-width:62ch;">
+          Capability-ceiling, PolicyGate validation, sealed receipts, fail-closed by design.
+          <span style="color:var(--c-text-on-dark);">The substrate underneath every workflow we ship.</span>
+        </p>
+        <p class="footer-note anim d5">Same human-decision-final discipline across every demo lane.</p>
+      </div>
+      <aside class="speaker-notes" hidden>The model never has the final word. Thunderline is the governance layer that enforces it: capability-ceiling on every agent, PolicyGate validation before every action, sealed receipts at every decision, fail-closed defaults. The receipt trail is what survives the audit. The human decision is what survives the regulator.</aside>
+    </section>
+
+    <!-- ============ SLIDE 13 (DARK) — Thunderline · By the numbers ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 13">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Thunderline · By the numbers</span>
+        <h2 class="anim d1">What you get for the governance layer.</h2>
+        <div class="anim d2" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:2rem; margin-top:2.75rem;">
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">100<span style="font-size:0.55em; vertical-align:0.3em; color:var(--c-accent-warm);">%</span></div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-on-dark-soft); line-height:1.5;">Decisions sealed in audit-grade receipts — every action, every time.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">0</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-on-dark-soft); line-height:1.5;">Agent actions execute without PolicyGate approval — fail-closed by default.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">6</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-on-dark-soft); line-height:1.5;">Products on the substrate — Cerebros, SiteVision, ATLAS, COCC, DORIS, ACE.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">40<span style="font-size:0.6em; vertical-align:0.18em; margin-left:0.05em; color:var(--c-accent-warm);">+ yrs</span></div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-on-dark-soft); line-height:1.5;">BEAM in carrier-grade telecom production — Ericsson 1986 → today.</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(2.6rem,5.5vw,4.4rem); color:var(--c-accent); line-height:0.95; letter-spacing:-0.02em;">1</div>
+            <div style="margin-top:0.85rem; font-size:clamp(0.88rem,1.05vw,1rem); color:var(--c-text-on-dark-soft); line-height:1.5;">Unified identity + receipt + policy model. Not glue code between agents.</div>
+          </div>
+        </div>
+        <p class="footer-note anim d3">The substrate underneath. Capability-ceiling per agent, PolicyGate before every action, sealed receipts at every decision, fail-closed defaults. The receipt trail is what survives the audit.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Five numbers for the governance layer. One hundred percent of decisions land inside an audit-grade receipt — every action a regulator could ask about is already documented. Zero agent actions run without explicit PolicyGate approval — fail-closed is the default, not the exception. Six products live on this substrate today, sharing one identity model and one receipt model. Forty-plus years of BEAM in carrier-grade telecom production — this is not a research substrate, it's the runtime your senior network engineers already deploy. One unified model for identity, receipts, and policy — the discipline is in the substrate, not glue code between agents.</aside>
+    </section>
+
+    <!-- ============ SLIDE 14 (LIGHT) — Making It Practical · Brandon ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 14">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Making it practical · Lead: Brandon</span>
+        <h2 class="anim d1">One workflow. Mapped. Measured. Piloted.</h2>
+        <ol class="stylized-list anim d2">
+          <li>Pick one workflow — closeout, HR, safety, or training</li>
+          <li>Map it — current steps, hand-offs, decision points, rework cycles</li>
+          <li>Measure baseline — time, error rate, approval speed, supervisor load</li>
+          <li>Pilot it — 90 days, real packages, real reviewers, real numbers</li>
+        </ol>
+        <p class="footer-note anim d3">No platform bet. No big-bang adoption. One lane, run end-to-end, with the receipts to prove it.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Brandon's discipline: pick one, map it precisely, measure what is true today before we change anything, then run a ninety-day pilot against that baseline. The number that matters at the end isn't a vendor's number — it's the delta between Circet's day-zero baseline and Circet's day-ninety state.</aside>
+    </section>
+
+    <!-- ============ SLIDE 15 (DARK) — 90-Day Pilot Path · Brandon ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 15">
+      <div class="slide-inner">
+        <span class="eyebrow anim">90-day pilot · Brandon</span>
+        <h2 class="anim d1">What you provide. <span class="accent">What we measure.</span></h2>
+        <div class="two-col anim d2">
+          <div>
+            <h3>What Circet provides</h3>
+            <ul>
+              <li>One workflow shape</li>
+              <li>One operating unit</li>
+              <li>One reviewer in the loop</li>
+              <li>Redacted or synthetic data</li>
+              <li>Agreed success metrics</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What we measure</h3>
+            <ul>
+              <li>Time saved</li>
+              <li>Rework reduced</li>
+              <li>Approval speed</li>
+              <li>Consistency</li>
+              <li>Confidence</li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note anim d3">We measure on your packages. Not somebody else's number.</p>
+      </div>
+      <aside class="speaker-notes" hidden>You give us the smallest credible slice — one workflow, one operating unit, one reviewer, one set of redacted or synthetic data. We measure five things on your packages, against your day-zero baseline. At ninety days you decide whether to expand to the next lane or stop. That's the deal.</aside>
+    </section>
+
+    <!-- ============ SLIDE 16 (LIGHT) — By the numbers · Where the value lives ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 16">
+      <div class="slide-inner">
+        <span class="eyebrow anim">By the numbers · Where the value lives</span>
+        <h2 class="anim d1">Five places SiteVision pays for itself.</h2>
+        <ul class="lede-list anim d2">
+          <li>Closeout review labor — fewer hours per package</li>
+          <li>Rework reduction — fewer rejection loops</li>
+          <li>Faster invoicing — days off approval-to-bill</li>
+          <li>Safety / compliance readiness — evidence verified pre-sign-off</li>
+          <li>Training / onboarding — governed knowledge layer</li>
+        </ul>
+      </div>
+      <aside class="speaker-notes" hidden>Five value pools. Base case assumes a regional rollout — three thousand packages a month, fifty-percent reduction in review time at fifty-five dollars an hour burdened reviewer cost, thirty-five-percent reduction in rework loops at a fifteen-percent rejection rate and two hundred fifty dollars per loop, seven-day approval acceleration at ten-percent cost of capital. Safety and training are conservative bands because the precise numbers depend on Circet's incident history and onboarding cohort size — those are inputs we ask Circet for at finalization. Sources: Circet USA's own operating description, OSHA penalty schedule and Safety Pays methodology, McKinsey's customer-operations productivity research. The pools combine to one-point-seven to two-point-three million dollars a year at base case. The same shape scales linearly: smaller pilot, smaller numbers; enterprise rollout, much larger numbers.</aside>
+    </section>
+
+    <!-- ============ SLIDE 17 (LIGHT) — Business Case + Next Step ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 17">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The business case</span>
+        <h2 class="anim d1">Less time spent on every package. Fewer corrections. Faster approvals.</h2>
+        <ul class="rhythm-list anim d2">
+          <li>Less time spent on every <span class="accent">package</span>.</li>
+          <li>Fewer corrections from a sharper <span class="accent">first pass</span>.</li>
+          <li>Faster approvals through the <span class="accent">chain</span>.</li>
+          <li>Better training, with feedback from <span class="accent">real work</span>.</li>
+          <li>Audit-ready evidence, sealed at the moment of <span class="accent">decision</span>.</li>
+        </ul>
+        <p class="closing-line anim d3">Choose one demo workflow and one pilot lane.</p>
+        <p class="footer-note anim d4">Thank you for the time. We're ready when you are.</p>
+      </div>
+      <aside class="speaker-notes" hidden>The ROI is not theoretical. Less time spent on every package, multiplied by package volume. Fewer corrections, multiplied by the cost of every rework cycle. Faster approvals, multiplied by every gate. Better training, because the model writes back what it learns. Audit-ready evidence, because every decision sealed on day one is a decision that holds at year three. The ask is one workflow and one pilot lane. Pick the lane. We start.</aside>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const track       = document.getElementById('track');
+  const slides      = Array.from(track.querySelectorAll('.slide'));
+  const total       = slides.length;
+  const counterNum  = document.getElementById('counter-num');
+  const counterTot  = document.getElementById('counter-total');
+  const progressEl  = document.getElementById('progress');
+  const hint        = document.getElementById('hint');
+  const btnPrev     = document.getElementById('btn-prev');
+  const btnNext     = document.getElementById('btn-next');
+  const body        = document.body;
+
+  counterTot.textContent = total;
+
+  // Parse URL params
+  const params = new URLSearchParams(window.location.search);
+  const initialSlide = Math.max(1, Math.min(total, parseInt(params.get('slide')) || 1));
+  const notesMode = params.get('notes') === '1';
+  if (notesMode) body.classList.add('notes-mode');
+
+  let current = initialSlide - 1;
+  let isAnimating = false;
+
+  function render() {
+    track.style.transform = `translate3d(${-current * 100}vw, 0, 0)`;
+    counterNum.textContent = current + 1;
+    progressEl.style.width = `${((current + 1) / total) * 100}%`;
+
+    if (btnPrev) btnPrev.disabled = (current === 0);
+    if (btnNext) btnNext.disabled = (current === total - 1);
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('is-active', i === current);
+      const notes = s.querySelector('.speaker-notes');
+      if (notes) {
+        notes.classList.toggle('is-active-notes', i === current);
+        if (notesMode && i === current) {
+          notes.removeAttribute('hidden');
+        }
+      }
+    });
+
+    const theme = slides[current].dataset.theme;
+    if (theme === 'dark') {
+      body.classList.add('is-dark');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#050a14');
+    } else {
+      body.classList.remove('is-dark');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#ffffff');
+    }
+
+    // Update URL silently
+    const url = new URL(window.location);
+    url.searchParams.set('slide', current + 1);
+    window.history.replaceState({}, '', url);
+  }
+
+  function go(n, opts = {}) {
+    const target = Math.max(0, Math.min(total - 1, n));
+    if (target === current && !opts.force) return;
+    current = target;
+    render();
+
+    // Fade hint after first nav
+    if (hint && !hint.classList.contains('faded')) {
+      hint.classList.add('faded');
+    }
+  }
+
+  function next() { go(current + 1); }
+  function prev() { go(current - 1); }
+
+  // Wire up nav buttons
+  if (btnPrev) btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
+  if (btnNext) btnNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    // Allow form input passthrough — none here, but defensive
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ':
+        e.preventDefault();
+        next();
+        break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        prev();
+        break;
+      case 'Home':
+        e.preventDefault();
+        go(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        go(total - 1);
+        break;
+      case 'Escape':
+        if (document.fullscreenElement) {
+          document.exitFullscreen?.();
+        }
+        break;
+      case 'f':
+      case 'F':
+        e.preventDefault();
+        toggleFullscreen();
+        break;
+      case 'n':
+      case 'N':
+        e.preventDefault();
+        body.classList.toggle('notes-mode');
+        // Reveal hidden speaker-notes for the active slide when toggled on
+        slides.forEach((s) => {
+          const notes = s.querySelector('.speaker-notes');
+          if (notes) notes.removeAttribute('hidden');
+        });
+        break;
+    }
+  });
+
+  // Click to advance (but allow text selection by ignoring drag)
+  let mouseDownX = 0;
+  document.addEventListener('mousedown', (e) => { mouseDownX = e.clientX; });
+  document.addEventListener('mouseup', (e) => {
+    const dx = Math.abs(e.clientX - mouseDownX);
+    if (dx > 6) return; // user was selecting / dragging
+    // Don't advance if clicking on chrome
+    if (e.target.closest('.counter, .brand-tag, .hint, .progress, .speaker-notes, a, button')) return;
+    next();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
+
+  // Fullscreen toggle
+  function toggleFullscreen() {
+    const el = document.documentElement;
+    if (!document.fullscreenElement) {
+      (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el);
+    } else {
+      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+    }
+  }
+
+  // Hash-based deep link as alternative
+  window.addEventListener('hashchange', () => {
+    const m = window.location.hash.match(/^#slide-(\d+)$/);
+    if (m) go(parseInt(m[1]) - 1);
+  });
+
+  // Wheel navigation (debounced) — optional, comment out if disruptive
+  let wheelTimer = null;
+  let wheelLock = false;
+  document.addEventListener('wheel', (e) => {
+    if (wheelLock) return;
+    if (Math.abs(e.deltaY) < 40 && Math.abs(e.deltaX) < 40) return;
+    wheelLock = true;
+    if (e.deltaY > 0 || e.deltaX > 0) next(); else prev();
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { wheelLock = false; }, 800);
+  }, { passive: true });
+
+  // Initial render
+  render();
+
+  // Fade hint after 6s if no interaction
+  setTimeout(() => {
+    if (hint && !hint.classList.contains('faded')) hint.classList.add('faded');
+  }, 6000);
+
+  // Expose minimal API for debugging
+  window.__deck = { go, next, prev, current: () => current + 1, total };
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thunderline — A governed operating substrate for AI in commerce</title>
+<meta name="description" content="Thunderline: the substrate underneath. Governed event transport, immutable receipts, identity-bound policy gates — the layer AI products should be built on, not the layer they pretend doesn't exist.">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap">
+
+<style>
+  :root {
+    --c-bg: #ffffff;
+    --c-bg-alt: #fafaf7;
+    --c-bg-dark: #07101f;
+    --c-bg-darker: #050a14;
+    --c-text: #0a0a0a;
+    --c-text-soft: #4a4a4a;
+    --c-text-mute: #7a7a7a;
+    --c-text-on-dark: #f5f5f5;
+    --c-text-on-dark-soft: #a8b3c4;
+    --c-text-on-dark-mute: #6a7689;
+    --c-border: #e5e0d6;
+    --c-border-dark: #1a2942;
+    --c-accent: #c9a961;
+    --c-accent-warm: #d4b876;
+    --c-accent-glow: #e6c98b;
+
+    --t-ease: cubic-bezier(0.7, 0, 0.3, 1);
+    --t-fast: 380ms;
+    --t-slide: 700ms;
+
+    --pad-h: clamp(2.5rem, 9vw, 9rem);
+    --pad-v: clamp(2rem, 9vh, 7rem);
+    --max-w: 1200px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--c-text);
+    font-size: clamp(15px, 1.05vw, 18px);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ===== STAGE ===== */
+  .stage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    perspective: 2000px;
+  }
+
+  .track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    transition: transform var(--t-slide) var(--t-ease);
+    will-change: transform;
+  }
+
+  .slide {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: var(--c-bg);
+    color: var(--c-text);
+  }
+
+  .slide.dark {
+    background: var(--c-bg-dark);
+    color: var(--c-text-on-dark);
+  }
+
+  /* Subtle texture on dark slides */
+  .slide.dark::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(201,169,97,0.06), transparent 55%),
+      radial-gradient(ellipse at 100% 100%, rgba(91,140,199,0.04), transparent 55%);
+    pointer-events: none;
+  }
+  .slide.light::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 0% 100%, rgba(201,169,97,0.04), transparent 60%);
+    pointer-events: none;
+  }
+
+  .slide-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: var(--pad-v) var(--pad-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: calc(var(--max-w) + var(--pad-h) * 2);
+    margin: 0 auto;
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.75rem;
+    display: block;
+  }
+
+  h1, h2, h3 {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 1.02;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4.2vw, 3.6rem);
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+
+  .subhead {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+    line-height: 1.35;
+    color: var(--c-text-soft);
+    max-width: 60ch;
+    margin-bottom: 2rem;
+  }
+  .slide.dark .subhead { color: var(--c-text-on-dark-soft); }
+
+  .body-text {
+    font-size: clamp(1rem, 1.15vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--c-text-soft);
+    max-width: 56ch;
+  }
+  .slide.dark .body-text { color: var(--c-text-on-dark-soft); }
+
+  .accent { color: var(--c-accent); }
+  .accent-strong { color: var(--c-accent); font-weight: 600; }
+
+  em, .italic {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ===== LISTS ===== */
+  .lede-list {
+    list-style: none;
+    margin-top: 1.5rem;
+  }
+  .lede-list li {
+    position: relative;
+    padding: 0.65rem 0 0.65rem 2rem;
+    font-size: clamp(1.05rem, 1.3vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--c-text);
+    border-bottom: 1px solid var(--c-border);
+  }
+  .lede-list li:last-child { border-bottom: none; }
+  .lede-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    width: 14px;
+    height: 1px;
+    background: var(--c-accent);
+  }
+  .slide.dark .lede-list li {
+    color: var(--c-text-on-dark);
+    border-bottom-color: var(--c-border-dark);
+  }
+
+  .rhythm-list {
+    list-style: none;
+    margin-top: 2rem;
+  }
+  .rhythm-list li {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.5rem, 2.6vw, 2.4rem);
+    line-height: 1.35;
+    color: var(--c-text);
+    padding: 0.5rem 0;
+  }
+  .rhythm-list li .accent { font-style: normal; font-weight: 600; }
+
+  .stylized-list {
+    list-style: none;
+    counter-reset: rules;
+    margin-top: 2rem;
+  }
+  .stylized-list li {
+    counter-increment: rules;
+    position: relative;
+    padding: 1rem 0 1rem 4rem;
+    font-size: clamp(1.05rem, 1.4vw, 1.45rem);
+    line-height: 1.5;
+    border-top: 1px solid var(--c-border);
+  }
+  .stylized-list li:last-child { border-bottom: 1px solid var(--c-border); }
+  .stylized-list li::before {
+    content: counter(rules, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.4rem;
+    color: var(--c-accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .slide.dark .stylized-list li { border-top-color: var(--c-border-dark); }
+  .slide.dark .stylized-list li:last-child { border-bottom-color: var(--c-border-dark); }
+
+  .numbered-list {
+    list-style: none;
+    counter-reset: nums;
+    margin-top: 2rem;
+    max-width: 720px;
+  }
+  .numbered-list li {
+    counter-increment: nums;
+    position: relative;
+    padding: 1.1rem 0 1.1rem 4rem;
+    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+    line-height: 1.4;
+    border-top: 1px solid var(--c-border-dark);
+    color: var(--c-text-on-dark);
+  }
+  .numbered-list li:last-child { border-bottom: 1px solid var(--c-border-dark); }
+  .numbered-list li::before {
+    content: counter(nums);
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    width: 2.6rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.6rem;
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  /* ===== GRIDS / COLUMNS ===== */
+  .four-col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .four-col .col {
+    border-top: 1px solid var(--c-border-dark);
+    padding-top: 1.25rem;
+  }
+  .slide.light .four-col .col { border-top-color: var(--c-border); }
+  .four-col .col h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1rem;
+  }
+  .four-col .col ul {
+    list-style: none;
+  }
+  .four-col .col ul li {
+    font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+    line-height: 1.5;
+    padding: 0.4rem 0;
+    color: var(--c-text-on-dark-soft);
+  }
+  .slide.light .four-col .col ul li { color: var(--c-text-soft); }
+  .four-col .col em {
+    color: var(--c-accent);
+    font-weight: 600;
+    display: block;
+    margin-top: 0.6rem;
+    font-style: italic;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 2.5rem;
+  }
+  .two-col h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.25rem;
+  }
+  .two-col ul {
+    list-style: none;
+  }
+  .two-col ul li {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    line-height: 1.5;
+    padding: 0.45rem 0;
+    color: var(--c-text-soft);
+  }
+  .slide.dark .two-col ul li { color: var(--c-text-on-dark-soft); }
+
+  .compare-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--c-border-dark);
+  }
+  .compare-table .cell {
+    padding: 1.5rem 1.5rem 1.5rem 0;
+    border-bottom: 1px solid var(--c-border-dark);
+  }
+  .compare-table .cell:nth-child(odd) { padding-right: 2rem; }
+  .compare-table .cell:nth-child(even) {
+    padding-left: 2rem;
+    border-left: 1px solid var(--c-border-dark);
+  }
+  .compare-table h3 {
+    font-family: -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .compare-table .sell h3 { color: var(--c-accent); }
+  .compare-table .dont h3 { color: #b85a5a; opacity: 0.95; }
+  .compare-table ul {
+    list-style: none;
+  }
+  .compare-table ul li {
+    font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+    line-height: 1.5;
+    padding: 0.4rem 0;
+    color: var(--c-text-on-dark-soft);
+  }
+
+  /* ===== Slide-specific blocks ===== */
+  .footer-note {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-border);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    color: var(--c-text-mute);
+    max-width: 60ch;
+  }
+  .slide.dark .footer-note {
+    border-top-color: var(--c-border-dark);
+    color: var(--c-text-on-dark-mute);
+  }
+
+  .closing-line {
+    margin-top: 3rem;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+    color: var(--c-accent);
+    line-height: 1.3;
+  }
+
+  /* Tree (slide 12) */
+  .tree {
+    margin-top: 2rem;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: clamp(0.9rem, 1.05vw, 1.1rem);
+    line-height: 1.85;
+    color: var(--c-text-on-dark-soft);
+  }
+  .tree .root {
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+  .tree .branch { color: var(--c-text-on-dark-mute); }
+  .tree .name { color: var(--c-text-on-dark); font-weight: 600; }
+  .tree .desc { color: var(--c-text-on-dark-soft); }
+
+  /* Brand mark */
+  .brand-mark {
+    width: 18px; height: 18px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 3px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 14px rgba(201, 169, 97, 0.45);
+    display: inline-block;
+    margin-right: 0.7rem;
+    vertical-align: middle;
+  }
+
+  /* Title-slide flourish */
+  .title-flourish {
+    width: 60px;
+    height: 1px;
+    background: var(--c-accent);
+    margin: 2rem 0;
+  }
+
+  /* ===== ENTRY ANIMATIONS ===== */
+  .slide .anim {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 750ms var(--t-ease), transform 750ms var(--t-ease);
+  }
+  .slide.is-active .anim { opacity: 1; transform: none; }
+  .slide.is-active .anim.d1 { transition-delay: 120ms; }
+  .slide.is-active .anim.d2 { transition-delay: 240ms; }
+  .slide.is-active .anim.d3 { transition-delay: 360ms; }
+  .slide.is-active .anim.d4 { transition-delay: 480ms; }
+  .slide.is-active .anim.d5 { transition-delay: 600ms; }
+  .slide.is-active .anim.d6 { transition-delay: 720ms; }
+
+  /* ===== CHROME (counter, progress, hint) ===== */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--c-accent);
+    z-index: 50;
+    transition: width var(--t-slide) var(--t-ease);
+    box-shadow: 0 0 8px rgba(201,169,97,0.5);
+  }
+
+  .counter {
+    position: fixed;
+    bottom: 1.6rem;
+    right: 2rem;
+    z-index: 50;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    color: var(--c-text-mute);
+    font-variant-numeric: tabular-nums;
+    transition: color 400ms var(--t-ease);
+  }
+  .counter .num {
+    color: var(--c-text);
+    font-weight: 600;
+  }
+  body.is-dark .counter { color: var(--c-text-on-dark-mute); }
+  body.is-dark .counter .num { color: var(--c-text-on-dark); }
+
+  .brand-tag {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 2rem;
+    z-index: 50;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: var(--c-text-mute);
+    display: flex;
+    align-items: center;
+    transition: color 400ms var(--t-ease);
+  }
+  body.is-dark .brand-tag { color: var(--c-text-on-dark-mute); }
+
+  .hint {
+    position: fixed;
+    bottom: 1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--c-text-mute);
+    opacity: 0.7;
+    transition: opacity 600ms ease, color 400ms var(--t-ease);
+    pointer-events: none;
+  }
+  body.is-dark .hint { color: var(--c-text-on-dark-mute); }
+  .hint.faded { opacity: 0; }
+
+  /* ===== SPEAKER NOTES (presenter mode) ===== */
+  .speaker-notes { display: none; }
+  body.notes-mode .speaker-notes {
+    display: block;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    max-height: 30vh;
+    overflow-y: auto;
+    background: rgba(7,16,31,0.96);
+    color: #d4d4d4;
+    font-family: -apple-system, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    padding: 1.25rem 2rem 2rem;
+    border-top: 1px solid var(--c-accent);
+    z-index: 60;
+    backdrop-filter: blur(10px);
+  }
+  body.notes-mode .speaker-notes::before {
+    content: "SPEAKER NOTES";
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: var(--c-accent);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+  body.notes-mode .speaker-notes:not(.is-active-notes) { display: none; }
+
+  /* ===== RESPONSIVE GUARD ===== */
+  @media (max-width: 768px) {
+    .four-col { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+    .compare-table { grid-template-columns: 1fr; }
+    .compare-table .cell:nth-child(even) {
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid var(--c-border-dark);
+    }
+    :root { --pad-h: 2rem; --pad-v: 3rem; }
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .track { transition: none; }
+    .slide .anim { transition: opacity 200ms; transform: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="counter"><span class="num" id="counter-num">1</span> <span style="opacity:0.5;">/</span> <span id="counter-total">15</span></div>
+<div class="brand-tag"><span class="brand-mark"></span> OKO Holding Corporation · Thunderline</div>
+<div class="hint" id="hint">← → space · F fullscreen · Esc</div>
+
+<div class="stage" id="stage">
+  <div class="track" id="track">
+
+    <!-- ============ SLIDE 1 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 1">
+      <div class="slide-inner">
+        <span class="eyebrow anim">OKO Holding Corporation</span>
+        <h1 class="anim d1">Thunderline</h1>
+        <div class="title-flourish anim d2"></div>
+        <p class="subhead anim d3">A governed operating substrate for AI in commerce.</p>
+        <p class="body-text anim d4" style="margin-top:1rem; color:var(--c-text-on-dark-mute); font-size:0.95rem; letter-spacing:0.04em;">
+          The layer underneath · April 2026
+        </p>
+      </div>
+      <aside class="speaker-notes" hidden>Thank you for the time. We're not here to demo another agent. Agents are the easy part. Anyone can spin one up in a weekend. The hard part — the part nobody wants to build because it isn't sexy — is the substrate underneath. The thing that decides whether an AI action is allowed to leave the room. The thing that records what happened with a receipt you can show to a regulator. The thing that fails closed when a model is wrong. That's what Thunderline is. The next forty minutes are about the layer most AI vendors pretend doesn't exist.</aside>
+    </section>
+
+    <!-- ============ SLIDE 2 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 2">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The state of play</span>
+        <h2 class="anim d1">Every enterprise has bought an AI demo. <span class="accent">Almost none can show the receipt.</span></h2>
+        <ul class="lede-list anim d2">
+          <li>Models call tools · who decided they could?</li>
+          <li>Agents take actions · who signed for them?</li>
+          <li>Outputs land in workflows · what was the input the model actually saw?</li>
+          <li>Something goes wrong in production · how do you replay what the model did, and why?</li>
+          <li>A regulator asks · "show me the chain."</li>
+        </ul>
+      </div>
+      <aside class="speaker-notes" hidden>This is the gap. Five questions an enterprise procurement officer can ask any AI vendor today, and the honest answer is usually some variation of "we have logs." Logs aren't receipts. Logs are observation. Receipts are evidence. The difference matters the moment something is contested — by a customer, by a regulator, by an auditor, by your own legal team. Thunderline starts here, because this is the actual problem.</aside>
+    </section>
+
+    <!-- ============ SLIDE 3 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 3">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The thesis</span>
+        <h2 class="anim d1">An AI product is only as defensible as the <span class="accent">substrate</span> it runs on.</h2>
+        <ul class="rhythm-list anim d3">
+          <li>The model is the <span class="accent">recommendation</span>.</li>
+          <li>The substrate is the <span class="accent">decision</span>.</li>
+          <li>The receipt is the <span class="accent">evidence</span>.</li>
+        </ul>
+      </div>
+      <aside class="speaker-notes" hidden>Three layers, and most vendors only sell the first one. The model gives you a recommendation — a prediction, an extraction, a draft. The substrate decides whether that recommendation is allowed to do anything. The receipt is the evidence trail you keep so that, six months later, you can prove what the system did and why. We sell all three. The model is replaceable; the substrate and the receipts are the moat.</aside>
+    </section>
+
+    <!-- ============ SLIDE 4 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 4">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The discipline</span>
+        <h1 class="anim d1" style="font-size: clamp(2.5rem, 5.5vw, 5rem);">
+          Models don't decide.<br>
+          Agents don't sign.<br>
+          <span class="accent">The substrate enforces it.</span>
+        </h1>
+      </div>
+      <aside class="speaker-notes" hidden>This is the load-bearing rule of the entire architecture. Not a slogan. A constraint encoded in the runtime. A model can produce an output. An agent can request an action. Neither one carries authority on its own. The substrate is the layer that says yes or no — and writes a receipt either way. If you take one thing from today, take this: the moment a model can sign for itself, you've built the wrong system.</aside>
+    </section>
+
+    <!-- ============ SLIDE 5 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 5">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The substrate</span>
+        <h1 class="anim d1">Thunderline</h1>
+        <p class="subhead anim d2">Governed event transport. Identity-bound storage. Immutable receipts.</p>
+        <ol class="stylized-list anim d3">
+          <li>Every action is mediated. Nothing skips the gate.</li>
+          <li>Every artifact is content-addressable. Tampering is detectable.</li>
+          <li>Every decision is a signed receipt. Replayable in full.</li>
+        </ol>
+        <p class="footer-note anim d4">Built on the BEAM — the runtime Ericsson invented in 1986 for carrier-grade telecom.</p>
+      </div>
+      <aside class="speaker-notes" hidden>Three rules, written into the runtime. One: every action goes through PolicyGate. There is no side-door. Two: every artifact — input, output, intermediate — is content-addressed and stored in a way that makes tampering visible. Three: every decision produces a Thundervine receipt, signed and replayable, with the full input the model saw and the full output it produced. We chose the BEAM because it's the only runtime that has carried a billion concurrent telephone calls in production for forty years. The substrate has to outlive the model fashion of the season.</aside>
+    </section>
+
+    <!-- ============ SLIDE 6 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 6">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Anatomy</span>
+        <h2 class="anim d1">Four primitives. Nothing else gets to be load-bearing.</h2>
+        <div class="four-col anim d2">
+          <div class="col">
+            <h3>Thunderblock</h3>
+            <ul>
+              <li>tenant identity</li>
+              <li>persistence root</li>
+              <li>capability ceiling</li>
+              <li>sovereignty boundary</li>
+            </ul>
+            <em>Who you are.</em>
+          </div>
+          <div class="col">
+            <h3>Crown Relay</h3>
+            <ul>
+              <li>governed transport</li>
+              <li>MCP-style events</li>
+              <li>signed envelopes</li>
+              <li>replay-safe</li>
+            </ul>
+            <em>How things move.</em>
+          </div>
+          <div class="col">
+            <h3>PolicyGate</h3>
+            <ul>
+              <li>8-stage authorization</li>
+              <li>fail-closed default</li>
+              <li>capability check</li>
+              <li>scope + ceiling</li>
+            </ul>
+            <em>What's allowed.</em>
+          </div>
+          <div class="col">
+            <h3>Thundervine</h3>
+            <ul>
+              <li>immutable receipts</li>
+              <li>content-addressable</li>
+              <li>full input + output</li>
+              <li>replayable</li>
+            </ul>
+            <em>What happened.</em>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>Four primitives, in plain language. Thunderblock — your identity unit, your persistence root, the boundary inside which your data stays. Crown Relay — the only path actions can travel; nothing bypasses it. PolicyGate — eight discrete stages of authorization, default deny. Thundervine — the receipt log that replays the world. If any of these four are missing, you don't have a substrate, you have a chat app pretending to be one.</aside>
+    </section>
+
+    <!-- ============ SLIDE 7 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 7">
+      <div class="slide-inner">
+        <span class="eyebrow anim">A receipt, not a log</span>
+        <h2 class="anim d1">Every action produces an artifact you can hand to a regulator.</h2>
+        <ul class="lede-list anim d2">
+          <li>Caller identity + capability scope at request time</li>
+          <li>Full input the model saw — not a summary, the input</li>
+          <li>Model + version + parameters + run envelope hash</li>
+          <li>Full output the model produced — and the gate's verdict</li>
+          <li>Human decision, if any, with signer identity and timestamp</li>
+          <li>Content-addressed · signed · <span class="accent-strong">replayable in full</span></li>
+        </ul>
+      </div>
+      <aside class="speaker-notes" hidden>This is what makes a receipt different from a log. A log says "X happened." A receipt says "X happened, and here is the bit-for-bit proof of what went in, what came out, who authorized it, and how to reproduce it." Six fields, written every time, no exceptions. The replayability matters because in a contested situation — incident review, audit, regulator inquiry — you don't need a story, you need to rerun the decision. We give you the rerun.</aside>
+    </section>
+
+    <!-- ============ SLIDE 8 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 8">
+      <div class="slide-inner">
+        <span class="eyebrow anim">PolicyGate</span>
+        <h2 class="anim d1">Eight stages between an action request and an action.</h2>
+        <p class="subhead anim d2" style="font-style:normal; font-family:-apple-system,sans-serif; font-size:clamp(0.95rem,1.15vw,1.1rem); letter-spacing:0.04em; color:var(--c-text-mute); text-transform:uppercase; margin-bottom:0;">
+          Default deny · fail closed · explicit allow only
+        </p>
+        <div class="two-col anim d3">
+          <div>
+            <h3>Identity &amp; intent</h3>
+            <ul>
+              <li>1 — Caller identity bound to a Thunderblock</li>
+              <li>2 — Action class within capability scope</li>
+              <li>3 — Tenant policy permits this class</li>
+              <li>4 — Quota / rate / budget envelope intact</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Authority &amp; ceiling</h3>
+            <ul>
+              <li>5 — Action ceiling not exceeded for this scope</li>
+              <li>6 — Required human-in-loop signers present</li>
+              <li>7 — Receipt pre-image valid · signing keys live</li>
+              <li>8 — Final commit · receipt issued · ledger appended</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>Eight stages, every one is fail-closed. If stage three says no, the action does not happen and a receipt is still written for the denial. There is no path through the system that bypasses these gates. We chose eight because that's the smallest set that covers the four real failure modes: spoofed caller, scope creep, runaway quota, and ungoverned signature. Anything fewer leaks one of those four. Anything more is theater.</aside>
+    </section>
+
+    <!-- ============ SLIDE 9 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 9">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Federation</span>
+        <h2 class="anim d1">One Thunderblock per tenant. <span class="accent">Build on the network without joining a tenant.</span></h2>
+        <div class="two-col anim d2">
+          <div>
+            <h3>You get</h3>
+            <p style="font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:clamp(1.4rem,2vw,1.8rem); color:var(--c-text-on-dark); line-height:1.3; margin-bottom:1rem;">Your own Thunderblock.</p>
+            <ul style="list-style:none; color:var(--c-text-on-dark-soft); font-size:clamp(0.95rem,1.1vw,1.1rem); line-height:1.7;">
+              <li>Tenant-owned identity + persistence</li>
+              <li>Your data · your perimeter · your keys</li>
+              <li>Capability ceilings you set, not us</li>
+              <li>Sovereignty is a default, not a tier</li>
+            </ul>
+          </div>
+          <div>
+            <h3>You can reach</h3>
+            <p style="font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:clamp(1.4rem,2vw,1.8rem); color:var(--c-text-on-dark); line-height:1.3; margin-bottom:1rem;">The product family.</p>
+            <ul style="list-style:none; color:var(--c-text-on-dark-mute); font-size:0.95rem; line-height:1.7;">
+              <li>PROBATIO · closeout review</li>
+              <li>WAVE · worksite vision</li>
+              <li>ATLAS · agent service + real-time call layer</li>
+              <li>COCC · compliance + control console</li>
+              <li>DORIS · ERP / secretary / interface builder</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>This is the federation model. A tenant gets their own Thunderblock — a real, isolated identity-and-storage root. They can then opt in to any product on the network: PROBATIO, WAVE, ATLAS, COCC, DORIS. Authority always stays with the Thunderblock. Transport gets relayed through Crown. We sell the substrate, then we sell what runs on top of it. The tenant never has to choose between sovereignty and capability — they get both because the architecture was designed that way.</aside>
+    </section>
+
+    <!-- ============ SLIDE 10 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 10">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The model layer</span>
+        <h1 class="anim d1">Plug-in. <span class="accent">Not load-bearing.</span></h1>
+        <p class="subhead anim d2">Bring your own. Or use ours. The substrate doesn't care.</p>
+        <p class="body-text anim d3" style="font-size:clamp(1.05rem,1.25vw,1.25rem); max-width:64ch;">
+          ONNX graphs via Ortex for deterministic vision. Bumblebee for transformer inference on the BEAM.
+          A VisionPAC pool — many small models observing the same evidence in parallel — for language-of-vision.
+          Cerebros sibling-head training, manifest-locked, when the model itself needs to be auditable.
+          <span style="color:var(--c-text);">Models are replaceable. Receipts are not.</span>
+        </p>
+      </div>
+      <aside class="speaker-notes" hidden>This is where most AI vendors get the architecture upside down. They couple their product to a specific model. We don't. The model layer is plug-in: ONNX for the deterministic pieces, Bumblebee for the BEAM-native pieces, a VisionPAC pool when we want many small models reading the same evidence in parallel — why have one model looking at it when you can have many. Cerebros is our partner for sibling-head training when the model itself needs to be a receipt-bearing artifact. But if a better model arrives next quarter, we swap it. The receipts and the substrate stay.</aside>
+    </section>
+
+    <!-- ============ SLIDE 11 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 11">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Host-native runtime</span>
+        <h1 class="anim d1">No Docker. <span class="accent">No Kubernetes by default.</span></h1>
+        <p class="subhead anim d2">systemd · Caddy · Nix · Postgres · BEAM. The boring, durable stack.</p>
+        <p class="body-text anim d3" style="font-size:clamp(1rem,1.2vw,1.2rem); max-width:62ch;">
+          Thunderline runs on the host. Process supervision is BEAM-native. Routing is Caddy.
+          Builds are Nix-pinned. Database is Postgres. The substrate is durable on a single VPS
+          and federates outward when a tenant needs their own.
+        </p>
+        <p class="footer-note anim d5">A substrate that lives a decade has to be built like a substrate, not like a startup.</p>
+      </div>
+      <aside class="speaker-notes" hidden>This is a deliberate choice and worth pausing on. We don't ship a Docker image as the primary deploy unit. We ship a host-native runtime — systemd units, a Caddy reverse proxy, Nix-pinned builds, Postgres for state, BEAM for supervision. The reason is simple: a substrate has to outlive the orchestration fashion of any given decade. Containers are useful, but they're a deployment optimization, not a foundation. We've watched enterprise systems collapse under their own Helm charts. The boring stack is the stack that's still running in twenty years.</aside>
+    </section>
+
+    <!-- ============ SLIDE 12 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 12">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The tree</span>
+        <h2 class="anim d1">Substrate first. <span class="accent">Products second.</span></h2>
+        <pre class="tree anim d2" style="background:transparent; color:var(--c-text); white-space:pre-wrap;"><span class="root" style="color:var(--c-accent);">Thunderline</span> <span style="color:var(--c-text-mute);">— governed substrate (BEAM, Crown, PolicyGate, Thundervine, fail-closed)</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">Thunderblock</span> <span style="color:var(--c-text-soft);">— per-tenant identity + persistence + capability ceiling</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">Crown Relay</span> <span style="color:var(--c-text-soft);">— governed event transport · MCP-compatible · signed envelopes</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">PolicyGate</span> <span style="color:var(--c-text-soft);">— 8-stage authorization · default-deny</span>
+<span style="color:var(--c-text-mute);">└──</span> <span style="color:var(--c-text); font-weight:600;">Thundervine</span> <span style="color:var(--c-text-soft);">— immutable receipts · content-addressable · replayable</span>
+
+<span class="root" style="color:var(--c-accent);">Products on top</span> <span style="color:var(--c-text-mute);">— each one a Thunderblock subscriber</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">PROBATIO</span> <span style="color:var(--c-text-soft);">— closeout review (lead vertical)</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">WAVE</span> <span style="color:var(--c-text-soft);">— autonomous worksite vision</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">ATLAS</span> <span style="color:var(--c-text-soft);">— agent service + real-time call layer</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">COCC</span> <span style="color:var(--c-text-soft);">— compliance + control console</span>
+<span style="color:var(--c-text-mute);">├──</span> <span style="color:var(--c-text); font-weight:600;">DORIS</span> <span style="color:var(--c-text-soft);">— ERP / secretary / interface builder</span>
+<span style="color:var(--c-text-mute);">└──</span> <span style="color:var(--c-text); font-weight:600;">ACE</span> <span style="color:var(--c-text-soft);">— CRM / front-office event source</span></pre>
+        <p class="footer-note anim d3">The substrate is the product. Everything above the line is what runs on it.</p>
+      </div>
+      <aside class="speaker-notes" hidden>This is the picture. Top half is the substrate — four primitives, fixed contracts, durable. Bottom half is the product family that subscribes to the substrate. You can buy the bottom half from us. You can also buy the substrate alone and put your own products on top of it. We're substrate-first by design — the product family exists to prove the substrate, not the other way around.</aside>
+    </section>
+
+    <!-- ============ SLIDE 13 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 13">
+      <div class="slide-inner">
+        <span class="eyebrow anim">Discipline</span>
+        <h2 class="anim d1">What the substrate is. What it isn't.</h2>
+        <div class="compare-table anim d2">
+          <div class="cell sell">
+            <h3>It is</h3>
+            <ul>
+              <li>Governed transport — every action mediated</li>
+              <li>Identity-bound storage — sovereignty by default</li>
+              <li>Receipts that replay — bit-for-bit, not summaries</li>
+              <li>Default-deny authorization — fail-closed by design</li>
+            </ul>
+          </div>
+          <div class="cell dont">
+            <h3>It isn't</h3>
+            <ul>
+              <li>An autonomous decision-maker</li>
+              <li>A regulatory pre-approval</li>
+              <li>A guarantee of model correctness</li>
+              <li>A replacement for human judgment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <aside class="speaker-notes" hidden>The substrate makes recommendations defensible, not autonomous. It enforces the architecture that lets a human signer move fast without giving up the ability to prove what happened. Plan-acceptance is not implementation-authorization. The machine recommends. The human decides. Every time, on the record.</aside>
+    </section>
+
+    <!-- ============ SLIDE 14 (LIGHT) ============ -->
+    <section class="slide light" data-theme="light" aria-label="Slide 14">
+      <div class="slide-inner">
+        <span class="eyebrow anim">The pilot</span>
+        <h2 class="anim d1"><span class="accent">8–12 weeks</span> · provision a Thunderblock · run one product on top</h2>
+        <div class="two-col anim d2">
+          <div>
+            <h3>What you provide</h3>
+            <ul>
+              <li>One tenant boundary — your data, your keys</li>
+              <li>One product use case (PROBATIO, WAVE, ATLAS, etc.)</li>
+              <li>The named human signer for the loop</li>
+              <li>Agreed success metrics, written before kickoff</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Success metrics</h3>
+            <ul>
+              <li>Receipt completeness — every action accounted for</li>
+              <li>Replay fidelity — can we rerun any decision</li>
+              <li>Default-deny rate — what got stopped before it shipped</li>
+              <li>Override rate — when human signers disagreed with the model</li>
+            </ul>
+          </div>
+        </div>
+        <p class="footer-note anim d3">We measure on your evidence. Not somebody else's case study.</p>
+      </div>
+      <aside class="speaker-notes" hidden>The pilot pattern is the same shape across every product, because the substrate is the same. We provision a Thunderblock for you, on infrastructure you control. We bring up one product on top of it. We agree on four numbers up front and we measure them honestly. Eight to twelve weeks. After the pilot, you decide whether to expand to other products on the network — or keep just the substrate and build your own.</aside>
+    </section>
+
+    <!-- ============ SLIDE 15 (DARK) ============ -->
+    <section class="slide dark" data-theme="dark" aria-label="Slide 15">
+      <div class="slide-inner">
+        <span class="eyebrow anim">How to engage</span>
+        <h2 class="anim d1">Five steps. <span class="accent">One signature.</span></h2>
+        <ol class="numbered-list anim d2">
+          <li>Authorize a paid discovery pilot</li>
+          <li>Pick one product use case to run on top</li>
+          <li>Name the human signer in the loop</li>
+          <li>Agree on the four substrate metrics</li>
+          <li>After the pilot, decide together whether to expand</li>
+        </ol>
+        <p class="closing-line anim d3">Operate AI. Don't just use it.</p>
+      </div>
+      <aside class="speaker-notes" hidden>That's the close. The substrate is the difference between using AI and operating it. Using AI is what your competitors are doing — buying demos. Operating AI is what regulated, evidence-bearing, decade-durable enterprises will be doing in three years. We'd rather you start now.</aside>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const track       = document.getElementById('track');
+  const slides      = Array.from(track.querySelectorAll('.slide'));
+  const total       = slides.length;
+  const counterNum  = document.getElementById('counter-num');
+  const counterTot  = document.getElementById('counter-total');
+  const progressEl  = document.getElementById('progress');
+  const hint        = document.getElementById('hint');
+  const body        = document.body;
+
+  counterTot.textContent = total;
+
+  // Parse URL params
+  const params = new URLSearchParams(window.location.search);
+  const initialSlide = Math.max(1, Math.min(total, parseInt(params.get('slide')) || 1));
+  const notesMode = params.get('notes') === '1';
+  if (notesMode) body.classList.add('notes-mode');
+
+  let current = initialSlide - 1;
+  let isAnimating = false;
+
+  function render() {
+    track.style.transform = `translate3d(${-current * 100}vw, 0, 0)`;
+    counterNum.textContent = current + 1;
+    progressEl.style.width = `${((current + 1) / total) * 100}%`;
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('is-active', i === current);
+      const notes = s.querySelector('.speaker-notes');
+      if (notes) {
+        notes.classList.toggle('is-active-notes', i === current);
+        if (notesMode && i === current) {
+          notes.removeAttribute('hidden');
+        }
+      }
+    });
+
+    const theme = slides[current].dataset.theme;
+    if (theme === 'dark') {
+      body.classList.add('is-dark');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#050a14');
+    } else {
+      body.classList.remove('is-dark');
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#ffffff');
+    }
+
+    // Update URL silently
+    const url = new URL(window.location);
+    url.searchParams.set('slide', current + 1);
+    window.history.replaceState({}, '', url);
+  }
+
+  function go(n, opts = {}) {
+    const target = Math.max(0, Math.min(total - 1, n));
+    if (target === current && !opts.force) return;
+    current = target;
+    render();
+
+    // Fade hint after first nav
+    if (hint && !hint.classList.contains('faded')) {
+      hint.classList.add('faded');
+    }
+  }
+
+  function next() { go(current + 1); }
+  function prev() { go(current - 1); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    // Allow form input passthrough — none here, but defensive
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'PageDown':
+      case ' ':
+        e.preventDefault();
+        next();
+        break;
+      case 'ArrowLeft':
+      case 'PageUp':
+        e.preventDefault();
+        prev();
+        break;
+      case 'Home':
+        e.preventDefault();
+        go(0);
+        break;
+      case 'End':
+        e.preventDefault();
+        go(total - 1);
+        break;
+      case 'Escape':
+        if (document.fullscreenElement) {
+          document.exitFullscreen?.();
+        }
+        break;
+      case 'f':
+      case 'F':
+        e.preventDefault();
+        toggleFullscreen();
+        break;
+      case 'n':
+      case 'N':
+        e.preventDefault();
+        body.classList.toggle('notes-mode');
+        // Reveal hidden speaker-notes for the active slide when toggled on
+        slides.forEach((s) => {
+          const notes = s.querySelector('.speaker-notes');
+          if (notes) notes.removeAttribute('hidden');
+        });
+        break;
+    }
+  });
+
+  // Click to advance (but allow text selection by ignoring drag)
+  let mouseDownX = 0;
+  document.addEventListener('mousedown', (e) => { mouseDownX = e.clientX; });
+  document.addEventListener('mouseup', (e) => {
+    const dx = Math.abs(e.clientX - mouseDownX);
+    if (dx > 6) return; // user was selecting / dragging
+    // Don't advance if clicking on chrome
+    if (e.target.closest('.counter, .brand-tag, .hint, .progress, .speaker-notes, a, button')) return;
+    next();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
+
+  // Fullscreen toggle
+  function toggleFullscreen() {
+    const el = document.documentElement;
+    if (!document.fullscreenElement) {
+      (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el);
+    } else {
+      (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+    }
+  }
+
+  // Hash-based deep link as alternative
+  window.addEventListener('hashchange', () => {
+    const m = window.location.hash.match(/^#slide-(\d+)$/);
+    if (m) go(parseInt(m[1]) - 1);
+  });
+
+  // Wheel navigation (debounced) — optional, comment out if disruptive
+  let wheelTimer = null;
+  let wheelLock = false;
+  document.addEventListener('wheel', (e) => {
+    if (wheelLock) return;
+    if (Math.abs(e.deltaY) < 40 && Math.abs(e.deltaX) < 40) return;
+    wheelLock = true;
+    if (e.deltaY > 0 || e.deltaX > 0) next(); else prev();
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => { wheelLock = false; }, 800);
+  }, { passive: true });
+
+  // Initial render
+  render();
+
+  // Fade hint after 6s if no interaction
+  setTimeout(() => {
+    if (hint && !hint.classList.contains('faded')) hint.classList.add('faded');
+  }, 6000);
+
+  // Expose minimal API for debugging
+  window.__deck = { go, next, prev, current: () => current + 1, total };
+})();
+</script>
+
+</body>
+</html>
