@@ -324,8 +324,7 @@ p {
 .benefit-grid,
 .steps,
 .audience-grid,
-.media-showcase,
-.media-stack {
+.media-showcase {
   display: grid;
   gap: 18px;
 }
@@ -344,12 +343,25 @@ p {
 }
 
 .media-showcase {
-  grid-template-columns: minmax(0, 1.28fr) minmax(280px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.42fr);
   align-items: start;
 }
 
-.media-stack {
-  grid-template-rows: auto 1fr;
+.photo-scroll {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 2px 2px 14px;
+  scroll-snap-type: x mandatory;
+  scrollbar-color: rgba(11, 42, 69, 0.35) transparent;
+}
+
+.photo-card {
+  flex: 0 0 min(100%, 720px);
+  align-self: flex-start;
+  scroll-snap-align: start;
 }
 
 .media-card {
@@ -365,22 +377,24 @@ p {
 .media-card video {
   display: block;
   width: 100%;
-  object-fit: cover;
-  background: var(--navy);
+  height: auto;
+  background: #eef6fb;
 }
 
 .media-card img {
   aspect-ratio: 4 / 3;
+  object-fit: contain;
 }
 
 .video-card {
   justify-self: center;
-  width: min(100%, 330px);
+  width: min(100%, 300px);
 }
 
 .video-card video {
   aspect-ratio: 9 / 16;
   object-fit: contain;
+  background: var(--navy);
 }
 
 .media-card figcaption {
