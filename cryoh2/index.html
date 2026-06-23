@@ -8,18 +8,20 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <main class="site-shell">
       <header class="topbar">
         <a class="brand" href="/" aria-label="CryoH2 home"><img src="assets/cryoh2-logo-transparent-trimmed.png" alt="CryoH2"></a>
         <nav class="top-actions" aria-label="Primary">
           <a href="#cryotherapy">Cryotherapy</a>
+          <a href="#in-session">In Session</a>
           <a href="#hydrogen">Hydrogen Therapy</a>
           <a href="#contact">Contact</a>
           <a class="button" href="tel:19544061676">Call or Text</a>
         </nav>
       </header>
 
-      <section class="hero">
+      <section id="main-content" class="hero">
         <div class="hero-inner">
           <p class="eyebrow">Advanced Localized Cryotherapy</p>
           <h1>Recover faster. Move better. Live without limits.</h1>
@@ -27,6 +29,11 @@
           <div class="hero-actions">
             <a class="button" href="#contact">Book Your Session Today</a>
             <a class="button secondary" href="tel:19544061676">954-406-1676</a>
+          </div>
+          <div class="hero-trust" aria-label="Service highlights">
+            <span>Fort Lauderdale studio</span>
+            <span>Mobile concierge</span>
+            <span>Sports and recovery support</span>
           </div>
         </div>
       </section>
@@ -58,6 +65,32 @@
               <li>Neuromuscular and tissue recovery support</li>
               <li>Lymphatic drainage and circulation response support</li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="in-session" class="soft">
+        <div class="section-inner">
+          <p class="section-kicker">In session</p>
+          <h2>Professional care in the clinic, on the field, and wherever recovery happens.</h2>
+          <p class="section-lede">See how targeted treatment fits into real recovery moments, from post-training care to focused in-studio sessions.</p>
+          <div class="media-showcase">
+            <figure class="media-card primary-media">
+              <img src="assets/cryoh2-sideline-treatment.jpeg" width="1448" height="1086" loading="lazy" alt="Localized cryotherapy treatment for an athlete on the sideline">
+              <figcaption>Mobile sideline treatment for active recovery and sports support.</figcaption>
+            </figure>
+            <div class="media-stack">
+              <figure class="media-card">
+                <img src="assets/cryoh2-clinic-treatment.jpeg" width="1448" height="1086" loading="lazy" alt="Localized cryotherapy treatment for neck and shoulder recovery in clinic">
+                <figcaption>Focused in-clinic treatment for targeted comfort and mobility.</figcaption>
+              </figure>
+              <figure class="media-card video-card">
+                <video controls preload="metadata" playsinline poster="assets/cryoh2-treatment-video-poster.jpg" aria-label="CryoH2 treatment demo video">
+                <source src="assets/cryoh2-treatment-demo-vertical.mp4" type="video/mp4">
+                </video>
+                <figcaption>Mobile-first treatment demo, formatted for the original vertical capture.</figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
@@ -145,23 +178,19 @@
             <p><strong>Hours:</strong> Monday - Sunday, 8am - 6pm<br>By appointment only.</p>
             <p class="fine-print">Need a time outside regular hours? Concierge after-hours appointments are available for clients seeking maximum flexibility. Additional fees apply.</p>
           </div>
-          <div class="contact-card">
-            <form>
-              <label>Name <input type="text" name="name" autocomplete="name"></label>
-              <label>Phone <input type="tel" name="phone" autocomplete="tel"></label>
-              <label>Email <input type="email" name="email" autocomplete="email"></label>
-              <label>Interested In
-                <select name="service">
-                  <option>Localized Cryotherapy</option>
-                  <option>Hydrogen Therapy</option>
-                  <option>Both Services</option>
-                  <option>Concierge Appointment</option>
-                </select>
-              </label>
-              <label>How can we help? <textarea name="message"></textarea></label>
-              <button class="button" type="submit">Request Appointment</button>
-              <p class="fine-print">This preview form is visual only. In WordPress, replace it with your preferred appointment form plugin or shortcode.</p>
-            </form>
+          <div class="contact-card booking-card">
+            <p class="section-kicker">Fastest booking</p>
+            <h3>Call or text CryoH2 directly.</h3>
+            <p>Appointments are handled personally so each session can be matched to the treatment area, location, and recovery goal.</p>
+            <div class="booking-actions">
+              <a class="button" href="tel:19544061676">Call 954-406-1676</a>
+              <a class="button secondary" href="sms:19544061676">Text CryoH2</a>
+            </div>
+            <dl class="booking-details">
+              <div><dt>Studio</dt><dd>540 N Andrews Avenue Suite 26</dd></div>
+              <div><dt>Concierge</dt><dd>Home, hotel, gym, office, or event</dd></div>
+              <div><dt>Hours</dt><dd>Daily by appointment, 8am - 6pm</dd></div>
+            </dl>
           </div>
         </div>
       </section>
