@@ -466,13 +466,13 @@ p {
 
 .video-frame {
   justify-self: center;
-  width: min(100%, 340px);
+  width: min(100%, 300px);
   margin: 0;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid rgba(12, 47, 82, 0.16);
   border-radius: 8px;
   background: #071f35;
-  box-shadow: 0 24px 52px rgba(12, 47, 82, 0.22);
+  box-shadow: 0 20px 42px rgba(12, 47, 82, 0.2);
 }
 
 .video-frame video {
