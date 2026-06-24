@@ -161,13 +161,40 @@ video:focus-visible {
   isolation: isolate;
 }
 
+.hero-media,
+.hero-slide {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-media {
+  z-index: -2;
+  overflow: hidden;
+}
+
+.hero-slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  animation: heroSlide 18s infinite;
+}
+
+.hero-slide:nth-child(2) {
+  animation-delay: 6s;
+}
+
+.hero-slide:nth-child(3) {
+  animation-delay: 12s;
+}
+
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(8, 33, 56, 0.92) 0%, rgba(8, 33, 56, 0.74) 37%, rgba(8, 33, 56, 0.16) 72%),
-    url("assets/cryoh2-hero.png") center / cover no-repeat;
+    linear-gradient(90deg, rgba(8, 33, 56, 0.92) 0%, rgba(8, 33, 56, 0.74) 37%, rgba(8, 33, 56, 0.16) 72%);
   z-index: -1;
 }
 
@@ -178,6 +205,32 @@ video:focus-visible {
   height: 180px;
   background: linear-gradient(180deg, rgba(12, 47, 82, 0) 0%, rgba(12, 47, 82, 0.42) 100%);
   z-index: -1;
+}
+
+@keyframes heroSlide {
+  0%,
+  27% {
+    opacity: 1;
+  }
+
+  33%,
+  94% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    animation: none;
+  }
+
+  .hero-slide:first-child {
+    opacity: 1;
+  }
 }
 
 .hero-inner,
@@ -574,8 +627,11 @@ li + li {
 
   .hero::before {
     background:
-      linear-gradient(180deg, rgba(8, 33, 56, 0.94) 0%, rgba(8, 33, 56, 0.78) 48%, rgba(8, 33, 56, 0.42) 100%),
-      url("assets/cryoh2-hero.png") 62% center / cover no-repeat;
+      linear-gradient(180deg, rgba(8, 33, 56, 0.94) 0%, rgba(8, 33, 56, 0.78) 48%, rgba(8, 33, 56, 0.42) 100%);
+  }
+
+  .hero-slide {
+    object-position: 62% center;
   }
 
   .hero-inner,
