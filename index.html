@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OKO Holding Corporation — Owner of Thunderline</title>
-<meta name="description" content="OKO Holding Corporation owns and builds Thunderline, ATLAS, and related governed AI systems for practical operations, human oversight, and receipt-backed work.">
-<meta property="og:title" content="OKO Holding Corporation — Owner of Thunderline">
-<meta property="og:description" content="There is always a better way. Find it. OKO builds governed AI systems for real operations.">
+<title>OKO Holding Corporation — Governed AI Operations Infrastructure</title>
+<meta name="description" content="OKO builds governed AI operations infrastructure: Thunderline, Prism, and business stations where autonomous work is policy-gated, visible to operators, and receipt-backed.">
+<meta property="og:title" content="OKO Holding Corporation — Governed AI Operations Infrastructure">
+<meta property="og:description" content="Governed AI operations for work that has to leave a receipt. Thunderline is the runtime; OKO builds the stations that run on it.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="assets/og-image.svg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OKO Holding Corporation — Owner of Thunderline">
-<meta name="twitter:description" content="There is always a better way. Find it.">
+<meta name="twitter:title" content="OKO Holding Corporation — Governed AI Operations Infrastructure">
+<meta name="twitter:description" content="Governed AI operations for work that has to leave a receipt.">
 <meta name="twitter:image" content="assets/og-image.svg">
 <meta name="theme-color" content="#050a14">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -445,7 +445,7 @@
   .section-header p.lead { color: var(--c-text-soft); }
   section.dark .section-header p.lead { color: var(--c-text-on-dark-soft); }
 
-  /* ATLAS / SUBSTRATE */
+  /* OPERATING MODEL / SUBSTRATE */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -736,7 +736,21 @@
     .reach-stats { grid-template-columns: repeat(2, 1fr); }
     footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     section { padding: 4.5rem 0; }
-    .hero { min-height: 640px; }
+    .hero {
+      display: block;
+      height: auto;
+      min-height: 0;
+      padding: 7rem 0 3rem;
+    }
+    .hero .hero-content { padding: 0; }
+    .hero h1 {
+      max-width: 680px;
+      font-size: clamp(3rem, 10vw, 4.75rem);
+    }
+    .hero .hero-subhead {
+      max-width: 620px;
+      margin-bottom: 2rem;
+    }
     .hero-pillars { position: static; padding: 2rem 0 0; }
     .principles-list li { grid-template-columns: 60px 1fr; gap: 1.25rem; }
   }
@@ -744,7 +758,29 @@
     .reach-stats { grid-template-columns: 1fr 1fr; }
     footer .footer-grid { grid-template-columns: 1fr; }
     .container, .container-prose { padding: 0 1.25rem; }
-    h1 { font-size: 2.5rem; }
+    .hero {
+      padding: 6rem 0 2.5rem;
+    }
+    .hero .badge {
+      align-items: flex-start;
+      border-radius: 18px;
+      line-height: 1.5;
+      max-width: 100%;
+      white-space: normal;
+    }
+    .hero h1 {
+      font-size: clamp(2.85rem, 13vw, 3.6rem);
+      line-height: 0.98;
+    }
+    .hero .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    .hero .actions .btn {
+      width: 100%;
+      text-align: center;
+    }
   }
 </style>
 </head>
@@ -758,7 +794,7 @@
       OKO
     </a>
     <ul>
-      <li><a href="#atlas">ATLAS</a></li>
+      <li><a href="#operating-model">Model</a></li>
       <li><a href="#thunderline">Thunderline</a></li>
       <li><a href="#services">Capabilities</a></li>
       <li><a href="#industries">Industries</a></li>
@@ -773,7 +809,7 @@
   </div>
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <ul>
-      <li><a href="#atlas">ATLAS</a></li>
+      <li><a href="#operating-model">Model</a></li>
       <li><a href="#thunderline">Thunderline</a></li>
       <li><a href="#services">Capabilities</a></li>
       <li><a href="#industries">Industries</a></li>
@@ -812,11 +848,11 @@
   </div>
   <div class="hero-content">
     <div class="container">
-      <span class="badge">OKO HOLDING CORPORATION · GLOBAL</span>
-      <p style="color: var(--c-accent); font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.35rem); margin-bottom: 1rem;">“There is always a better way. Find it.” — Thomas Edison</p>
-      <h1>OKO Holding Corporation.<br><span class="accent-text">There is always a better way.</span></h1>
+      <span class="badge">OKO HOLDING CORPORATION · GOVERNED AI OPERATIONS</span>
+      <p style="color: var(--c-accent); font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.35rem); margin-bottom: 1rem;">One substrate. Many stations. Every action lawful.</p>
+      <h1>Governed AI operations<br><span class="accent-text">for work that has to leave a receipt.</span></h1>
       <p class="hero-subhead">
-        OKO Holding Corporation owns and builds Thunderline, ATLAS, and the operating systems around them. Veteran-led, receipt-grounded, and focused on practical AI for real work.
+        OKO builds Thunderline, Prism, and applied operating stations for teams that need autonomous systems to persist, act, coordinate, and prove what happened without assuming authority.
       </p>
       <div class="actions">
         <a class="btn btn-primary" href="#contact">Contact OKO</a>
@@ -828,56 +864,55 @@
     <div class="container">
       <div class="pillar-row">
         <div class="pillar">
-          <h4>Substrate</h4>
-          <p>Identity, receipts, policy gates, event transport, and replay — governed under one runtime, not bolted onto one application.</p>
+          <h4>Runtime</h4>
+          <p>Identity, policy, events, receipts, lineage, and durable blocks — governed under one runtime, not bolted onto one application.</p>
         </div>
         <div class="pillar">
-          <h4>Agents</h4>
-          <p>Triage, summarize, explain, orchestrate. ATLAS works alongside your operators across every workflow it touches. It never holds final authority.</p>
+          <h4>Stations</h4>
+          <p>ACORN, DORIS, ACE, Automana, and client workflows run as scoped stations: same rail, different policy, different receipts.</p>
         </div>
         <div class="pillar">
           <h4>Receipts</h4>
-          <p>Every state change is sealed with provenance. Every decision is replayable. Every override carries a reason. Audit isn't a feature — it's the spine.</p>
+          <p>Every governed state change carries provenance. Every denial has a reason. Audit is not an afterthought; it is the operating surface.</p>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ATLAS BRAND -->
-<section id="atlas">
+<!-- OPERATING MODEL -->
+<section id="operating-model">
   <div class="container">
     <div class="section-header reveal">
-      <span class="eyebrow">Parent Company</span>
-      <h2>OKO owns the family.</h2>
-      <p class="lead">OKO Holding Corporation is the company behind Thunderline, ATLAS, and the related operating brands. The public promise is simple: practical AI systems, governed workflows, human approval, and records that show what happened.</p>
+      <span class="eyebrow">Operating Model</span>
+      <h2>Build the rail. Put lawful agents on it.</h2>
+      <p class="lead">OKO Holding Corporation packages a governed autonomous runtime into practical business systems. Intelligence may propose, reason, and prepare work. It may not act unless the operating membrane permits it. If it acts, the act leaves a receipt.</p>
     </div>
 
     <div class="grid-2 reveal">
       <div>
         <div class="definition-block">
-          <h4>One identity, every workflow</h4>
-          <p>Thunderline is the owned substrate. ATLAS is an operating surface. Other brands and vertical tools sit underneath the OKO umbrella as the company expands. The ownership story is OKO first.</p>
+          <h4>Thunderline is the runtime</h4>
+          <p>Thunderline gives persistent autonomous constructs identity, policy, bounded execution, evented memory, receipts, lineage, and operator visibility.</p>
         </div>
         <div class="definition-block">
-          <h4>Machine recommends. Human decides.</h4>
-          <p>ATLAS is not autonomous decisioning. It produces structured recommendations, evidence-backed explanations, and routed handoffs. The human in the loop is a feature of the system, not a constraint we work around.</p>
+          <h4>Prism is the cockpit</h4>
+          <p>Prism is the operator window: blocks, health, pending work, receipts, denials, lineage, and topology in one accountable view.</p>
         </div>
         <div class="definition-block">
-          <h4>Plan-acceptance is not implementation-authorization</h4>
-          <p>We separate doctrine from deployment. Accepted plans live in version-controlled documentation; build authorization is a separate ruling with its own receipt. This discipline carries through every product we ship.</p>
+          <h4>Stations are the business layer</h4>
+          <p>ACORN, DORIS, ACE, and client-specific workflows are ThunderBlocks with business personalities: same rail, different scope, different policy, different receipt trail.</p>
         </div>
       </div>
       <div>
-        <h3>What ATLAS does, today and on roadmap</h3>
-        <p>OKO supports several scoped capability lanes. Some are live patterns, some are in active build, and some are concept lanes. We are explicit about which is which.</p>
+        <h3>What OKO deploys</h3>
+        <p>OKO starts with bounded workflows where receipt-backed execution matters: capture, closeout, intake, CRM events, business operations, and operator dashboards. We are explicit about live surfaces, active builds, and concept lanes.</p>
         <ul style="list-style: none; margin-top: 1rem;">
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Closeout review</strong> — package-level evidence review for telecom, energy, and infrastructure field work</li>
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Worksite vision</strong> — computer-vision pipeline for ongoing site capture and change detection</li>
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Compliance dashboards</strong> — operational posture views over receipts, audits, and findings</li>
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Operating environments</strong> — task-specific ERP scaffolds for individuals, SMBs, and enterprise</li>
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Front-office events</strong> — CRM-grade lifecycle event publishing into the substrate</li>
-          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);"><strong>Real-time call intake</strong> — multilingual transcript and structured handoff for live voice</li>
+          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Capture operations</strong> — opportunity sweeps, compliance packets, partner briefs, and traceable capture artifacts</li>
+          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Field evidence review</strong> — closeout packages, photo bundles, requirement checklists, and human-signed gap trails</li>
+          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Operator cockpits</strong> — health, queues, receipts, denials, and topology for governed blocks</li>
+          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border);"><strong>Customer operations</strong> — CRM events, live intake, structured handoffs, and retry-safe queues</li>
+          <li style="padding: 0.85rem 0; border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);"><strong>Living-world research</strong> — Automana and ThunderBolt make cellular, graph, and agentic computation visible without turning research into a production claim</li>
         </ul>
       </div>
     </div>
@@ -889,24 +924,24 @@
   <div class="container">
     <div class="section-header reveal">
       <span class="eyebrow">The Substrate</span>
-      <h2>Powered by Thunderline</h2>
-      <p class="lead">Thunderline is the governed operating substrate that ATLAS rides on. It is not a model. It is the runtime around models — the layer that decides what an agent is allowed to do, records what it actually did, projects the consequences into a queryable shape, and refuses to execute when the operating envelope is incomplete.</p>
+      <h2>Thunderline is the governed runtime.</h2>
+      <p class="lead">Thunderline is a lawful substrate for autonomous intelligence. It is not a model and not a chatbot wrapper. It is the runtime around models, tools, operators, and blocks: the layer that decides what may act, records what actually happened, and refuses execution when the envelope is incomplete.</p>
     </div>
 
     <div class="grid-2 reveal">
       <div>
-        <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin-bottom: 1rem;">Built on the runtime telecom already trusts</h3>
-        <p>Thunderline runs on the BEAM — the virtual machine Erlang has used in production since 1986, when Ericsson invented it for telecom switches. The same runtime that powers Ericsson's AXD301 telephone exchange, WhatsApp's messaging backbone, the Kazoo Erlang PBX, RabbitMQ, ejabberd, and Riak.</p>
-        <p>This is a credibility lever, not an availability claim. We tell operators what the runtime is and let them draw their own conclusions about its lineage. Senior telecom and messaging engineers can read our code on day one.</p>
+        <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin-bottom: 1rem;">Persistent constructs, governed motion</h3>
+        <p>Most AI systems are prompt to tool call to side effect. Thunderline is intent to policy to authorized work to bounded execution to durable event to receipt to lineage to operator readout.</p>
+        <p>The runtime is BEAM-native and Ash/Phoenix-shaped because persistent autonomous systems need supervision, typed resources, explicit policies, durable state, and observable failure modes before they need another model demo.</p>
       </div>
       <div>
         <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin-bottom: 1rem;">Primitives, not promises</h3>
         <ul style="list-style: none;">
-          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Thunderblock</strong> — identity + persistence unit each application uses to plug in</li>
-          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Crown Relay</strong> — MCP-style governed event-transport boundary</li>
-          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Thundervine Receipts</strong> — immutable, content-addressable, replayable</li>
-          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">PolicyGate</strong> — eight-stage command authorization, every action</li>
-          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">PgFlow + MLflow + Postgres projection</strong> — orchestration, evidence, index</li>
+          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Crown</strong> — law, authority, capability, approval, and denial</li>
+          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Gate</strong> — identity, permission, and MCP-shaped action boundary</li>
+          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Block</strong> — station, durable runtime, state, and heartbeat</li>
+          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Flow + Vine</strong> — event motion, receipts, correlation, causation, and lineage</li>
+          <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Bolt + Cell + Bit</strong> — automata compute, genotype, phenotype, and bounded emergence</li>
           <li style="padding: 0.85rem 0;"><strong style="color: var(--c-accent);">Fail-closed doctrine</strong> — when context is insufficient, decline and explain</li>
         </ul>
       </div>
@@ -920,56 +955,56 @@
     <div class="section-header reveal">
       <span class="eyebrow">Operating Lanes</span>
       <h2>What OKO builds</h2>
-      <p class="lead">OKO owns the operating family. Thunderline provides the governed substrate. Each lane is scoped separately, tied to human approval, and recorded through receipts.</p>
+      <p class="lead">OKO packages the same governed substrate into practical stations. Each lane has its own policy boundary, operator surface, and receipt trail.</p>
     </div>
 
     <div class="services-grid reveal">
       <div class="service-card">
-        <div class="name">Field Package Review</div>
-        <div class="tagline">Closeout and evidence workflows</div>
-        <p>Workbook, checklist, and photo bundles are organized into a requirement-bound review surface. The system prepares evidence, flags gaps, and records the review trail. The supervisor still decides.</p>
+        <div class="name">ACORN Capture Station</div>
+        <div class="tagline">Federal capture and workflow packets</div>
+        <p>ACORN turns opportunity research, partner fit, compliance posture, and pitch materials into a repeatable capture kit. It prepares the packet; operators make the contact and own the claim.</p>
         <span class="status preview">Pilot lane</span>
       </div>
 
       <div class="service-card">
-        <div class="name">Worksite Intelligence</div>
-        <div class="tagline">Vision-assisted operations</div>
-        <p>Field imagery can be structured into observations, candidate evidence, and change signals. Outputs are evidence for operators, not verdicts from the machine.</p>
+        <div class="name">DORIS Relay Station</div>
+        <div class="tagline">Onboarding, intake, and business ops</div>
+        <p>DORIS is the relay surface for structured intake, onboarding, and operating handoffs. It is designed to move work across teams without losing identity, scope, or receipt context.</p>
         <span class="status concept">Scoped capability</span>
       </div>
 
       <div class="service-card">
-        <div class="name">Back-Office Workflow</div>
-        <div class="tagline">Forms, handoffs, and operating surfaces</div>
-        <p>OKO can scaffold task-specific operating surfaces for teams that need less admin drag and more structured handoff discipline.</p>
+        <div class="name">ACE CRM Station</div>
+        <div class="tagline">Customer action with governed memory</div>
+        <p>ACE applies the rail to contacts, customer events, follow-ups, and commercial workflows. The point is not another CRM; it is a customer station with authority boundaries and receipts.</p>
         <span class="status concept">Roadmap lane</span>
       </div>
 
       <div class="service-card">
-        <div class="name">Governance Dashboards</div>
-        <div class="tagline">Receipts, posture, and audit readiness</div>
-        <p>Operational posture is assembled from receipts, findings, exceptions, and human decisions so managers can see what happened and what remains unresolved.</p>
+        <div class="name">Prism Cockpits</div>
+        <div class="tagline">Blocks, graph maps, receipts, and denials</div>
+        <p>Prism makes the runtime legible: health, pending work, receipt trails, policy denials, operator actions, and topology in one command surface.</p>
         <span class="status live">Operator surface</span>
       </div>
 
       <div class="service-card">
-        <div class="name">Customer Operations</div>
-        <div class="tagline">Front-office event support</div>
-        <p>Inbound events, status changes, and customer-facing handoffs can be normalized into durable queues with retry, audit, and human review boundaries.</p>
-        <span class="status live">Production pattern</span>
+        <div class="name">Field Evidence Review</div>
+        <div class="tagline">Closeout, vision, and requirement evidence</div>
+        <p>Workbook, checklist, photo, and site artifacts can be organized into requirement-bound review surfaces. The system prepares evidence and flags gaps; a supervisor still decides.</p>
+        <span class="status preview">Pilot pattern</span>
       </div>
 
       <div class="service-card">
-        <div class="name">Live Intake</div>
-        <div class="tagline">Voice, transcript, and structured handoff</div>
-        <p>Multilingual transcription and intake preparation can support live operators. The system prepares context; the handler does the work.</p>
+        <div class="name">Automana Research</div>
+        <div class="tagline">Living-world expression of the substrate</div>
+        <p>Automana makes the doctrine visible as a world: genotype to phenotype, cell to bit, rule to emergence, state to receipt. It is research and simulation, not a production claim.</p>
         <span class="status concept">Scoped lane</span>
       </div>
     </div>
 
     <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--c-border);" class="reveal">
       <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6rem; margin-bottom: 1rem; letter-spacing: -0.01em;">And under OKO Corporate</h3>
-      <p>Beyond the first operating lanes, OKO supports scoped work in territorial AI licensing, tenant-owned deployments, white-label substrate hosting, governance and policy advisory, semantic-kernel research, agent-stack integration consulting, and bespoke vertical solutions on the same substrate. Each is engaged as a separate scope.</p>
+      <p>Beyond the first operating stations, OKO supports scoped work in territorial AI licensing, tenant-owned deployments, white-label substrate hosting, governance and policy advisory, automata research, agent-stack integration, and vertical solutions on the same rail. Each is engaged as a separate scope.</p>
     </div>
   </div>
 </section>
@@ -1103,7 +1138,7 @@
         <div class="integration-tile">Snowflake</div>
         <div class="integration-tile">Databricks</div>
         <div class="integration-tile">PostgreSQL</div>
-        <div class="integration-tile">MLflow</div>
+        <div class="integration-tile">Receipt exports</div>
         <div class="integration-tile">Tableau</div>
         <div class="integration-tile">Power BI</div>
         <div class="integration-tile">Grafana</div>
@@ -1138,7 +1173,7 @@
       </div>
 
       <p style="margin-top: 2.5rem; font-size: 0.88rem; font-style: italic; color: var(--c-text-soft);">
-        Integrations land at varying maturity. Named platforms reflect either shipped connectors, working partnerships, or the documented contract by which Thunderline integrates with that system class. Every active integration is reviewed against PolicyGate before reaching production.
+        Integrations land at varying maturity. Named platforms reflect platform classes, documented contracts, or scoped delivery targets. Any active connector is reviewed against PolicyGate before it can move governed work.
       </p>
     </div>
   </div>
@@ -1159,12 +1194,12 @@
         <div class="stat-label">Countries in our founder's operating history</div>
       </div>
       <div class="stat-block">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Receipt-grounded operator coverage on the substrate</div>
+        <div class="stat-num">Fail</div>
+        <div class="stat-label">Closed-by-default authority posture for uncovered actions</div>
       </div>
       <div class="stat-block">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">Languages supported in the call-intake layer (Whisper-class transcription)</div>
+        <div class="stat-num">Many</div>
+        <div class="stat-label">Language and intake lanes scoped per deployment and operator review</div>
       </div>
       <div class="stat-block">
         <div class="stat-num">3</div>
@@ -1192,7 +1227,7 @@
       <li>
         <div>
           <h4>Machine recommends. Human decides.</h4>
-          <p>OKO systems produce structured recommendations with provenance. The human in the loop signs the outcome. We do not sell autonomous decisioning, regulator-approved compliance, or enterprise-ready guarantees we have not built.</p>
+          <p>OKO systems produce structured recommendations with provenance. The human in the loop signs the outcome. We do not sell autonomous decisioning, regulator-approved compliance, or maturity guarantees we have not built.</p>
         </div>
       </li>
       <li>
@@ -1229,7 +1264,7 @@
     <div class="section-header reveal">
       <span class="eyebrow">OKO Holding Corporation</span>
       <h2>Who we are</h2>
-      <p class="lead">OKO Holding Corporation is the parent company. It owns Thunderline, ATLAS, and the related operating brands. The company builds governed AI systems for real operations, with human approval and receipt-backed records.</p>
+      <p class="lead">OKO Holding Corporation is the parent company. It owns Thunderline, Prism, and the applied station brands. The company builds governed AI systems for real operations, with human approval and receipt-backed records.</p>
     </div>
 
     <div class="grid-2 reveal">
@@ -1269,17 +1304,17 @@
     <div class="footer-grid">
       <div>
         <h5><span class="brand-mark"></span>OKO</h5>
-        <p style="color: var(--c-text-on-dark-soft); font-size: 0.9rem; line-height: 1.6;">OKO Holding Corporation owns Thunderline, ATLAS, and the related operating brands. Governed AI systems. Human approval. Receipt-grounded work.</p>
+        <p style="color: var(--c-text-on-dark-soft); font-size: 0.9rem; line-height: 1.6;">OKO Holding Corporation owns Thunderline, Prism, and the applied station brands. Governed AI systems. Human approval. Receipt-grounded work.</p>
       </div>
       <div>
         <h5>Operating lanes</h5>
         <ul>
-          <li><a href="#services">Field package review</a></li>
-          <li><a href="#services">Worksite intelligence</a></li>
-          <li><a href="#services">Back-office workflow</a></li>
-          <li><a href="#services">Governance dashboards</a></li>
-          <li><a href="#services">Customer operations</a></li>
-          <li><a href="#services">Live intake</a></li>
+          <li><a href="#services">ACORN capture</a></li>
+          <li><a href="#services">DORIS relay</a></li>
+          <li><a href="#services">ACE CRM</a></li>
+          <li><a href="#services">Prism cockpits</a></li>
+          <li><a href="#services">Field evidence</a></li>
+          <li><a href="#services">Automana research</a></li>
         </ul>
       </div>
       <div>
@@ -1304,7 +1339,7 @@
     </div>
     <div class="footer-bottom">
       <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
-      <div class="legal-line">ATLAS and Thunderline are services of OKO Holding Corporation. We do not sell autonomous compliance, regulator-approved decisioning, or enterprise-ready guarantees we have not built. Plan-acceptance is not implementation-authorization. Hero visual effects: <a href="https://radiant-shaders.com" style="color: var(--c-text-on-dark-soft); text-decoration-color: var(--c-accent);">Radiant by Paul Bakaus</a> (MIT).</div>
+      <div class="legal-line">Thunderline, Prism, and OKO station brands are services of OKO Holding Corporation. We do not sell autonomous compliance, regulator-approved decisioning, or maturity guarantees we have not built. Plan-acceptance is not implementation-authorization. Hero visual effects: <a href="https://radiant-shaders.com" style="color: var(--c-text-on-dark-soft); text-decoration-color: var(--c-accent);">Radiant by Paul Bakaus</a> (MIT).</div>
     </div>
   </div>
 </footer>
