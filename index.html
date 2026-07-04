@@ -52,6 +52,11 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid rgba(201, 169, 97, 0.82);
+    outline-offset: 4px;
+  }
   h1, h2, h3, h4 {
     font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
     font-weight: 500;
@@ -66,6 +71,22 @@
   p.lead { font-size: 1.2rem; color: var(--c-text); line-height: 1.55; }
   a { color: var(--c-text); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 3px; transition: color 0.2s ease; }
   a:hover { color: var(--c-accent-warm); }
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 200;
+    transform: translateY(-140%);
+    border-radius: 999px;
+    background: var(--c-accent);
+    color: #1a1208;
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease;
+  }
+  .skip-link:focus-visible { transform: translateY(0); }
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
   .container-prose { max-width: var(--max-w-prose); margin: 0 auto; padding: 0 2rem; }
   section { padding: 6rem 0; border-bottom: 1px solid var(--c-border); position: relative; }
@@ -157,6 +178,9 @@
     box-shadow: 0 4px 16px rgba(201, 169, 97, 0.25);
   }
   nav.top .cta-secondary {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     color: var(--c-text-on-dark-soft);
     text-decoration: none;
     font-size: 0.92rem;
@@ -179,7 +203,7 @@
     display: none;
     background: transparent;
     border: 1px solid rgba(255,255,255,0.18);
-    width: 42px; height: 42px;
+    width: 44px; height: 44px;
     border-radius: 100px;
     cursor: pointer;
     padding: 0;
@@ -245,6 +269,7 @@
     color: var(--c-text-on-dark);
     text-decoration: none;
     font-size: 1.05rem;
+    min-height: 44px;
     padding: 0.85rem 0;
     border-bottom: 1px solid rgba(255,255,255,0.05);
     letter-spacing: 0.01em;
@@ -314,7 +339,7 @@
     bottom: 1rem;
     right: 1rem;
     z-index: 5;
-    display: flex;
+    display: none;
     gap: 0.4rem;
     flex-wrap: wrap;
     opacity: 0.45;
@@ -392,6 +417,7 @@
   .hero .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn {
     display: inline-block;
+    min-height: 46px;
     padding: 0.95rem 1.8rem;
     font-weight: 600;
     font-size: 0.98rem;
@@ -769,8 +795,8 @@
       white-space: normal;
     }
     .hero h1 {
-      font-size: clamp(2.85rem, 13vw, 3.6rem);
-      line-height: 0.98;
+      font-size: clamp(2.55rem, 12vw, 3.35rem);
+      line-height: 1.02;
     }
     .hero .actions {
       display: grid;
@@ -785,9 +811,10 @@
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- NAV -->
-<nav class="top">
+<nav class="top" aria-label="Primary navigation">
   <div class="container">
     <a href="#top" class="brand">
       <span class="brand-mark"></span>
@@ -803,7 +830,7 @@
     </ul>
     <a href="https://thunderline.net/sign-in" target="_blank" rel="noopener" class="cta-secondary">Sign in</a>
     <a href="#contact" class="cta">Contact OKO</a>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
       <span class="bar"></span>
     </button>
   </div>
@@ -823,6 +850,7 @@
   </div>
 </nav>
 
+<main id="main-content">
 <!-- HERO with R3F canvas -->
 <header id="top" class="hero">
   <!-- SVG poster fallback: visible at z-index 0 if shader iframe fails to load or WebGL blocked -->
@@ -838,13 +866,13 @@
   <!-- Vignette overlay (z-index 2) — keeps the hero text legible over the shader -->
   <div id="hero-vignette" aria-hidden="true"></div>
   <!-- Dev/QA shader picker (z-index 5) -->
-  <div id="shader-picker" aria-label="Shader picker (dev)">
-    <button data-shader="phase-transition" class="active">Phase Transition</button>
-    <button data-shader="kinetic-grid">Kinetic Grid</button>
-    <button data-shader="magnetic-field">Magnetic Field</button>
-    <button data-shader="crystal-lattice">Crystal Lattice</button>
-    <button data-shader="tesseract-shadow">Tesseract</button>
-    <button data-shader="radiant-geometry">Radiant Geom</button>
+  <div id="shader-picker" aria-hidden="true">
+    <button type="button" data-shader="phase-transition" class="active" tabindex="-1">Phase Transition</button>
+    <button type="button" data-shader="kinetic-grid" tabindex="-1">Kinetic Grid</button>
+    <button type="button" data-shader="magnetic-field" tabindex="-1">Magnetic Field</button>
+    <button type="button" data-shader="crystal-lattice" tabindex="-1">Crystal Lattice</button>
+    <button type="button" data-shader="tesseract-shadow" tabindex="-1">Tesseract</button>
+    <button type="button" data-shader="radiant-geometry" tabindex="-1">Radiant Geom</button>
   </div>
   <div class="hero-content">
     <div class="container">
@@ -1297,6 +1325,7 @@
     <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--c-text-on-dark-soft);">In every case, the discipline is the same: OKO first, one operating workflow, one substrate story, one clear scope. We do not lead with the runway before we show the plane. The receipts are the artifact.</p>
   </div>
 </div>
+</main>
 
 <!-- FOOTER -->
 <footer>
