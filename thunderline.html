@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thunderline — Governed Autonomous Runtime | OKO Holding</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Thunderline is the governed autonomous runtime beneath OKO's stations: durable identity, evented memory, policy-gated action, receipts, lineage, and replay.">
+<meta name="theme-color" content="#070A0F">
+<link rel="stylesheet" href="assets/site.css">
+<script>try{var d=document.documentElement;if('IntersectionObserver' in window && window.matchMedia && !matchMedia('(prefers-reduced-motion:reduce)').matches){d.classList.add('reveal');setTimeout(function(){d.classList.remove('reveal');},2200);}}catch(e){}</script>
+</head>
+<body>
+<div id="stage"></div>
+<canvas id="gl"></canvas>
+<div class="grain"></div>
+
+<nav class="site">
+  <a class="brand" href="index.html"><span class="bolt"></span> OKO&nbsp;Holding</a>
+  <div class="navlinks">
+    <a href="thunderline.html" aria-current="page">Runtime</a>
+    <a href="stations.html">Stations</a>
+    <a href="circet.html">Case&nbsp;study</a>
+    <a class="cta" href="index.html#contact">Talk to us</a>
+  </div>
+</nav>
+
+<header class="hero short">
+  <div class="wrap">
+    <div class="eyebrow rv">The runtime</div>
+    <h1 class="rv">Thunderline.<br><span class="g">Autonomy, written on law.</span></h1>
+    <p class="sub rv">The governed autonomous runtime beneath every OKO station — a substrate where nothing acts without authorization, and nothing happens without a record.</p>
+  </div>
+  <div class="scrollcue"><span class="bar"></span> How it works</div>
+</header>
+
+<section id="primitives">
+  <div class="wrap">
+    <div class="kick rv">The primitives</div>
+    <h2 class="h2 rv">Six guarantees, inherited for free.</h2>
+    <p class="lead rv">A station built on Thunderline doesn't bolt governance on afterward. It's born with it. These are the runtime's non-negotiables — every business above them gets them by default.</p>
+    <div class="cards stg" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card"><span class="lab">Identity</span><h3>Durable identity</h3><p>Every actor — human, agent, station — has a stable, addressable identity that persists across restarts.</p></div>
+      <div class="card"><span class="lab">Memory</span><h3>Evented memory</h3><p>State changes are events, not overwrites. The past is never silently rewritten.</p></div>
+      <div class="card"><span class="lab">Authority</span><h3>Policy-gated action</h3><p>No action runs until a policy gate admits it. Capability, actor and scope are checked at the membrane — fail-closed.</p></div>
+      <div class="card"><span class="lab">Evidence</span><h3>Receipts</h3><p>Every state transition writes a durable, content-hashed receipt. The record is the source of truth.</p></div>
+      <div class="card"><span class="lab">Provenance</span><h3>Lineage</h3><p>Receipts link to the actions that produced and caused them — a traceable graph of what led to what.</p></div>
+      <div class="card"><span class="lab">Proof</span><h3>Replay</h3><p>Reconstruct any sequence exactly, and verify it against its receipts. Autonomy you can re-run.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="wrap">
+    <div class="kick rv">One action, end to end</div>
+    <h2 class="h2 rv">Authorized before. Receipted after.</h2>
+    <div class="flow vert rv">
+      <div class="fstep"><div class="fi">01 · intent</div><h4>An agent proposes an action</h4><p>AI prepares, routes, explains and recommends — it never acts on its own authority.</p></div>
+      <div class="fstep"><div class="fi">02 · gate</div><h4>The policy gate decides</h4><p>Capability, actor and scope are checked at the membrane. Admitted, or refused — and either way, recorded.</p></div>
+      <div class="fstep"><div class="fi">03 · seal</div><h4>The runtime writes a receipt</h4><p>Content-hashed, lineage-linked, durable. The moment the action lands, the evidence lands with it.</p></div>
+      <div class="fstep"><div class="fi">04 · replay</div><h4>Anyone authorized can replay it</h4><p>Reconstruct exactly what happened and why — for an operator, an auditor, or a regulator.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="layers">
+  <div class="wrap">
+    <div class="kick rv">Below and beside</div>
+    <h2 class="h2 rv">The compute and expression layers.</h2>
+    <div class="lattice stg">
+      <div class="node wide"><span class="tag">Compute</span><h3>ThunderBolt</h3><p>The automata &amp; execution substrate beneath the stations — deterministic, replayable compute for the runtime's heavy work.</p></div>
+      <div class="node wide"><span class="tag">Expression</span><h3>Automana</h3><p>The living-world &amp; simulation layer — the runtime made visible and playable, where emergent behavior can be watched and studied.</p></div>
+    </div>
+    <div class="panel rv" style="margin-top:22px">
+      <div class="lab">Honest status</div>
+      <p style="color:var(--soft); margin:0; font-size:.95rem">Thunderline is early. The governance machinery — policy gates, receipts, lineage, replay — is real and running; the full station catalog is being built out in the open. We tell you what's shipped versus what's designed, because the whole point of the runtime is that it can't fake confidence.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2 class="rv">Build a business.<br>Get governance for free.</h2>
+    <div class="btnrow rv">
+      <a class="btn" href="stations.html">See the stations →</a>
+      <a class="btn ghost" href="index.html">Back to overview</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <div class="creed-line">Every action <b>authorized</b> · every transition <b>receipted</b> · every operator <b>visible</b>.</div>
+        <div class="fine">Thunderline — governed autonomous runtime. AI prepares, routes, explains and recommends; humans or authorized policies decide where required.</div>
+      </div>
+      <div class="fcol"><h4>Product</h4><a href="index.html">Overview</a><a href="stations.html">Stations</a><a href="circet.html">Case study</a></div>
+      <div class="fcol"><h4>Company</h4><a href="mailto:hello@okoholding.com">Contact</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/lenis.min.js"></script>
+<script src="assets/site.js"></script>
+</body>
+</html>
