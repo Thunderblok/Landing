@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACORN × Circet — A Governed Capture Desk | OKO Holding</title>
+<meta name="description" content="ACORN turns public opportunities into source-cited, receipted, decision-ready packets for a five-lane telecom operator — a governed capture desk held to what it verified. Public-source only.">
+<meta property="og:title" content="ACORN × Circet — A Governed Capture Desk">
+<meta property="og:description" content="Source-cited, receipted, decision-ready capture on public-opportunity data. The moat is the evidence envelope.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/og-image.svg">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<style>
+  :root {
+    --c-bg: #ffffff;
+    --c-bg-alt: #fafafa;
+    --c-bg-dark: #07101f;
+    --c-bg-darker: #050a14;
+    --c-text: #0a0a0a;
+    --c-text-soft: #525252;
+    --c-text-on-dark: #f5f5f5;
+    --c-text-on-dark-soft: #a8b3c4;
+    --c-border: #e5e5e5;
+    --c-border-dark: #1a2942;
+    --c-accent: #c9a961;
+    --c-accent-warm: #d4b876;
+    --c-accent-glow: #e6c98b;
+    --c-blue-glow: #5b8cc7;
+    --max-w: 1280px;
+    --max-w-prose: 760px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 {
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  h1 { font-size: clamp(2.5rem, 5.5vw, 4.5rem); }
+  h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 1rem; }
+  h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  h4 { font-size: 1.05rem; font-family: -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; }
+  p { margin-bottom: 1rem; color: var(--c-text-soft); }
+  p.lead { font-size: 1.2rem; color: var(--c-text); line-height: 1.55; }
+  a { color: var(--c-text); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 3px; transition: color 0.2s ease; }
+  a:hover { color: var(--c-accent-warm); }
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+  .container-prose { max-width: var(--max-w-prose); margin: 0 auto; padding: 0 2rem; }
+  section { padding: 6rem 0; border-bottom: 1px solid var(--c-border); position: relative; }
+  section.dark {
+    background: var(--c-bg-dark);
+    color: var(--c-text-on-dark);
+    border-bottom-color: var(--c-border-dark);
+  }
+  section.dark p { color: var(--c-text-on-dark-soft); }
+  section.dark a { color: var(--c-text-on-dark); text-decoration-color: var(--c-accent); }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-accent);
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .accent { color: var(--c-accent); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* NAV */
+  nav.top {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(5, 10, 20, 0.78);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    color: var(--c-text-on-dark);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  nav.top .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  nav.top .brand {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: 0.04em;
+    color: var(--c-text-on-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.top .brand-mark {
+    width: 22px; height: 22px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 4px;
+    transform: rotate(45deg);
+    box-shadow: 0 0 16px rgba(201, 169, 97, 0.5);
+  }
+  nav.top ul {
+    display: flex;
+    list-style: none;
+    gap: 2.25rem;
+  }
+  nav.top ul a {
+    color: var(--c-text-on-dark-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  nav.top ul a:hover { color: var(--c-accent); }
+  nav.top .cta {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 16px rgba(201, 169, 97, 0.25);
+  }
+  nav.top .cta-secondary {
+    color: var(--c-text-on-dark-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    margin-right: 0.75rem;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.01em;
+  }
+  nav.top .cta-secondary:hover { border-color: var(--c-accent); color: var(--c-accent); }
+  @media (max-width: 720px) {
+    nav.top .cta-secondary { display: none; }
+  }
+
+  nav.top .cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201, 169, 97, 0.4); color: #1a1208; }
+
+  nav.top .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.18);
+    width: 42px; height: 42px;
+    border-radius: 100px;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s ease;
+  }
+  nav.top .nav-toggle:hover { border-color: var(--c-accent); }
+  nav.top .nav-toggle .bar {
+    display: block;
+    width: 18px; height: 2px;
+    background: var(--c-text-on-dark);
+    border-radius: 2px;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+  nav.top .nav-toggle .bar::before,
+  nav.top .nav-toggle .bar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px; height: 2px;
+    background: var(--c-text-on-dark);
+    border-radius: 2px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), top 0.25s ease;
+  }
+  nav.top .nav-toggle .bar::before { top: -6px; }
+  nav.top .nav-toggle .bar::after { top: 6px; }
+  body.nav-open nav.top .nav-toggle .bar { background: transparent; }
+  body.nav-open nav.top .nav-toggle .bar::before { top: 0; transform: rotate(45deg); }
+  body.nav-open nav.top .nav-toggle .bar::after { top: 0; transform: rotate(-45deg); }
+  body.nav-open nav.top .nav-toggle { border-color: var(--c-accent); }
+
+  nav.top .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 68px; left: 0; right: 0;
+    background: rgba(5, 10, 20, 0.96);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 2rem 2rem;
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 99;
+  }
+  body.nav-open nav.top .mobile-menu {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  nav.top .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  nav.top .mobile-menu ul a {
+    display: block;
+    color: var(--c-text-on-dark);
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    letter-spacing: 0.01em;
+  }
+  nav.top .mobile-menu ul a:hover { color: var(--c-accent); }
+  nav.top .mobile-menu .cta {
+    display: inline-block;
+    margin-top: 1.25rem;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    padding: 0.75rem 1.4rem;
+    border-radius: 100px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* PAGE HERO (no canvas — solid dark, content-focused) */
+  .page-hero {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(201, 169, 97, 0.10) 0%, transparent 45%),
+      radial-gradient(circle at 80% 80%, rgba(91, 140, 199, 0.08) 0%, transparent 45%),
+      var(--c-bg-darker);
+    color: var(--c-text-on-dark);
+    border-bottom: 1px solid var(--c-border-dark);
+    padding: 11rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201, 169, 97, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 169, 97, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+  }
+  .page-hero > * { position: relative; z-index: 1; }
+  .page-hero h1 {
+    color: var(--c-text-on-dark);
+    margin-bottom: 1.5rem;
+    max-width: 920px;
+  }
+  .page-hero h1 .accent-text {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-hero p.lead {
+    color: var(--c-text-on-dark-soft);
+    max-width: 720px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2.25rem;
+  }
+  .page-hero .actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block;
+    padding: 0.95rem 1.8rem;
+    font-weight: 600;
+    font-size: 0.98rem;
+    border-radius: 100px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    color: #1a1208;
+    box-shadow: 0 8px 24px rgba(201, 169, 97, 0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201, 169, 97, 0.45); color: #1a1208; }
+  .btn-ghost {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.18);
+    color: var(--c-text-on-dark);
+    backdrop-filter: blur(8px);
+  }
+  .btn-ghost:hover { border-color: var(--c-accent); color: var(--c-accent); background: rgba(201, 169, 97, 0.08); }
+
+  .section-header { max-width: 820px; margin-bottom: 4rem; }
+  .section-header p.lead { color: var(--c-text-soft); }
+  section.dark .section-header p.lead { color: var(--c-text-on-dark-soft); }
+
+  /* PRINCIPLES-style numbered list (matches index.html .principles-list) */
+  .ask-list {
+    list-style: none;
+    counter-reset: pcount;
+    margin-top: 2rem;
+  }
+  .ask-list li {
+    counter-increment: pcount;
+    padding: 2rem 0;
+    border-top: 1px solid var(--c-border);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .ask-list li:last-child { border-bottom: 1px solid var(--c-border); }
+  .ask-list li::before {
+    content: counter(pcount, decimal-leading-zero);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 2.2rem;
+    color: var(--c-accent);
+    line-height: 1;
+    font-weight: 400;
+  }
+  .ask-list li h4 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .ask-list li p { font-size: 0.98rem; }
+
+  /* TIMELINE */
+  .timeline {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .timeline-axis {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
+    color: var(--c-text-on-dark-soft);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-border-dark);
+    margin-bottom: 0.5rem;
+  }
+  .timeline-axis .ticks {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+  }
+  .timeline-axis .ticks span {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding-left: 0.5rem;
+    font-weight: 500;
+    color: var(--c-text-on-dark-soft);
+  }
+  .timeline-axis .ticks span:first-child { border-left: none; padding-left: 0; }
+  .phase {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.25rem 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.06);
+  }
+  .phase:last-child { border-bottom: none; }
+  .phase-label {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--c-accent);
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+  .phase-label small {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    color: var(--c-text-on-dark-soft);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.25rem;
+    font-weight: 600;
+  }
+  .phase-track {
+    position: relative;
+    height: 56px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .phase-track::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: calc(100% / 12) 100%;
+    pointer-events: none;
+  }
+  .phase-bar {
+    position: absolute;
+    top: 8px; bottom: 8px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 4px;
+    box-shadow: 0 4px 18px rgba(201, 169, 97, 0.25);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1a1208;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .phase-bar.muted {
+    background: linear-gradient(135deg, #2c3e60, #3a4f78);
+    color: var(--c-text-on-dark);
+    box-shadow: 0 4px 14px rgba(91, 140, 199, 0.18);
+  }
+
+  /* TABLE */
+  .metric-table-wrap {
+    margin-top: 2rem;
+    overflow-x: auto;
+    border: 1px solid var(--c-border);
+    border-radius: 4px;
+  }
+  table.metrics {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.94rem;
+    background: var(--c-bg);
+  }
+  table.metrics th, table.metrics td {
+    text-align: left;
+    padding: 1.1rem 1.25rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--c-border);
+  }
+  table.metrics th {
+    background: var(--c-bg-alt);
+    font-family: -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--c-text);
+  }
+  table.metrics tr:last-child td { border-bottom: none; }
+  table.metrics td:first-child {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.2rem;
+    color: var(--c-text);
+    font-weight: 500;
+    width: 26%;
+  }
+  table.metrics td:nth-child(2) { color: var(--c-text-soft); width: 38%; }
+  table.metrics td:nth-child(3) { color: var(--c-text); }
+  .metric-note {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 2px solid var(--c-accent);
+    background: var(--c-bg-alt);
+    font-size: 0.95rem;
+    color: var(--c-text);
+  }
+
+  /* DELIVERABLES (dark section) */
+  .deliverable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .deliverable {
+    padding: 1.75rem;
+    border: 1px solid var(--c-border-dark);
+    background: rgba(255,255,255,0.025);
+    border-radius: 4px;
+    position: relative;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .deliverable:hover { border-color: var(--c-accent); transform: translateY(-3px); }
+  .deliverable .num {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--c-accent);
+    font-size: 0.9rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.65rem;
+    display: block;
+  }
+  .deliverable h4 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--c-text-on-dark);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+  .deliverable p { color: var(--c-text-on-dark-soft); font-size: 0.92rem; margin: 0; }
+
+  /* PRICING */
+  .pricing-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .pricing-item {
+    border: 1px solid var(--c-border);
+    background: var(--c-bg);
+    padding: 1.5rem 1.75rem;
+    border-radius: 4px;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .pricing-item:hover {
+    border-color: var(--c-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  }
+  .pricing-item .pname {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--c-text);
+    line-height: 1.2;
+  }
+  .pricing-item .pname small {
+    display: block;
+    font-family: -apple-system, sans-serif;
+    color: var(--c-accent-warm);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 0.4rem;
+    font-weight: 600;
+  }
+  .pricing-item p { margin: 0; color: var(--c-text-soft); font-size: 0.96rem; }
+  .signal-callout {
+    margin-bottom: 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--c-bg-alt);
+    border-left: 2px solid var(--c-accent);
+    color: var(--c-text);
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+  }
+  .pricing-tail {
+    margin-top: 2rem;
+    padding: 1.5rem 1.75rem;
+    border: 1px dashed var(--c-border);
+    border-radius: 4px;
+    font-size: 0.98rem;
+    color: var(--c-text);
+    line-height: 1.6;
+  }
+
+  /* NOT-PROMISES (dark) */
+  .not-promises {
+    list-style: none;
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+  .not-promises li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--c-border-dark);
+    background: rgba(255,255,255,0.02);
+    border-radius: 4px;
+    color: var(--c-text-on-dark-soft);
+    font-size: 0.96rem;
+    line-height: 1.55;
+  }
+  .not-promises li::before {
+    content: "—";
+    color: var(--c-accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  /* CTA */
+  .cta-block {
+    background: linear-gradient(135deg, var(--c-bg-darker) 0%, var(--c-bg-dark) 100%);
+    color: var(--c-text-on-dark);
+    padding: 6rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.1) 0%, transparent 60%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-block > * { position: relative; z-index: 1; }
+  .cta-block h2 { color: var(--c-text-on-dark); }
+  .cta-block p { color: var(--c-text-on-dark-soft); max-width: 640px; margin: 1rem auto 2.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--c-bg-darker);
+    color: var(--c-text-on-dark-soft);
+    padding: 5rem 0 2rem;
+    font-size: 0.9rem;
+    border-top: 1px solid var(--c-border-dark);
+  }
+  footer .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--c-border-dark);
+  }
+  footer h5 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    color: var(--c-text-on-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  footer h5 .brand-mark {
+    width: 16px; height: 16px;
+    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
+    border-radius: 3px;
+    transform: rotate(45deg);
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 0.5rem; }
+  footer ul a { color: var(--c-text-on-dark-soft); text-decoration: none; }
+  footer ul a:hover { color: var(--c-accent); }
+  footer .footer-bottom {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--c-text-on-dark-soft);
+    font-size: 0.83rem;
+  }
+  footer .legal-line { max-width: 700px; line-height: 1.5; }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav.top ul { display: none; }
+    nav.top .nav-toggle { display: inline-flex; }
+    nav.top .mobile-menu { display: block; }
+    section { padding: 4.5rem 0; }
+    .page-hero { padding: 9rem 0 4.5rem; }
+    .ask-list li { grid-template-columns: 60px 1fr; gap: 1.25rem; }
+    .pricing-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .timeline-axis, .phase { grid-template-columns: 1fr; gap: 0.5rem; }
+    .timeline-axis .ticks { display: none; }
+    .phase-track { height: 48px; }
+    footer .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  }
+  @media (max-width: 480px) {
+    footer .footer-grid { grid-template-columns: 1fr; }
+    .container, .container-prose { padding: 0 1.25rem; }
+    h1 { font-size: 2.25rem; }
+    .ask-list li { grid-template-columns: 1fr; gap: 0.5rem; }
+    .ask-list li::before { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top">
+  <div class="container">
+    <a href="index.html#top" class="brand">
+      <span class="brand-mark"></span>
+      OKO
+    </a>
+    <ul>
+      <li><a href="index.html#atlas">ATLAS</a></li>
+      <li><a href="index.html#thunderline">Thunderline</a></li>
+      <li><a href="index.html#services">Capabilities</a></li>
+      <li><a href="index.html#industries">Industries</a></li>
+      <li><a href="index.html#integrations">Integrations</a></li>
+      <li><a href="index.html#global">Global</a></li>
+      <li><a href="index.html#company">Company</a></li>
+    </ul>
+    <a href="https://thunderline.net/sign-in" target="_blank" rel="noopener" class="cta-secondary">Sign in</a>
+    <a href="#contact" class="cta">Contact OKO</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="bar"></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul>
+      <li><a href="index.html#atlas">ATLAS</a></li>
+      <li><a href="index.html#thunderline">Thunderline</a></li>
+      <li><a href="index.html#services">Capabilities</a></li>
+      <li><a href="index.html#industries">Industries</a></li>
+      <li><a href="index.html#integrations">Integrations</a></li>
+      <li><a href="index.html#global">Global</a></li>
+      <li><a href="index.html#company">Company</a></li>
+      <li><a href="https://thunderline.net/sign-in" target="_blank" rel="noopener">Sign in to live platform</a></li>
+    </ul>
+    <a href="#contact" class="cta">Contact OKO</a>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<header class="page-hero" id="top">
+  <div class="container">
+    <span class="eyebrow">Case study — ACORN × Circet</span>
+    <h1>A capture desk they <span class="accent-text">asked to trial</span>.</h1>
+    <p class="lead">ACORN ran a demo for a five-lane telecom-infrastructure operator and left it requesting a trial — because ACORN delivers a decision you can defend: source-cited, receipted, drawn from public-opportunity data anyone can pull but few can package.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="#offer">See the offer</a>
+      <a class="btn btn-ghost" href="#ledger">The honesty ledger</a>
+    </div>
+  </div>
+</header>
+
+<!-- 1. WHO IT'S FOR -->
+<section id="who">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Who it's for</span>
+      <h2>Circet's breadth is the asset.</h2>
+      <p class="lead">A five-lane infrastructure operator — outside plant, wireless, inside plant, data centers, fire &amp; security — screens a broad, noisy public-opportunity space by hand. ACORN turns that breadth into capture surface area: more of the addressable pipeline matched to real capability, every match carrying its source.</p>
+    </div>
+    <div class="deliverable-grid reveal">
+      <div class="deliverable"><span class="num">01</span><h4>Outside plant</h4><p>Fiber, splicing, FTTH, backhaul.</p></div>
+      <div class="deliverable"><span class="num">02</span><h4>Wireless</h4><p>5G, CBRS, DAS, E911.</p></div>
+      <div class="deliverable"><span class="num">03</span><h4>Inside plant</h4><p>Central office, optical transport.</p></div>
+      <div class="deliverable"><span class="num">04</span><h4>Data centers</h4><p>Structured cabling, smart hands.</p></div>
+      <div class="deliverable"><span class="num">05</span><h4>Fire &amp; security</h4><p>CCTV, access control, low-voltage.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. WHERE THE VALUE LANDS -->
+<section class="dark" id="value">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Where the value lands</span>
+      <h2>Reclaimed capacity, with an audit trail.</h2>
+      <p class="lead">The material names no contract dollars, and neither do we. It names, precisely, where value accrues — each one something a trial measures against Circet's own baseline.</p>
+    </div>
+    <div class="deliverable-grid reveal">
+      <div class="deliverable"><span class="num">V1</span><h4>Reclaimed hours</h4><p>Today's manual "keyword, download, eyeball" runs continuously instead, returning decision-ready packets to the capture team.</p></div>
+      <div class="deliverable"><span class="num">V2</span><h4>Coverage lift</h4><p>All five lanes, across federal, state, and municipal sources — more pipeline seen and screened than a hand-run desk can reach.</p></div>
+      <div class="deliverable"><span class="num">V3</span><h4>An audit trail</h4><p>Every pursue-or-skip is a recorded, source-cited receipt leadership can stand behind.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. WHY IT'S CREDIBLE -->
+<section id="credible">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">Why it's credible</span>
+      <h2>The moat is the evidence envelope.</h2>
+      <p class="lead">Public data is a commodity — anyone can search it. The differentiator is how each opportunity is packaged: a fixed review contract where every fact is traceable, every gap is visible, and the generator holds its confidence to what it actually verified.</p>
+    </div>
+    <div class="signal-callout reveal">Public-source · source-cited · fully receipted · no invented figures.</div>
+    <div class="deliverable-grid reveal">
+      <div class="deliverable"><span class="num">C1</span><h4>A fixed 10-part packet</h4><p>Same sections every time — a non-technical reviewer finds priorities and next actions in under thirty seconds.</p></div>
+      <div class="deliverable"><span class="num">C2</span><h4>A graded evidence ledger</h4><p>Source URLs, whether the notice and attachments were fetched and parsed, and a receipt id — you see how deep verification went.</p></div>
+      <div class="deliverable"><span class="num">C3</span><h4>A fail-closed floor</h4><p>Eligibility, pricing, and award probability stay marked for human review until proven — the packet holds its confidence to the evidence in hand.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. THE HONESTY LEDGER -->
+<section class="dark" id="ledger">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">The honesty ledger</span>
+      <h2>What's proven, what's designed, what we hold back.</h2>
+      <p class="lead">Rather than assert readiness, here is exactly where each claim stands. This candor is the product posture — the same posture the packet takes on every opportunity.</p>
+    </div>
+    <div class="metric-table-wrap reveal">
+      <table class="metrics">
+        <thead>
+          <tr><th>Standing</th><th>The claim</th><th>The evidence</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Demonstrated</td><td>The engine runs. A live workspace served real requests; 76 telecom / fiber / wireless opportunities ingested from public sources.</td><td>Running workspace · runtime screenshots.</td></tr>
+          <tr><td>Designed &amp; ratified</td><td>The trust contract exists — the 10-section packet standard, the graded-evidence ledger, and the fail-closed floor, each with acceptance tests.</td><td>Packet Room Standard · acceptance criteria.</td></tr>
+          <tr><td>Partially proven</td><td>The last mile is next. Finished packet generation wasn't run in the prep pass; the sample output is labelled "format only." The trial proves this end to end.</td><td>Runbook · sample-output notes.</td></tr>
+          <tr><td>Held back</td><td>No live recurring integration beyond SAM; no FedRAMP / SOC&nbsp;2 / CUI; no win-prediction; no signed pipeline and no dollar values.</td><td>Standing non-claims.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="metric-note reveal">Public-source only. We make no assertion that Circet is a customer or has endorsed ACORN, and no eligibility, pricing, or award-probability claim. The trial is where "the engine runs" becomes "the packet lands."</p>
+  </div>
+</section>
+
+<!-- 5. THE OFFER -->
+<section id="offer">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="eyebrow">The offer</span>
+      <h2>A phased ladder, no lock-in.</h2>
+      <p class="lead">A recommended order — stop at any phase, keep every output, owe nothing further. Each phase has a one-time and a cancellable-monthly option; fees are scoped with leadership.</p>
+    </div>
+    <div class="signal-callout reveal">Shapes of engagement — scoped on signature.</div>
+    <div class="pricing-list reveal">
+      <div class="pricing-item"><div class="pname">Trial<small>Phase 0</small></div><p>Evaluated against your codes and keywords. Zero obligation; data deleted at close.</p></div>
+      <div class="pricing-item"><div class="pname">ACORN pilot<small>Phase 1</small></div><p>Production-style, in your cloud. The output stays with you.</p></div>
+      <div class="pricing-item"><div class="pname">SiteVision pilot<small>Phase 2</small></div><p>Field-closeout validation on a project slice, on the same receipted spine.</p></div>
+      <div class="pricing-item"><div class="pname">Private AI layer<small>Phase 3</small></div><p>A model trained on your data — portable, and yours to keep.</p></div>
+    </div>
+    <p class="pricing-tail reveal">Recommended order, but the ladder is yours to climb at your pace. The trial earns the pilot; the pilot earns the rest. Every rung leaves you with something you keep.</p>
+  </div>
+</section>
+
+<!-- 6. CTA -->
+<div id="contact" class="cta-block">
+  <div class="container-prose">
+    <span class="eyebrow">How to start</span>
+    <h2>See more. Prove every call.</h2>
+    <p>One reply, one set of codes and keywords, and we come back with a scoped trial — evaluated on your lanes, receipted end to end.</p>
+    <div class="actions" style="justify-content: center; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <a class="btn btn-primary" href="mailto:hello@okoholding.com?subject=ACORN%20trial%20%E2%80%94%20Circet%20lanes">hello@okoholding.com</a>
+      <a class="btn btn-ghost" href="pilot.html">See the pilot proposal</a>
+    </div>
+    <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--c-text-on-dark-soft);">Public-source only. AI assists, humans approve, ACORN records. A review-stage case study, not a signed engagement.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h5><span class="brand-mark"></span>OKO</h5>
+        <p style="color: var(--c-text-on-dark-soft); font-size: 0.9rem; line-height: 1.6;">OKO Holding Corporation owns Thunderline, ATLAS, and the related operating brands. Governed AI systems. Human approval. Receipt-grounded work.</p>
+      </div>
+      <div>
+        <h5>Operating lanes</h5>
+        <ul>
+          <li><a href="index.html#services">Field package review</a></li>
+          <li><a href="index.html#services">Worksite intelligence</a></li>
+          <li><a href="index.html#services">Back-office workflow</a></li>
+          <li><a href="index.html#services">Governance dashboards</a></li>
+          <li><a href="index.html#services">Customer operations</a></li>
+          <li><a href="index.html#services">Live intake</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="https://thunderline.net/sign-in" target="_blank" rel="noopener">Live platform ↗</a></li>
+          <li><a href="index.html#thunderline">Thunderline substrate</a></li>
+          <li><a href="index.html#integrations">Integrations</a></li>
+          <li><a href="index.html#industries">Industries</a></li>
+          <li><a href="index.html#global">Global reach</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="index.html#company">About OKO</a></li>
+          <li><a href="index.html#company">Leadership</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="mailto:atlas@aliveadvisor.com">atlas@aliveadvisor.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+      <div class="legal-line">ATLAS and Thunderline are services of OKO Holding Corporation. We do not sell autonomous compliance, regulator-approved decisioning, or enterprise-ready guarantees we have not built. Plan-acceptance is not implementation-authorization.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cormorant Garamond from Google Fonts (loaded async, non-blocking) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+<!-- Scroll-reveal + mobile menu toggle -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Scroll reveal
+    const els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+      els.forEach(el => io.observe(el));
+    } else {
+      els.forEach(el => el.classList.add('visible'));
+    }
+
+    // Mobile hamburger toggle
+    const toggle = document.querySelector('.nav-toggle');
+    const menu = document.getElementById('mobile-menu');
+    if (toggle && menu) {
+      const closeMenu = () => {
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+      };
+      toggle.addEventListener('click', () => {
+        const isOpen = document.body.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        menu.setAttribute('aria-hidden', String(!isOpen));
+      });
+      menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && document.body.classList.contains('nav-open')) closeMenu();
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
