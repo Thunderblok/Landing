@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Into the Thunderblock — OKO Holding</title>
+<meta name="description" content="A substrate that thinks. Descend into a Thunderblock and watch a burst propagate across the lattice — computation grown from local rules, seeded and fingerprinted so every result replays.">
+<meta name="theme-color" content="#050a14">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>
+  :root{
+    --bg:#050a14; --bg2:#07101f; --ink:#eaf0f8;
+    --soft:#a8b3c4; --faint:#6b7789;
+    --gold:#c9a961; --gold-warm:#d4b876; --gold-glow:#e6c98b; --blue:#5b8cc7;
+    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box} html,body{margin:0}
+  body{background:var(--bg); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; overflow-x:hidden}
+  h1,h2{font-family:var(--serif); font-weight:500; margin:0; letter-spacing:-.015em; line-height:1.04; text-wrap:balance; text-shadow:0 2px 34px rgba(3,6,12,.85), 0 0 3px rgba(3,6,12,.6)}
+  h1 em,h2 em{font-style:italic; color:var(--gold-warm)}
+  #stage{position:fixed; inset:0; z-index:0}
+  #scene{display:block; width:100%; height:100%}
+  /* cinematic vignette + grain over the canvas */
+  .vig{position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 42%, transparent 40%, rgba(3,6,12,.55) 78%, rgba(2,4,9,.9) 100%);}
+  .grain{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:22px 40px}
+  .brand{font-family:var(--serif); font-size:1.3rem; display:flex; align-items:center; gap:11px; color:var(--ink); text-decoration:none; letter-spacing:.02em}
+  .brand .mk{width:13px;height:13px;background:linear-gradient(135deg,var(--gold),var(--gold-warm));transform:rotate(45deg);border-radius:3px;box-shadow:0 0 16px rgba(201,169,97,.6)}
+  .back{font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); text-decoration:none; border:1px solid rgba(255,255,255,.14); padding:8px 13px; border-radius:100px; transition:.2s}
+  .back:hover{border-color:var(--gold); color:var(--gold)}
+  .prog{position:fixed; left:40px; bottom:26px; z-index:30; font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--faint)}
+  .prog b{color:var(--gold)}
+  .track{position:relative; z-index:10}
+  .panel{min-height:100vh; display:flex; align-items:center; pointer-events:none}
+  .panel .cap{max-width:460px; margin-left:8vw; pointer-events:auto; opacity:0; transform:translateY(28px); filter:blur(6px)}
+  .panel.on .cap{opacity:1; transform:none; filter:none; transition:opacity 1s cubic-bezier(.2,.8,.25,1), transform 1s cubic-bezier(.2,.8,.25,1), filter 1s ease}
+  .panel.right .cap{margin-left:auto; margin-right:8vw; text-align:right}
+  .panel.mid .cap{margin:0 auto; text-align:center}
+  @media(prefers-reduced-motion:reduce){.panel .cap{opacity:1;transform:none;filter:none}}
+  .eye{font-family:var(--mono); font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; display:flex; align-items:center; gap:9px}
+  .panel.right .eye{justify-content:flex-end} .panel.mid .eye{justify-content:center}
+  .eye::before{content:""; width:22px; height:1px; background:var(--gold); opacity:.6}
+  .panel.right .eye::before{display:none} .panel.right .eye::after{content:""; width:22px; height:1px; background:var(--gold); opacity:.6}
+  h1{font-size:clamp(2.6rem,6.4vw,4.6rem)}
+  h2{font-size:clamp(2.2rem,5.4vw,3.7rem)}
+  .cap p{color:var(--soft); font-size:1.12rem; line-height:1.55; margin:18px 0 0; max-width:44ch; text-shadow:0 1px 20px rgba(3,6,12,.8)}
+  .panel.right .cap p{margin-left:auto} .panel.mid .cap p{margin-left:auto;margin-right:auto}
+  .chip{display:inline-block; margin-top:22px; font-family:var(--mono); font-size:.63rem; letter-spacing:.08em; color:var(--soft); border:1px solid rgba(255,255,255,.14); padding:8px 14px; border-radius:100px; background:rgba(255,255,255,.02)}
+  .chip.gold{color:var(--gold-glow); border-color:rgba(201,169,97,.4)}
+  .end{position:relative; z-index:10; text-align:center; padding:34vh 40px 22vh; background:linear-gradient(180deg,transparent, rgba(3,6,12,.6) 30%, var(--bg))}
+  .end h2{font-size:clamp(2.2rem,5.4vw,3.6rem)}
+  .end p{color:var(--soft); max-width:52ch; margin:20px auto 0; line-height:1.6}
+  .btnrow{display:flex; gap:14px; justify-content:center; margin-top:34px; flex-wrap:wrap}
+  .btn{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; padding:14px 24px; border-radius:100px; transition:.2s}
+  .btn.solid{background:linear-gradient(135deg,var(--gold),var(--gold-warm)); color:#160f04; font-weight:600; box-shadow:0 6px 26px rgba(201,169,97,.28)}
+  .btn.solid:hover{transform:translateY(-2px); box-shadow:0 10px 34px rgba(201,169,97,.45)}
+  .btn.ghost{color:var(--ink); border:1px solid rgba(255,255,255,.2)}
+  .btn.ghost:hover{border-color:var(--gold); color:var(--gold)}
+  .fb{position:fixed;inset:0;z-index:0;display:none;align-items:center;justify-content:center;color:var(--faint);font-family:var(--mono);font-size:.8rem}
+</style>
+<script type="importmap">
+{ "imports": { "three": "./assets/vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering the substrate…</div></div>
+<div class="vig"></div>
+<div class="grain"></div>
+
+<nav>
+  <a class="brand" href="index.html"><span class="mk"></span> OKO</a>
+  <a class="back" href="index.html">← okoholding.com</a>
+</nav>
+<div class="prog"><b id="pv">the substrate</b> · scroll to descend</div>
+
+<div class="track">
+  <section class="panel mid" data-i="0"><div class="cap">
+    <div class="eye">OKO Holding · the substrate</div>
+    <h1>A substrate that <em>thinks.</em></h1>
+    <p>This is a Thunderblock — one sovereign cell of a machine grown from local rules, keeping its own memory and its own law.</p>
+    <span class="chip">scroll to descend ↓</span>
+  </div></section>
+
+  <section class="panel" data-i="1"><div class="cap">
+    <div class="eye">Look closer</div>
+    <h2>Every block is a <em>world.</em></h2>
+    <p>Past the shell it stops being an icon. Inside, thousands of small machines are already at work.</p>
+  </div></section>
+
+  <section class="panel right" data-i="2"><div class="cap">
+    <div class="eye">The little machines</div>
+    <h2>Thunderbits, <em>firing.</em></h2>
+    <p>Each follows one local rule. No bit sees the whole picture — yet a burst propagates across the lattice, one tick at a time, and coordination emerges.</p>
+    <span class="chip gold">cell → bit → creature → world</span>
+  </div></section>
+
+  <section class="panel" data-i="3"><div class="cap">
+    <div class="eye">The substrate, thinking</div>
+    <h2>A burst runs.<br>A receipt <em>seals.</em></h2>
+    <p>Fast loops run locally and deterministically. Every burst is seeded and fingerprinted — computation you can replay and prove.</p>
+    <span class="chip">seed 0x7d73 · sha256 bd21…e5b</span>
+  </div></section>
+
+  <section class="panel mid" data-i="4"><div class="cap">
+    <div class="eye">And back out</div>
+    <h2>One block.<br>Then a <em>thousand.</em></h2>
+    <p>Compose sovereign blocks into an operating system for emergent intelligence.</p>
+  </div></section>
+</div>
+
+<section class="end">
+  <h2>Millions of machines. One emergent mind.</h2>
+  <p>Identity, memory, transport, planning and law — inherited from the substrate itself, so every station built on it is governed from its first breath.</p>
+  <div class="btnrow">
+    <a class="btn solid" href="index.html#contact">Talk to OKO →</a>
+    <a class="btn ghost" href="circet.html">See a station at work</a>
+  </div>
+</section>
+
+<script type="module">
+import * as THREE from "three";
+
+const canvas = document.getElementById('scene');
+let renderer;
+try{
+  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+}catch(e){ document.getElementById('fb').style.display='flex'; }
+if(renderer){
+renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
+renderer.setClearColor(0x050a14, 1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x050a14, 0.04);
+const camera = new THREE.PerspectiveCamera(46, innerWidth/innerHeight, 0.1, 120);
+camera.position.set(0, 0, 7.4);
+
+const world = new THREE.Group(); scene.add(world);
+const block = new THREE.Group(); world.add(block);
+
+const R = 1.62, DEPTH = 1.5;
+
+// ---------- hex-prism shell: dark glass with gold Fresnel rim ----------
+const prism = new THREE.CylinderGeometry(R, R, DEPTH, 6, 1);
+prism.rotateX(Math.PI/2);      // hex face toward camera
+prism.rotateZ(Math.PI/6);      // flat-top
+const shellMat = new THREE.ShaderMaterial({
+  transparent:true, depthWrite:false, side:THREE.DoubleSide,
+  uniforms:{ uShell:{value:1.0} },
+  vertexShader:`
+    varying vec3 vN; varying vec3 vV;
+    void main(){
+      vec4 wp = modelMatrix * vec4(position,1.0);
+      vN = normalize(mat3(modelMatrix) * normal);
+      vV = normalize(cameraPosition - wp.xyz);
+      gl_Position = projectionMatrix * viewMatrix * wp;
+    }`,
+  fragmentShader:`
+    varying vec3 vN; varying vec3 vV; uniform float uShell;
+    void main(){
+      float f = pow(1.0 - max(dot(normalize(vN), normalize(vV)), 0.0), 2.6);
+      vec3 base = vec3(0.015,0.03,0.06);
+      vec3 gold = vec3(0.82,0.64,0.32);
+      vec3 col = mix(base, gold, f);
+      float a = mix(0.015, 0.42, pow(f,1.5)) * uShell;
+      gl_FragColor = vec4(col, a);
+    }`
+});
+const shell = new THREE.Mesh(prism, shellMat); block.add(shell);
+
+// gold wireframe + a soft glow copy (fake bloom)
+const edgeGeo = new THREE.EdgesGeometry(prism);
+const edge = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color:0xd4b876, transparent:true, opacity:0.95 }));
+block.add(edge);
+const edgeGlow = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({ color:0xc9a961, transparent:true, opacity:0.35, blending:THREE.AdditiveBlending, depthWrite:false }));
+edgeGlow.scale.set(1.03,1.03,1.03); block.add(edgeGlow);
+
+// soft gold halo behind the block (atmosphere)
+const halo = new THREE.Sprite(new THREE.SpriteMaterial({ color:0xc9a961, transparent:true, opacity:0.0, blending:THREE.AdditiveBlending, depthWrite:false }));
+halo.scale.set(9,9,1); halo.position.z = -1.2; world.add(halo);
+
+// ---------- interior lattice of Thunderbits ----------
+const pts = [];
+const step = 0.115, rad = R*0.82;
+for(let x=-rad; x<=rad; x+=step)
+  for(let y=-rad; y<=rad; y+=step){
+    if(x*x + y*y > rad*rad) continue;
+    for(let z=-DEPTH*0.44; z<=DEPTH*0.44; z+=step){
+      pts.push(
+        x + (Math.random()-0.5)*0.05,
+        y + (Math.random()-0.5)*0.05,
+        z + (Math.random()-0.5)*0.05
+      );
+    }
+  }
+const N = pts.length/3;
+const pos = new Float32Array(pts);
+const jit = new Float32Array(N);
+for(let i=0;i<N;i++) jit[i]=Math.random();
+const lat = new THREE.BufferGeometry();
+lat.setAttribute('position', new THREE.BufferAttribute(pos,3));
+lat.setAttribute('aJit', new THREE.BufferAttribute(jit,1));
+const latMat = new THREE.ShaderMaterial({
+  transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+  uniforms:{
+    uTime:{value:0}, uBurst:{value:0}, uOpacity:{value:0},
+    uScale:{value:innerHeight*renderer.getPixelRatio()},
+    uSeedA:{value:new THREE.Vector3(-rad*0.6,-rad*0.5, 0.0)},
+    uSeedB:{value:new THREE.Vector3( rad*0.6, rad*0.4, 0.0)},
+    uWaveA:{value:0}, uWaveB:{value:0}
+  },
+  vertexShader:`
+    attribute float aJit; uniform float uTime,uBurst,uScale,uWaveA,uWaveB;
+    uniform vec3 uSeedA,uSeedB; varying float vAct;
+    void main(){
+      float dA = distance(position, uSeedA);
+      float dB = distance(position, uSeedB);
+      float ringA = exp(-9.0*pow(dA - uWaveA, 2.0));
+      float ringB = exp(-9.0*pow(dB - uWaveB, 2.0));
+      float shimmer = 0.12*(0.5+0.5*sin(uTime*2.2 + aJit*40.0));
+      float act = clamp(max(ringA, ringB) + shimmer, 0.0, 1.0) * uBurst;
+      vAct = act;
+      vec4 mv = modelViewMatrix * vec4(position,1.0);
+      float sz = (2.0 + 9.5*act) * (uScale*0.0016 / max(0.1,-mv.z));
+      gl_PointSize = sz;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader:`
+    precision mediump float; varying float vAct; uniform float uOpacity;
+    void main(){
+      vec2 c = gl_PointCoord-0.5; float d=length(c); if(d>0.5) discard;
+      float glow = smoothstep(0.5,0.14,d);
+      float core = smoothstep(0.26,0.0,d);
+      vec3 idle = vec3(0.24,0.36,0.58);
+      vec3 gold = vec3(0.88,0.68,0.34);
+      vec3 hot  = vec3(1.0,0.95,0.80);
+      vec3 col = mix(idle, gold, vAct);
+      col = mix(col, hot, core*vAct);
+      float a = (glow*0.3 + core*1.0) * uOpacity * (0.5 + 0.5*vAct);
+      gl_FragColor = vec4(col, a);
+    }`
+});
+const lattice = new THREE.Points(lat, latMat); block.add(lattice);
+
+// ---------- the seal ring ----------
+const sealGeo = new THREE.RingGeometry(R*0.9, R*1.0, 6, 1);
+const sealMat = new THREE.MeshBasicMaterial({ color:0xe6c98b, transparent:true, opacity:0, blending:THREE.AdditiveBlending, side:THREE.DoubleSide, depthWrite:false });
+const seal = new THREE.Mesh(sealGeo, sealMat); seal.rotation.z = Math.PI/6; block.add(seal);
+
+// ---------- ambient motes outside the block ----------
+const M = 380; const mp = new Float32Array(M*3);
+for(let i=0;i<M;i++){ mp[i*3]=(Math.random()-0.5)*22; mp[i*3+1]=(Math.random()-0.5)*14; mp[i*3+2]=-Math.random()*20-2; }
+const mg = new THREE.BufferGeometry(); mg.setAttribute('position', new THREE.BufferAttribute(mp,3));
+const motes = new THREE.Points(mg, new THREE.PointsMaterial({ color:0x5b8cc7, size:0.03, transparent:true, opacity:0.5, blending:THREE.AdditiveBlending, depthWrite:false }));
+world.add(motes);
+
+function resize(){ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); latMat.uniforms.uScale.value=innerHeight*renderer.getPixelRatio(); }
+resize(); addEventListener('resize', resize);
+
+// ---------- scroll + mouse ----------
+const clamp=(a,b,t)=>{ t=(t-a)/(b-a); return Math.max(0,Math.min(1,t)); };
+const smooth=(a,b,t)=>{ t=clamp(a,b,t); return t*t*(3-2*t); };
+const easeIO=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+let p=0, mx=0, my=0, tmx=0, tmy=0;
+const pv=document.getElementById('pv');
+const labels=['the substrate','a thunderblock','the little machines','a receipt seals','one block · then a thousand'];
+const track=document.querySelector('.track');
+function onScroll(){ const max=track.offsetHeight - innerHeight; p=clamp(0,1, scrollY/Math.max(1,max)); }
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+addEventListener('pointermove', e=>{ tmx=(e.clientX/innerWidth-0.5); tmy=(e.clientY/innerHeight-0.5); });
+
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('on', e.isIntersecting)), {threshold:0.4});
+  document.querySelectorAll('.panel').forEach(el=>io.observe(el));
+} else document.querySelectorAll('.panel').forEach(el=>el.classList.add('on'));
+
+const clock=new THREE.Clock();
+function loop(){
+  const t=clock.getElapsedTime();
+  mx += (tmx-mx)*0.05; my += (tmy-my)*0.05;
+
+  const descend = smooth(0.08,0.58,p);
+  const pull    = smooth(0.72,0.96,p);
+  // stop just inside the shell so the whole firing lattice stays in frame
+  camera.position.z = 7.4 - easeIO(descend)*6.0 + pull*6.2;
+  camera.position.x = mx*0.7*(1.0-descend*0.6);
+  camera.position.y = -my*0.5*(1.0-descend*0.6);
+  camera.lookAt(0,0,0);
+
+  block.rotation.y = t*0.11 + p*0.5 + mx*0.25;
+  block.rotation.x = 0.1 + Math.sin(t*0.22)*0.03 - my*0.2;
+  world.rotation.z = Math.sin(t*0.05)*0.02;
+  motes.rotation.y = t*0.01;
+
+  // shell dissolves early, so the firing beat is clean lattice (not gold fog)
+  const dissolve = smooth(0.26,0.44,p);
+  shellMat.uniforms.uShell.value = (1.0 - dissolve) * (1.0 - pull*0.5) + pull*0.7;   // reforms to hero crystal
+  edge.material.opacity = 0.95*(1.0 - smooth(0.32,0.45,p)) + pull*0.95;
+  edgeGlow.material.opacity = 0.35*(1.0 - smooth(0.32,0.46,p)) + pull*0.35;
+  halo.material.opacity = 0.14*(1.0 - descend*0.92) + pull*0.12;   // atmosphere at hero, gone inside
+
+  // lattice: faint machines visible THROUGH the glass at rest, full burst once inside, dims on reform
+  latMat.uniforms.uTime.value = t;
+  latMat.uniforms.uOpacity.value = (0.18 + 0.82*smooth(0.22,0.44,p)) * (1.0 - pull*0.72);
+  // the seal: crisp gold hex ring rushes inward and snaps shut, with a lattice flash
+  const sealP = smooth(0.65,0.74,p) * (1.0 - smooth(0.80,0.9,p));
+  latMat.uniforms.uBurst.value = ((0.14 + 0.86*smooth(0.24,0.46,p)) + sealP*0.5) * (1.0 - pull*0.62);
+  const maxW = rad*2.2;
+  latMat.uniforms.uWaveA.value = (t*0.72) % maxW;
+  latMat.uniforms.uWaveB.value = (t*0.72 + maxW*0.5) % maxW;
+
+  sealMat.opacity = sealP;
+  seal.scale.setScalar(0.95 - sealP*0.55 + (0.5+0.5*Math.sin(t*4.0))*0.03);
+
+  pv.textContent = labels[Math.min(4, Math.floor(p*5+0.001))];
+  renderer.render(scene, camera);
+  requestAnimationFrame(loop);
+}
+loop();
+}
+</script>
+</body>
+</html>
