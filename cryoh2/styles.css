@@ -335,7 +335,7 @@ section {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: 52px;
-  align-items: start;
+  align-items: end;
 }
 
 .section-kicker {
@@ -579,7 +579,7 @@ li + li {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 36px;
-  align-items: start;
+  align-items: end;
 }
 
 .contact-card {
@@ -722,6 +722,7 @@ form .button {
     .steps,
     .contact-box {
     grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
   .story-reverse > div {
