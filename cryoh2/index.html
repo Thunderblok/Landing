@@ -14,7 +14,6 @@
         <a class="brand" href="/" aria-label="CryoH2 home"><img src="assets/cryoh2-logo-transparent-trimmed.png" alt="CryoH2"></a>
         <nav class="top-actions" aria-label="Primary">
           <a href="#cryotherapy">Cryotherapy</a>
-          <a href="#in-session">In Session</a>
           <a href="#hydrogen">Hydrogen Therapy</a>
           <a href="#contact">Contact</a>
           <a class="button" href="tel:19544061676">Call or Text</a>
@@ -23,7 +22,6 @@
 
       <section id="main-content" class="hero">
         <div class="hero-media" aria-hidden="true">
-          <img class="hero-slide" src="assets/cryoh2-hero.png" alt="">
           <img class="hero-slide" src="assets/cryoh2-sideline-treatment.jpeg" alt="">
           <img class="hero-slide" src="assets/cryoh2-clinic-treatment.jpeg" alt="">
         </div>
@@ -36,17 +34,17 @@
             <a class="button secondary" href="tel:19544061676">954-406-1676</a>
           </div>
           <div class="hero-trust" aria-label="Service highlights">
-            <span>Fort Lauderdale studio</span>
-            <span>Mobile concierge</span>
-            <span>Sports and recovery support</span>
+            <span>Fort Lauderdale Studio</span>
+            <span>Mobile Concierge</span>
+            <span>Sports and Recovery Support</span>
           </div>
         </div>
       </section>
 
       <div class="quick-strip">
         <div class="quick-grid">
-          <div class="quick-item"><strong>Location</strong><span>540 N Andrews Avenue Suite 26, Fort Lauderdale</span></div>
-          <div class="quick-item"><strong>Mobile Concierge</strong><span>Homes, offices, gyms, hotels, and events</span></div>
+          <div class="quick-item"><strong>Location</strong><span>540 N Andrews Avenue Suite 26<br>Fort Lauderdale, FL 33001</span></div>
+          <div class="quick-item"><strong>Mobile Concierge</strong><span>Home, Office, Gym, Hotel, Athletic and Wellness Events</span></div>
           <div class="quick-item"><strong>Hours</strong><span>Monday - Sunday, 8am - 6pm</span></div>
           <div class="quick-item"><strong>By Appointment</strong><span>After-hours concierge appointments available</span></div>
         </div>
@@ -104,7 +102,6 @@
               <div class="video-copy">
                 <p class="story-label">Treatment demo</p>
                 <h3>See the localized flow in action.</h3>
-                <p>A quick demo clip shows how the localized treatment is applied, framed in its own focused viewing area for easy playback.</p>
               </div>
               <figure class="video-frame">
                 <video controls preload="metadata" playsinline poster="assets/cryoh2-treatment-video-poster.jpg" aria-label="CryoH2 localized treatment demo video">
@@ -194,27 +191,57 @@
             <p class="section-kicker">Book your session</p>
             <h2>Take the next step toward feeling your best.</h2>
             <img class="contact-logo" src="assets/cryoh2-logo-transparent-trimmed.png" alt="CryoH2">
-            <p>540 N Andrews Avenue Suite 26<br>Fort Lauderdale, FL 33301</p>
+            <p>540 N Andrews Avenue Suite 26<br>Fort Lauderdale, FL 33001</p>
             <p><strong>Call or Text:</strong> <a href="tel:19544061676">954-406-1676</a></p>
-            <p><strong>Hours:</strong> Monday - Sunday, 8am - 6pm<br>By appointment only.</p>
-            <p class="fine-print">Need a time outside regular hours? Concierge after-hours appointments are available for clients seeking maximum flexibility. Additional fees apply.</p>
-          </div>
-          <div class="contact-card booking-card">
-            <p class="section-kicker">Fastest booking</p>
-            <h3>Call or text CryoH2 directly.</h3>
-            <p>Appointments are handled personally so each session can be matched to the treatment area, location, and recovery goal.</p>
-            <div class="booking-actions">
-              <a class="button" href="tel:19544061676">Call 954-406-1676</a>
-              <a class="button secondary" href="sms:19544061676">Text CryoH2</a>
+            <p><strong>Hours:</strong> Monday - Sunday, 8am - 6pm<br>By Appointment Only!</p>
+            <p class="fine-print">Need a time outside regular hours? Concierge after-hours appointments are available for clients seeking maximum flexibility.<br>*Additional Fees Apply</p>
+            <div class="map-card">
+              <iframe title="Map showing CryoH2 at 540 N Andrews Avenue Suite 26, Fort Lauderdale" src="https://www.google.com/maps?q=540%20N%20Andrews%20Avenue%20Suite%2026%2C%20Fort%20Lauderdale%2C%20FL%2033001&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <a class="directions-link" href="https://www.google.com/maps/dir/?api=1&amp;destination=540%20N%20Andrews%20Avenue%20Suite%2026%2C%20Fort%20Lauderdale%2C%20FL%2033001" target="_blank" rel="noopener noreferrer">Get Directions</a>
             </div>
-            <dl class="booking-details">
-              <div><dt>Studio</dt><dd>540 N Andrews Avenue Suite 26</dd></div>
-              <div><dt>Concierge</dt><dd>Home, hotel, gym, office, or event</dd></div>
-              <div><dt>Hours</dt><dd>Daily by appointment, 8am - 6pm</dd></div>
-            </dl>
+          </div>
+          <div class="contact-card">
+            <p class="section-kicker">Request an appointment</p>
+            <h3>Tell us how we can help.</h3>
+            <form id="appointment-form">
+              <label for="appointment-name">Name</label>
+              <input id="appointment-name" type="text" name="name" autocomplete="name" required>
+              <label for="appointment-phone">Phone</label>
+              <input id="appointment-phone" type="tel" name="phone" autocomplete="tel" required>
+              <label for="appointment-email">Email</label>
+              <input id="appointment-email" type="email" name="email" autocomplete="email">
+              <label for="appointment-service">Interested In</label>
+              <select id="appointment-service" name="service" required>
+                <option value="">Choose a service</option>
+                <option>Localized Cryotherapy</option>
+                <option>Hydrogen Therapy</option>
+                <option>Both Services</option>
+                <option>Studio Appointment</option>
+                <option>Concierge Appointment</option>
+              </select>
+              <label for="appointment-message">How can we help?</label>
+              <textarea id="appointment-message" name="message" rows="5"></textarea>
+              <button class="button" type="submit">Request Appointment</button>
+              <p class="fine-print">Submitting opens a prefilled text message to CryoH2. Review and send it from your messaging app.</p>
+            </form>
           </div>
         </div>
       </section>
     </main>
+    <script>
+      document.getElementById("appointment-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const lines = [
+          "CryoH2 appointment request",
+          `Name: ${data.get("name")}`,
+          `Phone: ${data.get("phone")}`,
+          `Email: ${data.get("email") || "Not provided"}`,
+          `Interested in: ${data.get("service")}`,
+          `Message: ${data.get("message") || "Not provided"}`
+        ];
+        window.location.href = `sms:+19544061676?body=${encodeURIComponent(lines.join("\n"))}`;
+      });
+    </script>
   </body>
 </html>

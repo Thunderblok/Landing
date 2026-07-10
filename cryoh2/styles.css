@@ -182,11 +182,7 @@ video:focus-visible {
 }
 
 .hero-slide:nth-child(2) {
-  animation-delay: 6s;
-}
-
-.hero-slide:nth-child(3) {
-  animation-delay: 12s;
+  animation-delay: 9s;
 }
 
 .hero::before {
@@ -209,11 +205,11 @@ video:focus-visible {
 
 @keyframes heroSlide {
   0%,
-  27% {
+  44% {
     opacity: 1;
   }
 
-  33%,
+  50%,
   94% {
     opacity: 0;
   }
@@ -394,6 +390,22 @@ p {
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
+.steps .tile {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.steps .tile h3,
+.steps .tile p {
+  margin: 0;
+}
+
+.steps .tile h3 {
+  flex: 0 0 auto;
+  color: var(--blue);
+}
+
 .session-stories {
   display: grid;
   gap: 34px;
@@ -499,6 +511,17 @@ p {
   box-shadow: 0 8px 18px rgba(12, 47, 82, 0.05);
 }
 
+.feature-grid .tile {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+}
+
+.feature-grid .tile p {
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
 .soft .tile {
   background: var(--white);
 }
@@ -572,6 +595,69 @@ li + li {
   width: min(260px, 100%);
   height: auto;
   margin: 4px 0 18px;
+}
+
+form {
+  display: grid;
+  gap: 10px;
+}
+
+form label {
+  color: var(--navy);
+  font-weight: 800;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid #b9cbd6;
+  border-radius: 6px;
+  padding: 11px 12px;
+  color: var(--ink);
+  background: var(--white);
+  font: inherit;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+form .button {
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.map-card {
+  overflow: hidden;
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+}
+
+.map-card iframe {
+  display: block;
+  width: 100%;
+  height: 260px;
+  border: 0;
+}
+
+.directions-link {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  color: var(--blue);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.directions-link:hover {
+  background: var(--mist);
 }
 
 .booking-card h3 {
