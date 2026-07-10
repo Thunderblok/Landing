@@ -597,6 +597,31 @@ li + li {
   margin: 4px 0 18px;
 }
 
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: -4px 0 18px;
+}
+
+.social-links a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: var(--blue);
+  background: var(--white);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  border-color: var(--aqua);
+  background: var(--mist);
+}
+
 form {
   display: grid;
   gap: 10px;
