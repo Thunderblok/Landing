@@ -829,7 +829,7 @@ form .button {
 
   .hero::before {
     background:
-      linear-gradient(180deg, rgba(8, 33, 56, 0.94) 0%, rgba(8, 33, 56, 0.78) 48%, rgba(8, 33, 56, 0.42) 100%);
+      linear-gradient(180deg, rgba(8, 33, 56, 0.82) 0%, rgba(8, 33, 56, 0.64) 48%, rgba(8, 33, 56, 0.3) 100%);
   }
 
   .hero-slide {
@@ -850,5 +850,25 @@ form .button {
 
   .button {
     width: 100%;
+  }
+
+  .top-actions .nav-contact {
+    order: 3;
+  }
+
+  .top-actions .social-icon-link {
+    order: 4;
+  }
+
+  .top-actions .button {
+    order: 5;
+  }
+
+  .feature-grid .tile {
+    min-height: 0;
+  }
+
+  .feature-grid .tile p {
+    margin-top: 0;
   }
 }
