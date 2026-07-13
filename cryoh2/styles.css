@@ -98,6 +98,10 @@ video:focus-visible {
   flex-wrap: wrap;
 }
 
+.nav-contact-group {
+  display: contents;
+}
+
 .top-actions a {
   min-height: 44px;
   display: inline-flex;
@@ -852,16 +856,26 @@ form .button {
     width: 100%;
   }
 
-  .top-actions .nav-contact {
+  .nav-contact-group {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
     order: 3;
-  }
-
-  .top-actions .social-icon-link {
-    order: 4;
+    white-space: nowrap;
   }
 
   .top-actions .button {
-    order: 5;
+    order: 4;
+  }
+
+  .nav-contact-group .nav-contact {
+    order: 1;
+  }
+
+  .nav-contact-group .social-icon-link {
+    order: 2;
+    flex: 0 0 44px;
   }
 
   .feature-grid .tile {
