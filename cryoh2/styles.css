@@ -856,16 +856,38 @@ form .button {
     width: 100%;
   }
 
+  .topbar {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .top-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .top-actions > a:not(.button) {
+    justify-content: center;
+    border: 1px solid var(--line);
+    background: var(--soft);
+    padding: 8px;
+    text-align: center;
+  }
+
   .nav-contact-group {
     display: flex;
-    width: 100%;
+    grid-column: 1 / -1;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     order: 3;
     white-space: nowrap;
   }
 
   .top-actions .button {
+    grid-column: 1 / -1;
     order: 4;
   }
 
@@ -876,6 +898,23 @@ form .button {
   .nav-contact-group .social-icon-link {
     order: 2;
     flex: 0 0 44px;
+  }
+
+  .hero-trust {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .hero-trust span {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 5px;
+    text-align: center;
+    font-size: 0.72rem;
+    line-height: 1.2;
   }
 
   .feature-grid .tile {
