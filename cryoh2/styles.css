@@ -825,6 +825,7 @@ form .button {
   .brand {
     width: 156px;
     height: 56px;
+    align-self: center;
   }
 
   .hero {
