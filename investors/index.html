@@ -80,6 +80,10 @@
         <span class="n">02 · Diligence</span>
         <span class="t">Mathematical &amp; Physical Foundations v3</span>
       </a>
+      <a class="doc-link" href="./preliminary-deck.html" onclick="return persistAndGo(event, this.href)">
+        <span class="n">03 · Deck</span>
+        <span class="t">Preliminary Investor Deck v1</span>
+      </a>
     </div>
   </form>
 
@@ -113,7 +117,7 @@ async function _decrypt(password, blob) {
   return new TextDecoder().decode(plaintext);
 }
 
-const CANARY = {"salt": "hv7fnYgQ2xECX1IDr1F25A==", "iv": "hXL/2cZmo9GnRAb4", "tag": "AKZP31kxKL+brzvq9A4yDg==", "ciphertext": "na0jXlFuTjI5vduEkv5ctuqwsQlV6A==", "iterations": 250000};
+const CANARY = {"salt": "PIQ5OhBn++owMizYoBFGVQ==", "iv": "cusrChvEUb+hpJ5w", "tag": "fu/ivytwy22EGyoR+RU+sg==", "ciphertext": "NovOONlbQqPQNonzy+xFTC7GXqKT6w==", "iterations": 250000};
 async function handleUnlock(ev) {
   ev.preventDefault();
   const pw = document.getElementById('pw').value;
