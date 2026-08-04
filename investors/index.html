@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>OKO / Thunderline — Investor Materials</title>
+<style>
+  :root {
+    --paper: #F7F3EB;
+    --ink: #1C1815;
+    --muted: #6D6660;
+    --accent: #6E2E38;
+    --accent-soft: #9A5A64;
+    --rule: #E0D9CC;
+    --code-bg: #EDE7DA;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17140F; --ink: #E9E3D6; --muted: #8A857D; --accent: #D89AA6;
+      --accent-soft: #B37C87; --rule: #2A2620; --code-bg: #1E1B17;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #17140F; --ink: #E9E3D6; --muted: #8A857D; --accent: #D89AA6;
+    --accent-soft: #B37C87; --rule: #2A2620; --code-bg: #1E1B17;
+  }
+  :root[data-theme="light"] {
+    --paper: #F7F3EB; --ink: #1C1815; --muted: #6D6660; --accent: #6E2E38;
+    --accent-soft: #9A5A64; --rule: #E0D9CC; --code-bg: #EDE7DA;
+  }
+
+  html { color-scheme: light dark; scroll-behavior: smooth; }
+  body {
+    font-family: "Iowan Old Style","Charter","Palatino Linotype","Palatino",Georgia,"Times New Roman",serif;
+    font-size: 17px; line-height: 1.6; color: var(--ink); background: var(--paper);
+    margin: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 6rem;
+  }
+  .kicker {
+    font-family: ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
+    font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 4.8vw, 2.8rem);
+    font-weight: 600; letter-spacing: -0.015em; line-height: 1.1;
+    margin: 0 0 1rem; text-wrap: balance;
+  }
+  .lead {
+    font-size: 1.15rem; color: var(--ink); font-style: italic;
+    margin: 0 0 2.5rem; line-height: 1.4; text-wrap: balance; max-width: 34rem;
+  }
+  hr.rule {
+    width: 3.5rem; height: 1px; background: var(--accent);
+    margin: 3rem 0; border: 0;
+  }
+  h2 {
+    font-size: 1.15rem; font-weight: 600; margin: 2.5rem 0 1rem;
+    letter-spacing: 0.02em;
+  }
+  .doc-card {
+    display: block;
+    padding: 1.5rem 1.5rem 1.75rem;
+    margin: 1rem 0;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .doc-card:hover { border-color: var(--accent); background: rgba(110, 46, 56, 0.03); }
+  @media (prefers-color-scheme: dark) {
+    .doc-card:hover { background: rgba(216, 154, 166, 0.05); }
+  }
+  .doc-num {
+    font-family: ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent-soft); display: block; margin-bottom: 0.5rem;
+  }
+  .doc-title {
+    font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--ink); margin: 0 0 0.6rem; line-height: 1.25;
+  }
+  .doc-blurb {
+    font-size: 0.98rem; color: var(--ink); margin: 0 0 0.85rem;
+    line-height: 1.5; opacity: 0.88;
+  }
+  .doc-meta {
+    font-family: ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
+    font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .body-copy p { margin: 0.9rem 0; }
+  .body-copy strong { color: var(--ink); font-weight: 600; }
+  .body-copy em { font-style: italic; }
+  .storyline {
+    font-family: "Iowan Old Style","Charter","Palatino Linotype","Palatino",Georgia,serif;
+    font-style: italic; font-size: 1.08rem;
+    border-left: 2px solid var(--accent);
+    padding: 0.15rem 1.2rem; margin: 1.5rem 0;
+    color: var(--ink); line-height: 1.4; text-wrap: balance;
+  }
+  a.contact {
+    color: var(--accent); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: border-color 0.12s;
+  }
+  a.contact:hover { border-bottom-color: var(--accent); }
+  footer {
+    margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--rule);
+    color: var(--muted); font-size: 0.82rem;
+    font-family: ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
+    letter-spacing: 0.04em; line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">Investor Materials · Working Draft</div>
+  <h1>OKO / Thunderline</h1>
+  <p class="lead">Every AI can produce an answer.<br>We prove who produced it.</p>
+
+  <div class="body-copy">
+    <p>OKO (Okoracle) is a Florida C-corp building <strong>Thunderline</strong> — a receipt-sealed BEAM substrate for governed agent operations. Every governed action produces a byte-verifiable cryptographic receipt the instant it happens. Tampering with any sealed field is detectable, not something that has to be reconstructed later when auditors arrive.</p>
+
+    <p>This posture is what regulated buyers &mdash; federal contractors, defense integrators, finance, healthcare, legal discovery &mdash; need but cannot buy today from the OpenAI Enterprise, Anthropic for Work, or AWS Bedrock stack. Our first live commercial application is <strong>ACORN</strong>, government-contracting intelligence at a private demo hosted for early operator use.</p>
+
+    <blockquote class="storyline">Thunderline governs who and what may act. Omega5 makes the machine, program, state, and evidence behind that action explicit and reproducible.</blockquote>
+  </div>
+
+  <hr class="rule">
+
+  <h2>Documents</h2>
+
+  <a href="./thunderline-briefing.html" class="doc-card">
+    <span class="doc-num">01 · Briefing</span>
+    <div class="doc-title">OKO / Thunderline &mdash; Investor Briefing</div>
+    <p class="doc-blurb">The commercial and technical story. Product architecture, moat, first applications, five buyer personas, visual and voice direction, video treatments, copy library, objection handling, and the seven-opportunity commercial map. Nine sections, ~20,000 words, ~15 minutes cover-to-cover.</p>
+    <div class="doc-meta">v2 · 2026-08-04 · Working Draft</div>
+  </a>
+
+  <a href="./technical-foundations.html" class="doc-card">
+    <span class="doc-num">02 · Diligence</span>
+    <div class="doc-title">Mathematical &amp; Physical Foundations</div>
+    <p class="doc-blurb">Technical due-diligence appendix. The published mathematical ingredients Thunderline and Omega5 draw on (six papers, cited), the structural analogies we draw as analogies not equivalences, and the FPOC hardware research lane. What is supported by the literature and what remains ours to prove &mdash; explicitly separated.</p>
+    <div class="doc-meta">v3 · 2026-08-04 · Docs &amp; Research Only</div>
+  </a>
+
+  <hr class="rule">
+
+  <div class="body-copy">
+    <p><strong>Under-claim posture, throughout.</strong> Nothing on this page or in the linked documents commits to a production ship date, fabricates a customer name, promises a certification we do not hold, or claims a theorem as our own. The receipts spine is real and shipping. The Omega5 automata research and FPOC hardware research are &mdash; and are marked as &mdash; research lanes.</p>
+
+    <p>For an initial conversation, contact <a href="mailto:hello@okoholding.com" class="contact">hello@okoholding.com</a>.</p>
+  </div>
+
+  <footer>
+    OKOHOLDING.COM &middot; INVESTOR MATERIALS &middot; V2 &middot; 2026-08-04<br>
+    OKORACLE INC. &middot; FLORIDA C-CORP &middot; WORKING DRAFT<br>
+    DOCUMENTS ON THIS PAGE ARE STAKEHOLDER-REVIEW MATERIALS &middot; NOT PRODUCTION COMMITMENTS
+  </footer>
+</main>
+</body>
+</html>
