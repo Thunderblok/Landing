@@ -108,10 +108,10 @@
   }
   .accent { color: var(--c-accent); }
 
-  /* SCROLL REVEAL */
+  /* SCROLL REVEAL — hidden by default, IntersectionObserver adds .visible */
   .reveal {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0;
+    transform: translateY(22px);
     transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -333,37 +333,6 @@
     background-position: center;
     background-repeat: no-repeat;
   }
-  /* Shader picker — small dev/QA control for swapping shaders by URL hash */
-  .hero #shader-picker {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 5;
-    display: none;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    opacity: 0.45;
-    transition: opacity 0.25s ease;
-    pointer-events: auto;
-  }
-  .hero #shader-picker:hover { opacity: 1; }
-  .hero #shader-picker button {
-    background: rgba(5, 10, 20, 0.6);
-    border: 1px solid rgba(201, 169, 97, 0.3);
-    color: var(--c-text-on-dark-soft);
-    padding: 0.3rem 0.7rem;
-    font-size: 0.7rem;
-    border-radius: 100px;
-    cursor: pointer;
-    font-family: -apple-system, "SF Mono", monospace;
-    letter-spacing: 0.04em;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: all 0.2s ease;
-  }
-  .hero #shader-picker button:hover { color: var(--c-accent); border-color: var(--c-accent); }
-  .hero #shader-picker button.active { background: rgba(201, 169, 97, 0.18); color: var(--c-accent); border-color: var(--c-accent); }
-  @media (max-width: 720px) { .hero #shader-picker { display: none; } }
   .hero .hero-content {
     position: relative;
     z-index: 2;
@@ -808,6 +777,28 @@
       text-align: center;
     }
   }
+
+  /* prefers-reduced-motion — respect vestibular sensitivity + accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    html { scroll-behavior: auto; }
+    /* Force reveals immediately visible — no scroll gate for motion-sensitive readers */
+    .reveal, .reveal.visible { opacity: 1 !important; transform: none !important; transition: none !important; }
+    /* Hide the shader iframe entirely — motion is its whole purpose */
+    #hero-shader { display: none !important; }
+  }
+
+  /* Higher-contrast focus outline for keyboard nav (was inline earlier; belt + suspenders) */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 3px solid rgba(201, 169, 97, 0.95);
+    outline-offset: 4px;
+  }
 </style>
 </head>
 <body>
@@ -864,15 +855,6 @@
           sandbox="allow-scripts allow-same-origin"></iframe>
   <!-- Vignette overlay (z-index 2) — keeps the hero text legible over the shader -->
   <div id="hero-vignette" aria-hidden="true"></div>
-  <!-- Dev/QA shader picker (z-index 5) -->
-  <div id="shader-picker" aria-hidden="true">
-    <button type="button" data-shader="phase-transition" class="active" tabindex="-1">Phase Transition</button>
-    <button type="button" data-shader="kinetic-grid" tabindex="-1">Kinetic Grid</button>
-    <button type="button" data-shader="magnetic-field" tabindex="-1">Magnetic Field</button>
-    <button type="button" data-shader="crystal-lattice" tabindex="-1">Crystal Lattice</button>
-    <button type="button" data-shader="tesseract-shadow" tabindex="-1">Tesseract</button>
-    <button type="button" data-shader="radiant-geometry" tabindex="-1">Radiant Geom</button>
-  </div>
   <div class="hero-content">
     <div class="container">
       <span class="badge">OKO HOLDING CORPORATION · GOVERNED AGENT OPERATIONS</span>
@@ -1182,15 +1164,6 @@
         <div class="integration-tile">Next decisions</div>
       </div>
 
-      <div class="integration-cat-title">Working with OKO</div>
-      <div class="integration-grid">
-        <div class="integration-tile">Design partners</div>
-        <div class="integration-tile">Pilot engagements</div>
-        <div class="integration-tile">Integration programs</div>
-        <div class="integration-tile">Research collaborations</div>
-        <div class="integration-tile">Investor introductions</div>
-      </div>
-
       <p style="margin-top: 2.5rem; font-size: 0.88rem; font-style: italic; color: var(--c-text-soft);">
         The exact controls, records, and integrations depend on the ThunderBlock and the engagement. We scope those capabilities explicitly rather than treating every concept or connector as shipped. Named partnership programs open selectively — <a href="#contact">start a conversation</a>.
       </p>
@@ -1304,21 +1277,20 @@
   </div>
 </section>
 
-<!-- INVESTORS -->
+<!-- INVESTORS (member area entry — access is out-of-band, not open solicitation) -->
 <section id="investors">
   <div class="container">
     <div class="section-header reveal">
-      <span class="eyebrow">Investors</span>
-      <h2>The briefing is behind a password.</h2>
-      <p class="lead">The investor briefing, technical foundations, and preliminary deck live in a member area protected by a shared password issued out-of-band to qualified stakeholders. If you already have the password, sign in. If not, ask.</p>
+      <span class="eyebrow">Members</span>
+      <h2>The briefing is behind a member gate.</h2>
+      <p class="lead">Investor and diligence materials live in a member area accessed through a substantive prior relationship. If you already hold access credentials, sign in below. This site does not advertise financing terms or process unsolicited requests here.</p>
     </div>
 
     <div class="reveal" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 2rem;">
-      <a class="btn btn-primary" href="/investors/">Go to member area</a>
-      <a class="btn btn-ghost" href="mailto:hello@okoholding.com?subject=Investor%20access%20request">Request the password</a>
+      <a class="btn btn-primary" href="/investors/">Sign in</a>
     </div>
 
-    <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--c-text-soft);">Materials are stage-appropriate for OKO / Thunderline as a private governed beta. We are the source of truth for our own claims; the deck separates what is live, what is being built, and what is still design direction.</p>
+    <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--c-text-soft);">Materials reflect OKO / Thunderline as a private early-use product. The archive separates what is live, what is being built, and what is still design direction.</p>
   </div>
 </section>
 
@@ -1383,10 +1355,10 @@
   </div>
 </footer>
 
-<!-- Cormorant Garamond from Google Fonts (loaded async, non-blocking) -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;display=swap" media="print" onload="this.media='all'">
+<!-- Cormorant Garamond via fonts.bunny.net — Google Fonts drop-in proxy, no cookies, GDPR-compliant.
+     Fully self-hosted woff2 is a P1 follow-up. -->
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link rel="stylesheet" href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700&amp;display=swap" media="print" onload="this.media='all'">
 
 <!-- WebGL feature-detect: if WebGL is blocked, hide the iframe and fall back to the SVG poster -->
 <script>
@@ -1400,50 +1372,20 @@
       console.info('[OKO] WebGL unavailable — keeping SVG hero poster.');
       var iframe = document.getElementById('hero-shader');
       if (iframe) { iframe.style.display = 'none'; iframe.removeAttribute('src'); }
-      var picker = document.getElementById('shader-picker');
-      if (picker) picker.style.display = 'none';
     }
   })();
 </script>
-<!-- Shader picker — swaps the iframe src by data-shader; reflects current selection in URL hash -->
+<!-- Respect reduced-motion: also hide the shader iframe if user opted out of motion -->
 <script>
-  (function shaderPicker() {
-    var iframe = document.getElementById('hero-shader');
-    var picker = document.getElementById('shader-picker');
-    if (!iframe || !picker) return;
-    var allowed = ['phase-transition','kinetic-grid','magnetic-field','crystal-lattice','tesseract-shadow','radiant-geometry'];
-    function readHash() {
-      var m = (location.hash || '').match(/shader=([a-z0-9-]+)/);
-      return (m && allowed.indexOf(m[1]) !== -1) ? m[1] : null;
-    }
-    function setActive(slug) {
-      Array.prototype.forEach.call(picker.querySelectorAll('button'), function (btn) {
-        btn.classList.toggle('active', btn.getAttribute('data-shader') === slug);
-      });
-    }
-    function load(slug) {
-      if (allowed.indexOf(slug) === -1) return;
-      iframe.src = 'assets/shaders/' + slug + '.html';
-      setActive(slug);
-    }
-    var initial = readHash();
-    if (initial) load(initial);
-    picker.addEventListener('click', function (e) {
-      var btn = e.target.closest('button[data-shader]');
-      if (!btn) return;
-      var slug = btn.getAttribute('data-shader');
-      // update hash without scrolling
-      history.replaceState(null, '', '#shader=' + slug);
-      load(slug);
-    });
-    // Re-act if user manually edits the hash
-    window.addEventListener('hashchange', function () {
-      var slug = readHash();
-      if (slug) load(slug);
-    });
+  (function reducedMotionHero() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var iframe = document.getElementById('hero-shader');
+        if (iframe) { iframe.style.display = 'none'; iframe.removeAttribute('src'); }
+      }
+    } catch (e) { /* no-op */ }
   })();
 </script>
-<!-- (Old R3F module fully removed — Radiant shader iframe replaces it.) -->
 
 <!-- Scroll-reveal animations via IntersectionObserver + mobile menu toggle -->
 <script>
