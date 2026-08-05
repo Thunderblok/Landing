@@ -4,7 +4,7 @@
 
 - `index.html`: rewrote the public home page message, navigation labels, metadata, core sections, CTA, and footer copy.
 
-The proposal and value pages (`pilot.html`, `circet.html`, and `acorn-circet-value.html`) were not changed because they serve separate, scoped conversations.
+The proposal and value pages (`pilot.html`, `circet.html`, and `acorn-circet-value.html`) were not changed at the time because they served separate, scoped conversations. **Update 2026-08-05: all three have since been removed from the public site per operator direction — Circet in commits `4824004` + `6221b11`, Pilot in `66fa583`. The `cryoh2/` vertical page was also removed to focus the site on the OKO / Thunderline story.**
 
 ## Message change
 
