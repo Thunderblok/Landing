@@ -1,4 +1,4 @@
-name: Deploy CBP Dashboard to GitHub Pages
+name: Deploy okoholding.com to GitHub Pages
 
 on:
   push:
