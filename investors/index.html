@@ -43,8 +43,13 @@
   .unlocked.show { display:block; }
   .doc-link { display:block; padding:1rem 1.25rem; margin:0.75rem 0; border:1px solid var(--rule); border-radius:3px;
     color:var(--ink); text-decoration:none; transition:border-color 0.15s, background 0.15s; }
-  .doc-link:hover { border-color:var(--accent); background:rgba(110,46,56,0.03); border-bottom-color:var(--accent); }
-  @media (prefers-color-scheme: dark) { .doc-link:hover { background:rgba(216,154,166,0.05); } }
+  /* The tint is derived from the accent, not a second hardcoded colour.
+     This rule kept rgba(110,46,56,...) — the MAROON of the palette that was
+     replaced — so it alone never migrated, and it was gated on
+     prefers-color-scheme while the rest of the page obeys [data-theme],
+     which meant an explicit dark choice on a light OS reverted this one
+     hover to the old colour. color-mix follows the token in every state. */
+  .doc-link:hover { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, transparent); border-bottom-color:var(--accent); }
   .doc-link .n { font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
     font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-soft); display:block; margin-bottom:0.3rem; }
   .doc-link .t { font-weight:600; font-size:1.05rem; color:var(--ink); }

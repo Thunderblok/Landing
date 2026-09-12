@@ -159,6 +159,46 @@ body {
   --accent: var(--oko-accent);
 }
 
+/* ---------------------------------------------------------------------------
+ * AN ARTWORK PAGE DOES NOT FOLLOW THE THEME
+ *
+ * substrate.html's ground is not `body`. It is a Three.js canvas whose clear
+ * colour is set in JavaScript — `renderer.setClearColor(0x050a14, 1)` — with a
+ * hardcoded dark vignette over it. Neither is a custom property, so neither
+ * has ever changed with the theme and neither can.
+ *
+ * The aliases above re-pointed that page's TEXT at the themed tokens while its
+ * BACKGROUND stayed fixed. In light mode — which is also the default for any
+ * reader whose OS prefers light — the headline ink #4a463d landed on #050a14
+ * at a contrast of 2.11, and the body copy at 3.68. The page was legible only
+ * in dark. Swapping half a surface is how invisible text ships; this file's
+ * own header says so about the hero, and then it happened here in reverse.
+ *
+ * So the artwork page is pinned to the artwork values, exactly as `.hero` and
+ * the Observatory sections are. `.oko-artwork` on <html> is the declaration
+ * that a page's ground is a picture rather than a surface. The floating theme
+ * toggle is not built on that page either: a control whose only two outcomes
+ * are "no change" and "unreadable" should not be offered.
+ *
+ * Contrast on the fixed canvas #050a14, for the record:
+ *   --ink   #eaf0f8   17.28
+ *   --soft  #a8b3c4    9.35
+ *   --gold  #c9a961    8.80
+ *   --faint #6b7789    4.36
+ * ------------------------------------------------------------------------- */
+:root.oko-artwork {
+  --bg: #050a14;
+  --bg2: #07101f;
+  --ink: #eaf0f8;
+  --soft: #a8b3c4;
+  --faint: #6b7789;
+  --muted: #a8b3c4;
+  --gold: #c9a961;
+  --gold-warm: #d4b876;
+  --gold-glow: #e6c98b;
+  --accent: #c9a961;
+}
+
 /* SPECIFICITY. The investors/ pages define their palette on
  * `:root[data-theme="dark"]` and `:root[data-theme="light"]`, which are
  * (0,1,1). A plain `:root` alias is (0,0,1) and LOSES to them whenever a
