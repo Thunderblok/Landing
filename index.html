@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+// Applied before paint so a chosen theme does not flash the other ground.
+// No stored choice means no attribute, which leaves prefers-color-scheme in
+// charge — the three-state default, not a two-state guess.
+(function(){try{var t=localStorage.getItem('oko-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKO Holding Corporation — Governed Agent Operations</title>
@@ -147,11 +153,10 @@
     gap: 0.6rem;
   }
   nav.top .brand-mark {
-    width: 22px; height: 22px;
-    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
-    border-radius: 4px;
-    transform: rotate(45deg);
-    box-shadow: 0 0 16px rgba(201, 169, 97, 0.5);
+    width: 30px; height: 30px;
+    display: block;
+    /* No rotation, radius or glow: this is real artwork now, not a drawn
+       square. The bolt carries its own gradient from the file. */
   }
   nav.top ul {
     display: flex;
@@ -701,10 +706,9 @@
     gap: 0.5rem;
   }
   footer h5 .brand-mark {
-    width: 16px; height: 16px;
-    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-warm));
-    border-radius: 3px;
-    transform: rotate(45deg);
+    width: 22px; height: 22px;
+    display: inline-block;
+    vertical-align: -5px;
   }
   footer ul { list-style: none; }
   footer ul li { margin-bottom: 0.5rem; }
@@ -800,15 +804,58 @@
     outline-offset: 4px;
   }
 </style>
+<link rel="stylesheet" href="/assets/brand/oko-tokens.css">
 </head>
 <body>
+<style>
+.oko-theme-toggle{position:fixed;bottom:18px;right:18px;z-index:9999;display:flex;align-items:center;gap:10px;
+  background:var(--oko-bg-2);border:1px solid var(--oko-hair);border-radius:999px;padding:9px 15px;box-shadow:0 2px 14px rgba(0,0,0,.28);
+  font:13px/1 var(--oko-sans,Arial,sans-serif);color:var(--oko-ink);cursor:pointer}
+.oko-theme-toggle:focus-visible{outline:2px solid var(--oko-accent);outline-offset:2px}
+.oko-theme-toggle svg{display:block}
+@media print{.oko-theme-toggle{display:none}}
+</style>
+<button class="oko-theme-toggle" id="okoTheme" type="button" aria-label="Switch between the dark and light ground">
+<svg width="20" height="20" viewBox="0 0 88 88" aria-hidden="true"><defs>
+<linearGradient id="oko-bolt" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/>
+</linearGradient></defs>
+<circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/>
+<circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/>
+<circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/>
+<circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/>
+<circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/>
+<circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/>
+<circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/>
+<path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt)"/></svg>
+<span id="okoThemeLabel">Theme</span></button>
+<script>
+(function(){
+  var b=document.getElementById('okoTheme'),l=document.getElementById('okoThemeLabel');
+  function current(){var a=document.documentElement.getAttribute('data-theme');
+    if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function label(){l.textContent=current()==='dark'?'Light':'Dark';}
+  label();
+  b.addEventListener('click',function(){
+    var next=current()==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('oko-theme',next);}catch(e){}
+    label();});
+  // Follow the system while the reader has expressed no preference.
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',function(){
+    var stored=null;try{stored=localStorage.getItem('oko-theme');}catch(e){}
+    if(!stored)label();});
+})();
+</script>
+
 <a href="#main-content" class="skip-link">Skip to content</a>
 
 <!-- NAV -->
 <nav class="top" aria-label="Primary navigation">
   <div class="container">
     <a href="#top" class="brand">
-      <span class="brand-mark"></span>
+      <img class="brand-mark" src="/assets/brand/oko-mark.svg" alt="" width="30" height="30">
       OKO
     </a>
     <ul>
@@ -1320,7 +1367,7 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <h5><span class="brand-mark"></span>OKO</h5>
+        <h5><img class="brand-mark" src="/assets/brand/oko-mark.svg" alt="" width="30" height="30">OKO</h5>
         <p style="color: var(--c-text-on-dark-soft); font-size: 0.9rem; line-height: 1.6;">OKO builds ThunderBlocks: managed hives where humans and agents can coordinate, remember, and work under clear rules.</p>
       </div>
       <div>

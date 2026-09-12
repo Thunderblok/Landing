@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="88" height="88" viewBox="0 0 88 88" role="img" aria-label="OKO">
+  <defs>
+    <!-- The Thunderline bolt gradient, carried across the estate unchanged:
+         #FFEB3B -> #FFC107 -> #FF9800 on the same 0,0 -> 100,100 axis. -->
+    <linearGradient id="oko-bolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFEB3B"/>
+      <stop offset="50%" stop-color="#FFC107"/>
+      <stop offset="100%" stop-color="#FF9800"/>
+    </linearGradient>
+  </defs>
+  <!-- Fourteen nodes. Warm spectrum, unchanged from the identity study. -->
+  <circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/>
+  <circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/>
+  <circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/>
+  <circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/>
+  <circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/>
+  <circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/>
+  <circle cx="44" cy="7"  r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/>
+  <!-- The bolt. Was currentColor; now the Thunderline gradient. -->
+  <path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt)"/>
+</svg>

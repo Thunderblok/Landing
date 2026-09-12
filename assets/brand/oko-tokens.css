@@ -1,0 +1,122 @@
+/* OKO / Thunderline shared surface tokens.
+ *
+ * One palette, two grounds:
+ *
+ *   dark   the Signal Observatory surface            #0b1117
+ *   light  the thunderline.net YoRHa tan             #f0ece3
+ *
+ * THREE THEME STATES, not two. An explicit choice stamps
+ * data-theme="dark" | "light" on the root; the default "system" setting
+ * stamps nothing, and only prefers-color-scheme separates the two. So the
+ * complete LIGHT palette is defined on bare :root, the dark values are
+ * redefined under prefers-color-scheme guarded against an explicit light
+ * choice, and redefined again under [data-theme="dark"] so a toggle wins in
+ * both directions. No colour gets its only definition inside a media query.
+ *
+ * CONTRAST IS MEASURED, NOT ASSUMED. Ratios below are computed against their
+ * own ground. The one that matters: the Observatory gold #dfba89 scores 1.55
+ * on the tan — it is a DARK-MODE accent and is unreadable on light. Light mode
+ * therefore carries its own accent, #8a5f1c at 4.77. Swapping only the
+ * background would have shipped invisible text.
+ */
+
+:root {
+  /* ---- LIGHT: thunderline.net YoRHa tan ------------------------------- */
+  --oko-bg: #f0ece3;        /* yorha-cream                                 */
+  --oko-bg-2: #e8e4d9;      /* yorha-parchment                             */
+  --oko-ink: #4a463d;       /* yorha-ink            7.97 on bg   AA        */
+  --oko-muted: #6f6a5e;     /*                      4.57 on bg   AA        */
+  --oko-subtle: #8a8478;    /* yorha-stone          3.15 on bg   AA-large  */
+  --oko-accent: #8a5f1c;    /*                      4.77 on bg   AA        */
+  --oko-hair: rgba(74, 70, 61, 0.18);
+
+  /* ---- Invariant across both grounds ---------------------------------- */
+  /* The bolt gradient is brand identity and does not re-tint per theme.   */
+  --oko-bolt-1: #ffeb3b;
+  --oko-bolt-2: #ffc107;
+  --oko-bolt-3: #ff9800;
+
+  --oko-serif: Georgia, "Times New Roman", serif;
+  --oko-sans: Arial, Helvetica, sans-serif;
+  --oko-max: 1328px;
+
+  color-scheme: light dark;
+}
+
+/* System preference is dark, and the reader has not chosen light. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --oko-bg: #0b1117;
+    --oko-bg-2: #111b23;
+    --oko-ink: #f4f0e7;     /* 16.68 on bg   AA */
+    --oko-muted: #b3b9bc;   /*  9.56 on bg   AA */
+    --oko-subtle: #8e989e;  /*  6.45 on bg   AA */
+    --oko-accent: #dfba89;  /* 10.41 on bg   AA */
+    --oko-hair: rgba(224, 230, 231, 0.17);
+  }
+}
+
+/* An explicit dark choice wins regardless of system preference. */
+:root[data-theme="dark"] {
+  --oko-bg: #0b1117;
+  --oko-bg-2: #111b23;
+  --oko-ink: #f4f0e7;
+  --oko-muted: #b3b9bc;
+  --oko-subtle: #8e989e;
+  --oko-accent: #dfba89;
+  --oko-hair: rgba(224, 230, 231, 0.17);
+}
+
+/* The ground is painted explicitly. A transparent body borrows whatever is
+ * behind it, which is how a themed page ends up with a host's background. */
+body {
+  background: var(--oko-bg);
+  color: var(--oko-ink);
+}
+
+/* The mark, when inlined rather than loaded as a file. */
+.oko-bolt-fill {
+  fill: url(#oko-bolt);
+}
+
+/* ---------------------------------------------------------------------------
+ * COMPATIBILITY ALIASES — okoholding.com
+ *
+ * The homepage predates these tokens and paints from its own `--c-*` set.
+ * Those names are re-pointed here rather than rewriting its rules, which would
+ * be a large, hard-to-review diff over a live investor-facing page.
+ *
+ * TWO KINDS OF TOKEN, and conflating them breaks the page:
+ *
+ *   DOCUMENT tokens  the reading surface. These follow the theme.
+ *   ARTWORK tokens   the `.hero` panel, which is a full-viewport picture —
+ *                    a background image under hardcoded rgba(5,10,20,…)
+ *                    cinematic overlays. It is dark because it is a
+ *                    PHOTOGRAPH, not because the theme is dark, so it stays
+ *                    dark on both grounds and its text stays light.
+ *
+ * Both errors were made before this was written down. Mapping the artwork
+ * tokens to the theme produced dark text on the dark hero — unreadable. And
+ * because `.hero` is `height:100vh`, a tall screenshot is ENTIRELY hero, which
+ * made a correctly-themed page look like a failed one and prompted the wrong
+ * fix. Verify the theme BELOW the fold.
+ * ------------------------------------------------------------------------- */
+:root {
+  /* Document surface — themed. */
+  --c-bg: var(--oko-bg);
+  --c-bg-alt: var(--oko-bg-2);
+  --c-text: var(--oko-ink);
+  --c-text-soft: var(--oko-muted);
+  --c-border: var(--oko-hair);
+  --c-accent: var(--oko-accent);
+
+  /* Artwork surface — fixed. Aligned to the Observatory's dark values so the
+     hero and the Observatory read as one surface. */
+  --c-bg-dark: #0b1117;
+  --c-bg-darker: #070d12;
+  --c-text-on-dark: #f4f0e7;
+  --c-text-on-dark-soft: #b3b9bc;
+  --c-border-dark: rgba(224, 230, 231, 0.17);
+  --c-accent-warm: #dfba89;
+  --c-accent-glow: #e6c98b;
+}
