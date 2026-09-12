@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>(function(){try{var t=localStorage.getItem('oko-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
@@ -35,9 +36,14 @@
   .status { margin-top:0.85rem; font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
     font-size:0.78rem; color:var(--muted); }
 </style>
+<link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+<script defer src="/assets/brand/oko-theme.js"></script>
+<style>.oko-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--oko-ink);font:600 17px/1 Georgia,serif;letter-spacing:.02em;margin-bottom:26px}.oko-brand img{display:block}.oko-brand:hover{color:var(--oko-accent)}</style>
 </head>
 <body>
 <main id="gate">
+<a class="oko-brand" href="/" aria-label="OKO Holding Corporation"><img src="/assets/brand/oko-mark.svg" alt="" width="26" height="26"><span>OKO</span></a>
+
   <div class="kicker">Preliminary Deck · Encrypted</div>
   <h1>Preliminary Investor Deck v1</h1>
   <p>This document is password-gated. Enter the access password to decrypt it in your browser.</p>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){try{var t=localStorage.getItem('oko-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Into the Thunderblock — OKO Holding</title>
@@ -29,7 +30,7 @@
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:22px 40px}
   .brand{font-family:var(--serif); font-size:1.3rem; display:flex; align-items:center; gap:11px; color:var(--ink); text-decoration:none; letter-spacing:.02em}
-  .brand .mk{width:13px;height:13px;background:linear-gradient(135deg,var(--gold),var(--gold-warm));transform:rotate(45deg);border-radius:3px;box-shadow:0 0 16px rgba(201,169,97,.6)}
+  .brand .mk{width:22px;height:22px;display:block}
   .back{font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); text-decoration:none; border:1px solid rgba(255,255,255,.14); padding:8px 13px; border-radius:100px; transition:.2s}
   .back:hover{border-color:var(--gold); color:var(--gold)}
   .prog{position:fixed; left:40px; bottom:26px; z-index:30; font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--faint)}
@@ -65,6 +66,8 @@
 <script type="importmap">
 { "imports": { "three": "./assets/vendor/three.module.js" } }
 </script>
+<link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+<script defer src="/assets/brand/oko-theme.js"></script>
 </head>
 <body>
 <div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering the substrate…</div></div>
@@ -72,7 +75,7 @@
 <div class="grain"></div>
 
 <nav>
-  <a class="brand" href="index.html"><span class="mk"></span> OKO</a>
+  <a class="brand" href="index.html"><img class="mk" src="/assets/brand/oko-mark.svg" alt="" width="22" height="22"> OKO</a>
   <a class="back" href="index.html">← okoholding.com</a>
 </nav>
 <div class="prog"><b id="pv">the substrate</b> · scroll to descend</div>

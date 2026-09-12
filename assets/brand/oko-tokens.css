@@ -120,3 +120,66 @@ body {
   --c-accent-warm: #dfba89;
   --c-accent-glow: #e6c98b;
 }
+
+/* ---------------------------------------------------------------------------
+ * COMPATIBILITY ALIASES — investors/ and substrate.html
+ *
+ * Three token families grew independently across the estate. Rather than
+ * rewrite three sets of rules, each family's names are re-pointed at the
+ * shared tokens. Loading this sheet LAST in <head> is what makes that work:
+ * at equal specificity the later rule wins, and loading it first is how the
+ * homepage silently kept its own palette.
+ *
+ * The investors/ pages already implemented the same three-state pattern used
+ * above — bare :root, prefers-color-scheme, and explicit data-theme. Only
+ * their VALUES differ, so alignment here is a remap, not new machinery. Their
+ * maroon accent (#6E2E38) is deliberately replaced by the shared gold; that is
+ * a change of character, and the reason to make it is that a reader moving
+ * between okoholding.com pages should not cross a palette boundary.
+ * ------------------------------------------------------------------------- */
+:root {
+  /* investors/ */
+  --paper: var(--oko-bg);
+  --rule: var(--oko-hair);
+  --code-bg: var(--oko-bg-2);
+  --accent-soft: var(--oko-muted);
+
+  /* substrate.html — a dark-only page until now; these make it follow. */
+  --bg: var(--oko-bg);
+  --bg2: var(--oko-bg-2);
+  --soft: var(--oko-muted);
+  --faint: var(--oko-subtle);
+  --gold: var(--oko-accent);
+  --gold-warm: var(--oko-accent);
+  --gold-glow: var(--oko-accent);
+
+  /* shared by both families */
+  --ink: var(--oko-ink);
+  --muted: var(--oko-muted);
+  --accent: var(--oko-accent);
+}
+
+/* SPECIFICITY. The investors/ pages define their palette on
+ * `:root[data-theme="dark"]` and `:root[data-theme="light"]`, which are
+ * (0,1,1). A plain `:root` alias is (0,0,1) and LOSES to them whenever a
+ * theme is explicitly chosen — which is exactly when a reader has touched the
+ * toggle. The accent stayed maroon and pink under an alias that looked
+ * applied. Source order is not enough when specificity differs, so the alias
+ * is repeated at matching specificity. */
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  --paper: var(--oko-bg);
+  --rule: var(--oko-hair);
+  --code-bg: var(--oko-bg-2);
+  --accent-soft: var(--oko-muted);
+  --bg: var(--oko-bg);
+  --bg2: var(--oko-bg-2);
+  --soft: var(--oko-muted);
+  --faint: var(--oko-subtle);
+  --gold: var(--oko-accent);
+  --gold-warm: var(--oko-accent);
+  --gold-glow: var(--oko-accent);
+  --ink: var(--oko-ink);
+  --muted: var(--oko-muted);
+  --accent: var(--oko-accent);
+}
