@@ -130,14 +130,14 @@
 import * as THREE from "three";
 
 const canvas = document.getElementById('scene');
-let renderer;
+const fallback = document.getElementById('fb');
+const showFallback = error => {
+  fallback.style.display='flex';
+  console.error('The substrate scene stopped before it could render.', error);
+};
+
 try{
-  renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
-}catch(e){ document.getElementById('fb').style.display='flex'; }
-if(renderer){
-// The scene is up: retire the fallback. Anything that stops this line from
-// running leaves the message on screen, which is the point.
-document.getElementById('fb').style.display='none';
+const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
 renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
 renderer.setClearColor(0x050a14, 1);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -288,7 +288,9 @@ if('IntersectionObserver' in window){
 } else document.querySelectorAll('.panel').forEach(el=>el.classList.add('on'));
 
 const clock=new THREE.Clock();
+let firstFrame=true;
 function loop(){
+  try{
   const t=clock.getElapsedTime();
   mx += (tmx-mx)*0.05; my += (tmy-my)*0.05;
 
@@ -327,10 +329,12 @@ function loop(){
 
   pv.textContent = labels[Math.min(4, Math.floor(p*5+0.001))];
   renderer.render(scene, camera);
+  if(firstFrame){ fallback.style.display='none'; firstFrame=false; }
   requestAnimationFrame(loop);
+  }catch(error){ showFallback(error); }
 }
 loop();
-}
+}catch(error){ showFallback(error); }
 </script>
 </body>
 </html>
