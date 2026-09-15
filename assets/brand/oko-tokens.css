@@ -187,6 +187,20 @@ body {
  *   --faint #6b7789    4.36
  * ------------------------------------------------------------------------- */
 :root.oko-artwork {
+  /* The ground and ink MUST be set on the --oko-* names, not only on the
+   * aliases below. `body { background: var(--oko-bg) }` is what actually
+   * paints, and it is defined in this file AFTER any page's inline <style>,
+   * so it wins on source order at equal specificity. An artwork page that set
+   * only --bg kept its dark alias and still rendered on the light cream
+   * ground, with gold-on-black type sitting on #f0ece3. Set what paints. */
+  --oko-bg: #050a14;
+  --oko-bg-2: #07101f;
+  --oko-ink: #eaf0f8;
+  --oko-muted: #a8b3c4;
+  --oko-subtle: #6b7789;
+  --oko-accent: #c9a961;
+  --oko-hair: rgba(234, 240, 248, 0.14);
+
   --bg: #050a14;
   --bg2: #07101f;
   --ink: #eaf0f8;

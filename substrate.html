@@ -61,7 +61,11 @@
   .btn.solid:hover{transform:translateY(-2px); box-shadow:0 10px 34px rgba(201,169,97,.45)}
   .btn.ghost{color:var(--ink); border:1px solid rgba(255,255,255,.2)}
   .btn.ghost:hover{border-color:var(--gold); color:var(--gold)}
-  .fb{position:fixed;inset:0;z-index:0;display:none;align-items:center;justify-content:center;color:var(--faint);font-family:var(--mono);font-size:.8rem}
+  /* Visible by DEFAULT and hidden on success. It used to be display:none,
+     revealed only by the module that draws the scene — so when that module
+     failed to load at all, nothing revealed it and the page was simply blank.
+     The text is written to stay true whether it is early or terminal. */
+  .fb{position:fixed;inset:0;z-index:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 28px;color:var(--faint);font-family:var(--mono);font-size:.8rem;line-height:1.7}
 </style>
 <script type="importmap">
 { "imports": { "three": "./assets/vendor/three.module.js" } }
@@ -69,7 +73,7 @@
 <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
 </head>
 <body>
-<div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering the substrate…</div></div>
+<div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering the substrate…<br>if this message stays, the scene could not start — WebGL may be unavailable, or an asset failed to load.</div></div>
 <div class="vig"></div>
 <div class="grain"></div>
 
@@ -131,6 +135,9 @@ try{
   renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
 }catch(e){ document.getElementById('fb').style.display='flex'; }
 if(renderer){
+// The scene is up: retire the fallback. Anything that stops this line from
+// running leaves the message on screen, which is the point.
+document.getElementById('fb').style.display='none';
 renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
 renderer.setClearColor(0x050a14, 1);
 renderer.outputColorSpace = THREE.SRGBColorSpace;
