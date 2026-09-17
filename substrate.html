@@ -28,11 +28,13 @@
     background:radial-gradient(120% 90% at 50% 42%, transparent 40%, rgba(3,6,12,.55) 78%, rgba(2,4,9,.9) 100%);}
   .grain{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-  nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:22px 40px}
+  nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; gap:18px; padding:22px 40px}
   .brand{font-family:var(--serif); font-size:1.3rem; display:flex; align-items:center; gap:11px; color:var(--ink); text-decoration:none; letter-spacing:.02em}
   .brand .mk{width:22px;height:22px;display:block}
-  .back{font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); text-decoration:none; border:1px solid rgba(255,255,255,.14); padding:8px 13px; border-radius:100px; transition:.2s}
-  .back:hover{border-color:var(--gold); color:var(--gold)}
+  .site-links{display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:12px}
+  .site-links a{font-family:var(--mono); font-size:.66rem; letter-spacing:.11em; text-transform:uppercase; color:var(--soft); text-decoration:none; padding:8px 4px; transition:.2s}
+  .site-links a:hover{color:var(--gold)}
+  .site-links .back{border:1px solid rgba(255,255,255,.18); padding:8px 13px; border-radius:100px; color:var(--ink)}
   .prog{position:fixed; left:40px; bottom:26px; z-index:30; font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--faint)}
   .prog b{color:var(--gold)}
   .track{position:relative; z-index:10}
@@ -42,6 +44,7 @@
   .panel.right .cap{margin-left:auto; margin-right:8vw; text-align:right}
   .panel.mid .cap{margin:0 auto; text-align:center}
   @media(prefers-reduced-motion:reduce){.panel .cap{opacity:1;transform:none;filter:none}}
+  @media(max-width:700px){nav{padding:16px 20px;align-items:flex-start}.site-links{gap:3px 10px}.site-links a{font-size:.58rem;padding:5px 0}.site-links .back{padding:5px 8px}}
   .eye{font-family:var(--mono); font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; display:flex; align-items:center; gap:9px}
   .panel.right .eye{justify-content:flex-end} .panel.mid .eye{justify-content:center}
   .eye::before{content:""; width:22px; height:1px; background:var(--gold); opacity:.6}
@@ -79,7 +82,12 @@
 
 <nav>
   <a class="brand" href="index.html"><img class="mk" src="/assets/brand/oko-mark.svg" alt="" width="22" height="22"> OKO</a>
-  <a class="back" href="index.html">← okoholding.com</a>
+  <div class="site-links">
+    <a href="/offerings.html">Offerings</a>
+    <a href="/index.html#technology">Product</a>
+    <a href="/investors/">Investors</a>
+    <a class="back" href="/index.html#contact">Talk to OKO</a>
+  </div>
 </nav>
 <div class="prog"><b id="pv">the substrate</b> · scroll to descend</div>
 
