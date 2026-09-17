@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('oko-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="OKO partners with teams to turn one difficult operating problem into a governed human-agent working system.">
+  <meta name="theme-color" content="#0b1117">
+  <title>Work with OKO — Governed operations for human-agent teams</title>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+  <script defer src="/assets/brand/oko-theme.js"></script>
+  <style>
+    :root { --rule: var(--oko-hair); --paper: var(--oko-bg-2); }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--oko-bg); color: var(--oko-ink); font: 16px/1.6 Arial, Helvetica, sans-serif; }
+    a { color: inherit; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid var(--oko-accent); outline-offset: 4px; }
+    .skip { position: fixed; left: 1rem; top: 1rem; z-index: 20; transform: translateY(-160%); background: var(--oko-ink); color: var(--oko-bg); padding: .65rem .85rem; }
+    .skip:focus { transform: none; }
+    .shell { width: min(1180px, calc(100% - 3rem)); margin: 0 auto; }
+    .site-nav { min-height: 86px; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; border-bottom: 1px solid var(--rule); }
+    .brand { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; font: 600 1.35rem/1 Georgia, "Times New Roman", serif; letter-spacing: .02em; }
+    .brand img { width: 28px; height: 28px; }
+    .site-nav ul { display: flex; align-items: center; gap: 1.25rem; list-style: none; padding: 0; margin: 0; }
+    .site-nav li { font-size: .9rem; }
+    .site-nav li a { color: var(--oko-muted); text-decoration: none; }
+    .site-nav li a:hover, .site-nav li a[aria-current="page"] { color: var(--oko-ink); }
+    .site-nav .contact { color: var(--oko-ink); border: 1px solid var(--rule); padding: .55rem .8rem; }
+    .hero { padding: clamp(5rem, 12vw, 10rem) 0 5rem; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr); gap: 3rem; align-items: end; }
+    .eyebrow, .map-label, .service-number, .footer-note { color: var(--oko-muted); font: .75rem/1.4 "Courier New", monospace; letter-spacing: .08em; text-transform: uppercase; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
+    h1 { max-width: 12ch; font-size: clamp(3.5rem, 8vw, 7.4rem); line-height: .92; }
+    h1 em, h2 em { color: var(--oko-accent); font-style: italic; }
+    .hero .eyebrow { margin-bottom: 1.5rem; }
+    .hero-copy { max-width: 31rem; padding-bottom: .65rem; color: var(--oko-muted); font-size: 1.1rem; }
+    .hero-copy strong { color: var(--oko-ink); font-weight: 600; }
+    .hero-copy a { display: inline-block; margin-top: 1.65rem; color: var(--oko-ink); text-underline-offset: .32rem; }
+    .declaration { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 1.2rem 0; display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; color: var(--oko-muted); }
+    .declaration p { max-width: 56rem; }
+    .map { margin: 5rem 0 0; border-top: 1px solid var(--rule); }
+    .map-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem 0; border-bottom: 1px solid var(--rule); }
+    h2 { font-size: clamp(2.1rem, 4vw, 4rem); line-height: 1.02; }
+    .map-intro p { max-width: 35rem; color: var(--oko-muted); align-self: end; }
+    .service { display: grid; grid-template-columns: 5rem minmax(0, .75fr) minmax(0, 1.25fr); gap: 1.5rem; padding: 2.45rem 0; border-bottom: 1px solid var(--rule); }
+    .service-number { padding-top: .45rem; color: var(--oko-accent); }
+    .service h3 { font-size: clamp(1.8rem, 3vw, 2.7rem); line-height: 1.05; }
+    .service div:last-child { color: var(--oko-muted); max-width: 39rem; }
+    .service ul { margin: 1.1rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: .5rem .9rem; }
+    .service li { color: var(--oko-ink); font-size: .9rem; }
+    .service li::before { content: "•"; color: var(--oko-accent); margin-right: .42rem; }
+    .process { margin: 7rem 0; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 4rem; }
+    .process p { color: var(--oko-muted); margin-top: 1rem; max-width: 30rem; }
+    .steps { border-top: 1px solid var(--rule); }
+    .step { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.3rem 0; border-bottom: 1px solid var(--rule); }
+    .step strong { display: block; font: 600 1rem/1.35 Arial, Helvetica, sans-serif; }
+    .step span { color: var(--oko-muted); display: block; margin-top: .25rem; }
+    .fit { background: var(--paper); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .fit-inner { padding: 5rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .fit ul { margin: 1.6rem 0 0; padding: 0; list-style: none; }
+    .fit li { padding: .75rem 0; border-bottom: 1px solid var(--rule); color: var(--oko-muted); }
+    .fit li::before { content: "↳"; color: var(--oko-accent); margin-right: .7rem; }
+    .close { padding: clamp(5rem, 11vw, 9rem) 0; text-align: center; }
+    .close p { max-width: 37rem; margin: 1.25rem auto 2rem; color: var(--oko-muted); }
+    .button { display: inline-block; padding: .9rem 1.1rem; background: var(--oko-ink); color: var(--oko-bg); text-decoration: none; font-weight: 700; }
+    footer { border-top: 1px solid var(--rule); padding: 1.5rem 0 5rem; display: flex; justify-content: space-between; gap: 2rem; color: var(--oko-muted); }
+    footer a { text-underline-offset: .25rem; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 2.2rem, 1180px); }
+      .site-nav { padding: 1rem 0; align-items: flex-start; }
+      .site-nav ul { justify-content: flex-end; flex-wrap: wrap; gap: .45rem .9rem; }
+      .site-nav .contact { border: 0; padding: 0; }
+      .hero, .map-intro, .process, .fit-inner { grid-template-columns: 1fr; gap: 1.75rem; }
+      .hero { padding-top: 4.5rem; }
+      .declaration { grid-template-columns: 1fr; gap: .35rem; }
+      .service { grid-template-columns: 3rem 1fr; gap: 1rem; }
+      .service div:last-child { grid-column: 2; }
+      .process { margin: 5rem 0; }
+      footer { display: block; }
+      footer p { margin-top: .8rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="shell">
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="brand" href="/"><img src="/assets/brand/oko-mark.svg" alt="" width="28" height="28">OKO</a>
+      <ul>
+        <li><a aria-current="page" href="/offerings.html">Offerings</a></li>
+        <li><a href="/#technology">Product</a></li>
+        <li><a href="/substrate.html">The substrate</a></li>
+        <li><a href="/investors/">Investors</a></li>
+        <li><a class="contact" href="mailto:hello@okoholding.com?subject=OKO%20operating%20problem">Talk to OKO</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="shell hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Work with OKO</p>
+        <h1 id="page-title">Make difficult work <em>coherent.</em></h1>
+      </div>
+      <div class="hero-copy">
+        <p>Bring us one operating problem that matters: work scattered across people, tools, decisions, and AI. We will help shape it into a <strong>human-owned working system</strong>.</p>
+        <a href="#ways-to-work">See how we work together</a>
+      </div>
+    </section>
+
+    <section class="shell declaration" aria-label="OKO engagement principle">
+      <p class="map-label">The starting point</p>
+      <p>We do not begin with a chatbot pitch or a generic automation menu. We begin with the outcome, the accountable person, the boundaries, and the evidence the work needs to leave behind.</p>
+    </section>
+
+    <section class="shell map" id="ways-to-work" aria-labelledby="ways-title">
+      <div class="map-intro">
+        <div>
+          <p class="eyebrow">Ways to work together</p>
+          <h2 id="ways-title">One problem.<br>One working <em>system.</em></h2>
+        </div>
+        <p>Engagements start small enough to become useful, then earn the right to grow. The exact tools, integrations, and controls are scoped around the work in front of us.</p>
+      </div>
+
+      <article class="service">
+        <p class="service-number">01</p>
+        <h3>Operational intelligence sprint</h3>
+        <div>
+          <p>Turn a vague “we should use AI here” into a clear operating design: where work begins, where judgment belongs, which systems matter, and what a useful first result looks like.</p>
+          <ul><li>Workflow mapping</li><li>Human decision points</li><li>First-slice design</li></ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <p class="service-number">02</p>
+        <h3>ThunderBlock pilot</h3>
+        <div>
+          <p>Give one team a shared place to direct human and agent work around a bounded objective. The pilot makes roles, context, review points, and operating history visible together.</p>
+          <ul><li>Shared operating context</li><li>Role-aware collaboration</li><li>Operator visibility</li></ul>
+        </div>
+      </article>
+
+      <article class="service">
+        <p class="service-number">03</p>
+        <h3>Governed workflow build</h3>
+        <div>
+          <p>Connect the tools and people already doing the work. We build a bounded workflow around the approvals, handoffs, and records that make the result usable in the real world.</p>
+          <ul><li>System integration</li><li>Human review paths</li><li>Evidence at the seams</li></ul>
+        </div>
+      </article>
+    </section>
+
+    <section class="shell process" aria-labelledby="process-title">
+      <div>
+        <p class="eyebrow">A practical first engagement</p>
+        <h2 id="process-title">The work earns its way into the <em>system.</em></h2>
+        <p>We make the next useful move visible before expanding the scope. That keeps the process legible for the people responsible for the outcome.</p>
+      </div>
+      <ol class="steps">
+        <li class="step"><p class="service-number">01</p><div><strong>Name the operating problem</strong><span>Start with the friction, decision, or handoff that is costing the team time or clarity.</span></div></li>
+        <li class="step"><p class="service-number">02</p><div><strong>Set the human owner and boundaries</strong><span>Decide what can be prepared, what must be reviewed, and what must never happen without a person.</span></div></li>
+        <li class="step"><p class="service-number">03</p><div><strong>Build the smallest useful loop</strong><span>Make one workflow work end to end before expanding its reach.</span></div></li>
+        <li class="step"><p class="service-number">04</p><div><strong>Carry forward what the team learns</strong><span>Keep the context, decisions, and next actions available for the work that follows.</span></div></li>
+      </ol>
+    </section>
+
+    <section class="fit" aria-labelledby="fit-title">
+      <div class="shell fit-inner">
+        <div>
+          <p class="eyebrow">A good fit</p>
+          <h2 id="fit-title">Work that crosses people, tools, and <em>consequences.</em></h2>
+        </div>
+        <ul>
+          <li>Lead intelligence that needs human-reviewed follow-through</li>
+          <li>Research, evidence, or document work that must stay coherent over time</li>
+          <li>Customer, field, or project operations with meaningful handoffs</li>
+          <li>Teams that need shared memory without surrendering human direction</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="shell close" aria-labelledby="contact-title">
+      <p class="eyebrow">Start here</p>
+      <h2 id="contact-title">Bring us the work that keeps slipping through the cracks.</h2>
+      <p>Tell us what happens today, who owns the decision, and what would make the next version of the workflow genuinely useful.</p>
+      <a class="button" href="mailto:hello@okoholding.com?subject=OKO%20operating%20problem">Start a conversation</a>
+    </section>
+  </main>
+  <footer class="shell">
+    <a class="brand" href="/"><img src="/assets/brand/oko-mark.svg" alt="" width="28" height="28">OKO</a>
+    <p class="footer-note">OKO Holding Corporation · Jupiter, Florida<br><a href="/">About OKO</a> · <a href="/offerings.html">Offerings</a> · <a href="/investors/">Investor materials</a></p>
+  </footer>
+</body>
+</html>
