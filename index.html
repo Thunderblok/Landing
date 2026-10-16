@@ -49,7 +49,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
     background: var(--c-bg);
     color: var(--c-text);
     font-size: 16px;
@@ -64,7 +64,7 @@
     outline-offset: 4px;
   }
   h1, h2, h3, h4 {
-    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-family: var(--font-serif, "Fraunces", Georgia, "Times New Roman", serif);
     font-weight: 500;
     letter-spacing: -0.015em;
     line-height: 1.1;
@@ -72,7 +72,7 @@
   h1 { font-size: clamp(2.75rem, 6vw, 5rem); }
   h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 1rem; }
   h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-  h4 { font-size: 1.05rem; font-family: -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; }
+  h4 { font-size: 1.05rem; font-family: var(--font-sans, "Inter", -apple-system, sans-serif); font-weight: 600; letter-spacing: 0.01em; }
   p { margin-bottom: 1rem; color: var(--c-text-soft); }
   p.lead { font-size: 1.2rem; color: var(--c-text); line-height: 1.55; }
   a { color: var(--c-text); text-decoration: underline; text-decoration-color: var(--c-accent); text-underline-offset: 3px; transition: color 0.2s ease; }
@@ -142,7 +142,7 @@
     height: 68px;
   }
   nav.top .brand {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-weight: 600;
     font-size: 1.4rem;
     letter-spacing: 0.04em;
@@ -432,7 +432,7 @@
   .pillar { pointer-events: auto; }
   .pillar h4 {
     color: var(--c-accent);
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-weight: 500;
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
@@ -457,7 +457,7 @@
     padding-left: 1.5rem;
     margin-bottom: 2rem;
   }
-  .definition-block h4 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.3rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  .definition-block h4 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
 
   /* SERVICE CARDS */
   .services-grid {
@@ -486,7 +486,7 @@
   .service-card:hover { border-color: var(--c-accent); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.06); }
   .service-card:hover::before { transform: scaleX(1); }
   .service-card .name {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-size: 1.85rem;
     font-weight: 500;
     color: var(--c-text);
@@ -563,7 +563,7 @@
     z-index: 3;
     color: var(--c-text-on-dark);
   }
-  .industry-card .content h4 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 1.4rem; color: var(--c-accent); margin-bottom: 0.35rem; }
+  .industry-card .content h4 { font-family: var(--font-serif); font-weight: 500; font-size: 1.4rem; color: var(--c-accent); margin-bottom: 0.35rem; }
   .industry-card .content p { font-size: 0.85rem; color: var(--c-text-on-dark-soft); margin: 0; line-height: 1.5; }
 
   /* INTEGRATIONS */
@@ -585,7 +585,7 @@
   }
   .integration-tile:hover { border-color: var(--c-accent); color: var(--c-accent-warm); transform: translateY(-2px); }
   .integration-cat-title {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-size: 1.3rem;
     font-weight: 500;
     color: var(--c-text);
@@ -603,7 +603,7 @@
   }
   .stat-block { text-align: left; }
   .stat-block .stat-num {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-size: 4rem;
     font-weight: 400;
     background: linear-gradient(135deg, var(--c-accent), var(--c-accent-glow));
@@ -637,13 +637,13 @@
   .principles-list li:last-child { border-bottom: 1px solid var(--c-border); }
   .principles-list li::before {
     content: counter(pcount, decimal-leading-zero);
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     font-size: 2.2rem;
     color: var(--c-accent);
     line-height: 1;
     font-weight: 400;
   }
-  .principles-list li h4 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+  .principles-list li h4 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
 
   /* COMPANY */
   .leader-card {
@@ -653,7 +653,7 @@
     border-left: 2px solid var(--c-accent);
     border-radius: 4px;
   }
-  .leader-card h4 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.4rem; font-weight: 500; color: var(--c-text-on-dark); margin-bottom: 0.4rem; }
+  .leader-card h4 { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 500; color: var(--c-text-on-dark); margin-bottom: 0.4rem; }
   .leader-card .title { font-size: 0.92rem; color: var(--c-accent); margin-bottom: 1rem; letter-spacing: 0.02em; }
   .leader-card p { color: var(--c-text-on-dark-soft); }
 
@@ -695,7 +695,7 @@
     border-bottom: 1px solid var(--c-border-dark);
   }
   footer h5 {
-    font-family: "Cormorant Garamond", Georgia, serif;
+    font-family: var(--font-serif);
     color: var(--c-text-on-dark);
     font-size: 1.1rem;
     font-weight: 500;
@@ -804,6 +804,7 @@
     outline-offset: 4px;
   }
 </style>
+<link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
 <link rel="stylesheet" href="assets/css/polish.css">
 <style>
@@ -886,7 +887,7 @@
   <div class="hero-content">
     <div class="container">
       <span class="badge">OKO HOLDING CORPORATION · GOVERNED AGENT OPERATIONS</span>
-      <p style="color: var(--c-accent); font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(1.05rem, 2vw, 1.35rem); margin-bottom: 1rem;">Every AI can produce an answer.</p>
+      <p style="color: var(--c-accent); font-family: var(--font-serif); font-size: clamp(1.05rem, 2vw, 1.35rem); margin-bottom: 1rem;">Every AI can produce an answer.</p>
       <h1>We prove the governed chain<br><span class="accent-text">behind the work.</span></h1>
       <p class="hero-subhead">
         OKO builds <strong style="color: var(--c-text-on-dark);">Thunderline</strong> — the governed operating environment for human-agent teams. Inside each <strong style="color: var(--c-text-on-dark);">ThunderBlock</strong> hive, agents remember, coordinate, and execute under human command with byte-verifiable receipts.
@@ -1000,12 +1001,12 @@
 
     <div class="grid-2 reveal fade-up">
       <div>
-        <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin-bottom: 1rem;">The hive is the product</h3>
+        <h3 style="color: var(--c-text-on-dark); font-family: var(--font-serif); font-weight: 500; margin-bottom: 1rem;">The hive is the product</h3>
         <p>Thunderline connects ThunderBlocks with memory, communication, governance, and execution.</p>
         <p>Prism gives operators a live visual window into hive state and active work.</p>
       </div>
       <div>
-        <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; margin-bottom: 1rem;">The product spine</h3>
+        <h3 style="color: var(--c-text-on-dark); font-family: var(--font-serif); font-weight: 500; margin-bottom: 1rem;">The product spine</h3>
         <ul style="list-style: none;">
           <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Remember</strong> — retain context across sessions</li>
           <li style="padding: 0.85rem 0; border-bottom: 1px solid var(--c-border-dark);"><strong style="color: var(--c-accent);">Coordinate</strong> — align agents on shared roles</li>
@@ -1073,7 +1074,7 @@
     </div>
 
     <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--c-border);" class="reveal fade-up">
-      <h3 style="font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6rem; margin-bottom: 1rem; letter-spacing: -0.01em;">One team, one operating space</h3>
+      <h3 style="font-family: var(--font-serif); font-weight: 500; font-size: 1.6rem; margin-bottom: 1rem; letter-spacing: -0.01em;">One team, one operating space</h3>
       <p>Direct specialized agents from one workspace instead of juggling isolated tabs and prompts.</p>
     </div>
   </div>
@@ -1228,7 +1229,7 @@
     </div>
 
     <div class="reveal fade-up" style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--c-border-dark);">
-      <h3 style="color: var(--c-text-on-dark); font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.7rem; margin-bottom: 1rem; letter-spacing: -0.01em;">A workspace the operator can steward</h3>
+      <h3 style="color: var(--c-text-on-dark); font-family: var(--font-serif); font-weight: 500; font-size: 1.7rem; margin-bottom: 1rem; letter-spacing: -0.01em;">A workspace the operator can steward</h3>
       <p>Preserve team context, governance boundaries, and operating records on your terms.</p>
     </div>
   </div>
@@ -1394,10 +1395,7 @@
   </div>
 </footer>
 
-<!-- Cormorant Garamond via fonts.bunny.net — Google Fonts drop-in proxy, no cookies, GDPR-compliant.
-     Fully self-hosted woff2 is a P1 follow-up. -->
-<link rel="preconnect" href="https://fonts.bunny.net">
-<link rel="stylesheet" href="https://fonts.bunny.net/css?family=cormorant-garamond:400,500,600,700&amp;display=swap" media="print" onload="this.media='all'">
+<!-- Self-hosted Inter + Fraunces variable fonts loaded via /assets/css/polish.css -->
 
 <!-- WebGL feature-detect: if WebGL is blocked, hide the iframe and fall back to the SVG poster -->
 <script>

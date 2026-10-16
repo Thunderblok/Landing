@@ -13,9 +13,9 @@
     --bg:#050a14; --bg2:#07101f; --ink:#eaf0f8;
     --soft:#a8b3c4; --faint:#6b7789;
     --gold:#c9a961; --gold-warm:#d4b876; --gold-glow:#e6c98b; --blue:#5b8cc7;
-    --serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;
-    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    --serif:var(--font-serif, "Fraunces",Georgia,"Times New Roman",serif);
+    --sans:var(--font-sans, "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif);
+    --mono:var(--font-mono, "JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace);
   }
   *{box-sizing:border-box} html,body{margin:0}
   body{background:var(--bg); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; overflow-x:hidden}
@@ -70,6 +70,7 @@
 <script type="importmap">
 { "imports": { "three": "./assets/vendor/three.module.js" } }
 </script>
+<link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
 <link rel="stylesheet" href="assets/css/polish.css">
 <style>

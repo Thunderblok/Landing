@@ -14,9 +14,14 @@ Self-hosted production builds vendored to eliminate third-party runtime CDN depe
 | `lenis-1.x/LICENSE` | `1.3.27` | `https://cdn.jsdelivr.net/npm/lenis@1.3.27/LICENSE` | `7d1896b31f2eed9f286b05faca067c4e35b2f109ae7c4ed5105220e2d2820228` | `1088` | MIT License text |
 | `three.module.js` | `0.186.0` (r186) | `https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js` | `9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea` | `662772` | MIT — Copyright 2010-2026 Three.js Authors (`README.txt`) |
 | `three.core.js` | `0.186.0` (r186) | `https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.core.js` | `9edde002b066a9a05676a6127f67735b62baf399bdea529f2f7e31657da769e6` | `1458113` | MIT — Copyright 2010-2026 Three.js Authors (`README.txt`) |
+| `fonts/inter/Inter-roman.var.woff2` | `4.1` | `https://rsms.me/inter/font-files/InterVariable.woff2?v=4.1` | `693b77d4f32ee9b8bfc995589b5fad5e99adf2832738661f5402f9978429a8e3` | `352240` | SIL OFL 1.1 (`fonts/inter/OFL.txt`) |
+| `fonts/fraunces/Fraunces[SOFT,WONK,opsz,wght].woff2` | `1.000` | `https://github.com/undercasetype/Fraunces/releases/download/1.000/UnderCaseType_Fraunces_1.000.zip` | `25e420d8c154303e08322ea77f08997c4aade75653ef18425772ada5abacd0ce` | `195068` | SIL OFL 1.1 (`fonts/fraunces/OFL.txt`) |
+| `fonts/fraunces/Fraunces-Italic[SOFT,WONK,opsz,wght].woff2` | `1.000` | `https://github.com/undercasetype/Fraunces/releases/download/1.000/UnderCaseType_Fraunces_1.000.zip` | `b02ea63758999cc1665e5d58ba300e92086f40e414a2de6ed1df949497dc8ba9` | `235736` | SIL OFL 1.1 (`fonts/fraunces/OFL.txt`) |
 
 ## MIT & Free-Use Notices
 
 - **Lenis (`1.3.27`)**: Released under the MIT License (`Copyright (c) 2024 darkroom.engineering`). Full text in [`lenis-1.x/LICENSE`](./lenis-1.x/LICENSE).
 - **GSAP (`3.15.0` — Core, ScrollTrigger, Flip)**: Copyright 2008-2026 GreenSock. 100% free for commercial and non-commercial use under the MIT / GreenSock Standard "No Charge" License (`gsap-3.x/LICENSE`).
 - **Three.js (`0.186.0`)**: Released under the MIT License. See [`README.txt`](./README.txt) for importmap notes.
+- **Inter (`4.1`) & Fraunces (`1.000`)**: Released under the SIL Open Font License 1.1. See [`fonts/inter/README.md`](./fonts/inter/README.md) and [`fonts/fraunces/README.md`](./fonts/fraunces/README.md).
+
