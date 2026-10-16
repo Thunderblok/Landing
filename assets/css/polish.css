@@ -1,0 +1,190 @@
+/* ==========================================================================
+ * OKO Shared Polish Layer — Styles & Elevation Tokens (assets/css/polish.css)
+ * Paired runtime script: /assets/js/polish.js
+ *
+ * Provides dual-layer depth shadows (sharp contact shadow + diffuse ambient
+ * shadow), dark-mode shadow variants aligned with /assets/brand/oko-tokens.css,
+ * and motion utility classes (.fade-up, .parallax, .hover-lift) with full
+ * prefers-reduced-motion overrides.
+ * ========================================================================== */
+
+:root {
+  /* ---- Brand-tinted shadow base (LIGHT ground: YoRHa tan #f0ece3) ------- */
+  --shadow-color-tint: rgba(138, 95, 28, 0.14);
+
+  /* ---- Core shadow primitives ------------------------------------------- */
+  --shadow-soft:
+    0 1px 2px rgba(28, 24, 21, 0.05),
+    0 6px 16px -2px rgba(28, 24, 21, 0.07);
+  --shadow-medium:
+    0 2px 4px rgba(28, 24, 21, 0.06),
+    0 12px 28px -4px rgba(28, 24, 21, 0.11);
+  --shadow-hard:
+    0 4px 8px rgba(28, 24, 21, 0.10),
+    0 24px 48px -8px rgba(28, 24, 21, 0.18);
+  --shadow-glow:
+    0 0 0 1px rgba(138, 95, 28, 0.22),
+    0 8px 28px -4px var(--shadow-color-tint);
+
+  /* ---- 5-tier Elevation Stack (sharp contact + large diffuse shadow) ---- */
+  --elev-1:
+    0 1px 2px rgba(28, 24, 21, 0.05),
+    0 3px 8px -1px rgba(28, 24, 21, 0.06);
+  --elev-2:
+    0 2px 4px rgba(28, 24, 21, 0.06),
+    0 8px 20px -3px rgba(28, 24, 21, 0.09);
+  --elev-3:
+    0 3px 6px rgba(28, 24, 21, 0.07),
+    0 14px 32px -4px rgba(28, 24, 21, 0.12),
+    0 0 20px -6px var(--shadow-color-tint);
+  --elev-4:
+    0 5px 10px rgba(28, 24, 21, 0.09),
+    0 22px 44px -6px rgba(28, 24, 21, 0.15),
+    0 0 28px -4px var(--shadow-color-tint);
+  --elev-5:
+    0 8px 16px rgba(28, 24, 21, 0.11),
+    0 32px 64px -10px rgba(28, 24, 21, 0.20),
+    0 0 36px -2px var(--shadow-color-tint);
+}
+
+/* Dark mode variants: detected in assets/brand/oko-tokens.css,
+ * assets/brand/oko-theme.js, index.html, and investors/*.html.
+ * Honors both system preference (unless explicitly set to light) and
+ * explicit [data-theme="dark"] / .oko-artwork grounds. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --shadow-color-tint: rgba(223, 186, 137, 0.16);
+
+    --shadow-soft:
+      0 1px 2px rgba(2, 5, 10, 0.45),
+      0 6px 18px -2px rgba(2, 5, 10, 0.50);
+    --shadow-medium:
+      0 2px 5px rgba(2, 5, 10, 0.55),
+      0 14px 32px -4px rgba(2, 5, 10, 0.62);
+    --shadow-hard:
+      0 4px 10px rgba(2, 5, 10, 0.65),
+      0 26px 56px -8px rgba(2, 5, 10, 0.76);
+    --shadow-glow:
+      0 0 0 1px rgba(223, 186, 137, 0.28),
+      0 10px 32px -4px var(--shadow-color-tint);
+
+    --elev-1:
+      0 1px 2px rgba(2, 5, 10, 0.42),
+      0 4px 10px -1px rgba(2, 5, 10, 0.48);
+    --elev-2:
+      0 2px 4px rgba(2, 5, 10, 0.48),
+      0 10px 24px -3px rgba(2, 5, 10, 0.56);
+    --elev-3:
+      0 3px 7px rgba(2, 5, 10, 0.54),
+      0 16px 36px -4px rgba(2, 5, 10, 0.64),
+      0 0 24px -6px var(--shadow-color-tint);
+    --elev-4:
+      0 5px 12px rgba(2, 5, 10, 0.60),
+      0 24px 48px -6px rgba(2, 5, 10, 0.72),
+      0 0 32px -4px var(--shadow-color-tint);
+    --elev-5:
+      0 8px 18px rgba(2, 5, 10, 0.68),
+      0 36px 72px -10px rgba(2, 5, 10, 0.82),
+      0 0 42px -2px var(--shadow-color-tint);
+  }
+}
+
+:root[data-theme="dark"],
+:root.oko-artwork {
+  --shadow-color-tint: rgba(223, 186, 137, 0.16);
+
+  --shadow-soft:
+    0 1px 2px rgba(2, 5, 10, 0.45),
+    0 6px 18px -2px rgba(2, 5, 10, 0.50);
+  --shadow-medium:
+    0 2px 5px rgba(2, 5, 10, 0.55),
+    0 14px 32px -4px rgba(2, 5, 10, 0.62);
+  --shadow-hard:
+    0 4px 10px rgba(2, 5, 10, 0.65),
+    0 26px 56px -8px rgba(2, 5, 10, 0.76);
+  --shadow-glow:
+    0 0 0 1px rgba(223, 186, 137, 0.28),
+    0 10px 32px -4px var(--shadow-color-tint);
+
+  --elev-1:
+    0 1px 2px rgba(2, 5, 10, 0.42),
+    0 4px 10px -1px rgba(2, 5, 10, 0.48);
+  --elev-2:
+    0 2px 4px rgba(2, 5, 10, 0.48),
+    0 10px 24px -3px rgba(2, 5, 10, 0.56);
+  --elev-3:
+    0 3px 7px rgba(2, 5, 10, 0.54),
+    0 16px 36px -4px rgba(2, 5, 10, 0.64),
+    0 0 24px -6px var(--shadow-color-tint);
+  --elev-4:
+    0 5px 12px rgba(2, 5, 10, 0.60),
+    0 24px 48px -6px rgba(2, 5, 10, 0.72),
+    0 0 32px -4px var(--shadow-color-tint);
+  --elev-5:
+    0 8px 18px rgba(2, 5, 10, 0.68),
+    0 36px 72px -10px rgba(2, 5, 10, 0.82),
+    0 0 42px -2px var(--shadow-color-tint);
+}
+
+/* ==========================================================================
+ * Utility Classes
+ * ========================================================================== */
+
+/* Initial hidden state for scroll reveal with CSS transition fallback */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-up.visible,
+.fade-up.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Compositor hint for ScrollTrigger scrub parallax elements */
+.parallax {
+  will-change: transform;
+}
+
+/* Interactive elevation lift on hover */
+.hover-lift {
+  box-shadow: var(--elev-1);
+  transition:
+    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover,
+.hover-lift:focus-visible,
+.hover-lift.is-hovered {
+  box-shadow: var(--elev-3);
+  transform: translateY(-4px);
+}
+
+/* ==========================================================================
+ * Reduced-Motion Overrides
+ * ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .parallax {
+    will-change: auto;
+    transform: none !important;
+  }
+
+  .hover-lift,
+  .hover-lift:hover,
+  .hover-lift:focus-visible,
+  .hover-lift.is-hovered {
+    transition: none !important;
+    transform: none !important;
+  }
+}
