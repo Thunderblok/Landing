@@ -10,17 +10,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OKO Holding Corporation — Governed Agent Operations</title>
-<meta name="description" content="OKO builds Thunderline: a governed operating environment for human-agent teams where every consequential action produces a byte-verifiable receipt. ThunderBlocks are managed hives under an operator who stays in control.">
+<meta name="description" content="Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay. A ThunderBlock is one managed workspace inside it. Prism is the operator surface. ACORN is the first live application proving the stack.">
+<link rel="canonical" href="https://okoholding.com/">
 <meta property="og:title" content="OKO Holding Corporation — Governed Agent Operations">
-<meta property="og:description" content="Every AI can produce an answer. Thunderline proves the governed chain behind the work. ThunderBlocks give human-agent teams shared memory, operating context, rules, oversight, and byte-verifiable receipts.">
+<meta property="og:description" content="Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/og-image.svg">
+<meta property="og:url" content="https://okoholding.com/">
+<meta property="og:image" content="https://okoholding.com/assets/og-image.svg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="OKO Holding Corporation — Governed Agent Operations">
-<meta name="twitter:description" content="Every AI can produce an answer. Thunderline proves the governed chain behind the work.">
-<meta name="twitter:image" content="assets/og-image.svg">
+<meta name="twitter:description" content="Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.">
+<meta name="twitter:image" content="https://okoholding.com/assets/og-image.svg">
 <meta name="theme-color" content="#050a14">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="alternate icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -954,8 +956,8 @@
           <a href="/product/" class="hero-chip hero-chip-beta">ThunderBlock · beta</a>
           <a href="/product/#prism" class="hero-chip hero-chip-live">Prism · live</a>
           <a href="/product/#acorn-demo" class="hero-chip hero-chip-live">ACORN · live</a>
-          <a href="/platform/#doris" class="hero-chip hero-chip-research">DORIS · research</a>
-          <a href="/platform/#atlas" class="hero-chip hero-chip-research">ATLAS · research</a>
+          <a href="#maturity" class="hero-chip hero-chip-research">DORIS · research</a>
+          <a href="#maturity" class="hero-chip hero-chip-research">ATLAS · research</a>
         </div>
       </div>
     </div>
@@ -968,7 +970,7 @@
     <div class="section-header reveal fade-up" style="margin-bottom: 2rem;">
       <span class="eyebrow">SUBSTRATE VISUALIZATION</span>
       <h2>One governed spine across thirteen domains.</h2>
-      <p class="lead">Every tool invocation crosses the PolicyGate, executes inside a sandboxed cell, and seals an append-only receipt into the lineage graph. Inspect the live shader stage below or launch the interactive Three.js 3D topology.</p>
+      <p class="lead">Consequential actions pass the PolicyGate and seal an <code>ActionReceipt</code> linked into the lineage graph. The visual below is a conceptual rendering, not live telemetry. Its full-screen home is the interactive Three.js scene.</p>
     </div>
     <div class="substrate-stage reveal fade-up">
       <div id="hero-fallback" class="parallax" data-parallax data-speed="0.18" role="img" aria-label="Substrate visualization — wireframe icosahedron with orbiting service nodes"></div>
@@ -1017,7 +1019,7 @@
       <div class="oko-card hover-lift">
         <span class="oko-card-eyebrow">Buyer B · Architecture &amp; Code</span>
         <h3>Hands-On Platform / Agent-Infra Lead</h3>
-        <p>Evaluating whether Thunderline is a real Elixir/OTP substrate or vapourware. Read 10 actual code excerpts from the running codebase — no marketing pseudocode.</p>
+        <p>You want to know whether Thunderline is a real Elixir/OTP substrate. Read 10 snippets written against the real module names — policy gate, receipt seal, lineage edge, replay query — with private modules marked as such.</p>
         <div style="margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.65rem;">
           <a href="/docs/" style="color: var(--teal); font-weight: 600; text-decoration: none;">Read 10 real Elixir &amp; SQL snippets in /docs →</a>
           <a href="https://github.com/Thunderblok/Landing" rel="noopener" style="color: var(--gold); font-weight: 600; text-decoration: none;">Inspect github.com/Thunderblok/Landing (Apache 2.0) ↗</a>
@@ -1043,42 +1045,48 @@
     <div class="section-header reveal fade-up">
       <span class="eyebrow">Honest-Trust Artifacts</span>
       <h2>What we can prove today — and what we don’t claim yet.</h2>
-      <p class="lead">No invented customer logos, no inflated call counts, and no fake compliance badges. Every claim links to an architectural control or states its roadmap status plainly.</p>
+      <p class="lead">No customer logos we don't have. No certifications we don't hold. Each item below either links to the architecture or states its status plainly.</p>
     </div>
 
     <div class="oko-grid-2 reveal fade-up">
       <div class="oko-card">
         <span class="oko-card-eyebrow">01 · Compliance Posture</span>
-        <h3>Cryptographic controls today; SOC2 Type II targeted Q1 2027</h3>
-        <p>We hold <strong>no current SOC2, ISO 27001, HIPAA, or FedRAMP certification</strong>. What runs in code today: an append-only receipt spine, HMAC-SHA256 sealing with per-node secret rotation, a fail-closed capability-token gate before every tool call, and a Postgres trigger (<code>prevent_sealed_receipt_mutation()</code>) that rejects UPDATE/DELETE on sealed rows. <a href="/security/">Read the full control plane on /security →</a></p>
+        <h3>SOC2 Type II: target Q1 2027</h3>
+        <p>HIPAA: TBD. FedRAMP: not applicable at current stage. We hold no compliance certification today. No regulatory-compliance guarantee: Thunderline is designed for governed workflows; your compliance posture remains yours. Current state: <a href="/security/">see /security for architecture →</a></p>
       </div>
 
       <div class="oko-card">
         <span class="oko-card-eyebrow">02 · Receipt-Spine Evidence</span>
-        <h3>17-field deterministic seal &amp; offline verification</h3>
-        <p>Every consequential action seals 17 canonical fields (<code>:receipt_id</code> through <code>:artifacts</code>) via <code>Thundersec.ReceiptSeal</code> and links parent hashes into <code>Thundereye.ReceiptChain</code>. Inspect a redacted production JSON receipt and its verification transcript on <a href="/security/#receipt-example">/security/#receipt-example</a> and <a href="/docs/#snippet-4">/docs/#snippet-4</a>.</p>
+        <h3>17-field <code>@seal_fields</code> over the <code>ActionReceipt</code></h3>
+        <p>Verifiable. Replay-tested in the trust-spine merge gate. Seals are unkeyed; they raise the price of tampering, not forbid it. <a href="/security/#receipt-spine">Receipt-spine architecture on /security →</a> · <a href="/docs/#snippet-4">field list in /docs →</a></p>
       </div>
 
       <div class="oko-card">
-        <span class="oko-card-eyebrow">03 · Adversarial Testing (2026-04-12 Anneal)</span>
-        <h3>29-agent adversarial anneal: 31 defects surfaced, 11 high-severity fixed</h3>
-        <p>On 2026-04-12 we ran a 29-agent adversarial anneal targeting token forgery, replay injection, receipt mutation, and WASM sandbox escape. The campaign surfaced <strong>31 defects</strong>: <strong>11 high-severity findings were fixed in-session</strong> and <strong>20 medium/low items</strong> are tracked in the remediation ledger. <a href="/security/#anneal-2026-04-12">Review the anneal ledger on /security →</a></p>
+        <span class="oko-card-eyebrow">03 · Adversarial Testing</span>
+        <h3>29-agent refute-by-default anneal (2026-07-30)</h3>
+        <p>31 defects surfaced; 11 high-severity. Open hazard classes stay listed in public, including fail-open at membranes (GH #3081) and upserts carrying authority into <code>ON CONFLICT</code> (GH #3073). <a href="/security/#adversarial-anneal">Current state on /security →</a></p>
       </div>
 
       <div class="oko-card">
-        <span class="oko-card-eyebrow">04 · Open Source &amp; What We Don’t Have Yet</span>
+        <span class="oko-card-eyebrow">04 · Open Source</span>
+        <h3>This site is Apache 2.0</h3>
+        <p>Source at <a href="https://github.com/Thunderblok/Landing" rel="noopener">github.com/Thunderblok/Landing</a>. Thunderline platform code is private pending launch.</p>
+      </div>
+
+      <div class="oko-card" style="grid-column: 1 / -1;">
+        <span class="oko-card-eyebrow">05 · Design Partners &amp; Customers</span>
         <h3>Beta — no production customers yet</h3>
-        <p>This site is open-source at <a href="https://github.com/Thunderblok/Landing" rel="noopener">github.com/Thunderblok/Landing</a> (Apache 2.0); core substrate source is private during beta with read access granted to design-partner evaluators under mutual NDA. We do not yet have named production customers, a public SLA, a bug-bounty program, or a third-party pen-test report. Design-partner slots: email <a href="mailto:mo@okoholding.com">mo@okoholding.com</a>.</p>
+        <p>We have no named production customers, no public SLA, and no third-party penetration-test report. Design-partner slots are open: email <a href="mailto:mo@okoholding.com?subject=Design-partner%20slot">mo@okoholding.com</a>.</p>
       </div>
     </div>
 
-    <div class="oko-callout reveal fade-up" style="margin-top: 3rem;">
+    <div id="maturity" class="oko-callout reveal fade-up" style="margin-top: 3rem; scroll-margin-top: 88px;">
       <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
         <div>
           <span class="eyebrow" style="margin-bottom: 0.35rem;">Canonical Maturity Label Matrix</span>
           <h3 style="color: var(--ink); margin: 0;">Four honest stops across the stack</h3>
         </div>
-        <p style="margin: 0; font-size: 0.86rem; color: var(--ink-faint); font-family: var(--font-mono);">Reduced from 11 ad-hoc labels to 4 canonical stops: <code>research · design · beta · live</code></p>
+        <p style="margin: 0; font-size: 0.86rem; color: var(--ink-faint); font-family: var(--font-mono);">Four-stop reduction of the 11-label public maturity axis: <code>research · design · beta · live</code></p>
       </div>
       <div class="oko-grid-3" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem;">
         <div style="padding: 0.95rem 1.1rem; border: 1px solid var(--hairline); border-radius: 10px; background: rgba(5,10,20,0.55);">
@@ -1114,7 +1122,7 @@
             <strong style="color: var(--ink);">K1WasmCell</strong>
             <span class="hero-chip hero-chip-beta" style="padding: 0.15rem 0.55rem; font-size: 0.7rem;">beta</span>
           </div>
-          <p style="margin: 0; font-size: 0.83rem; color: var(--ink-dim);">Wasmex fuel-, memory-, and wall-clock-bounded tool execution cell.</p>
+          <p style="margin: 0; font-size: 0.83rem; color: var(--ink-dim);">Hermetic WASM cell: wasmtime NIF, zero-import check, fuel + wall-clock bounds.</p>
         </div>
         <div style="padding: 0.95rem 1.1rem; border: 1px solid var(--hairline); border-radius: 10px; background: rgba(5,10,20,0.55);">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
