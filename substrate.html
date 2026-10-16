@@ -71,15 +71,31 @@
 { "imports": { "three": "./assets/vendor/three.module.js" } }
 </script>
 <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+<link rel="stylesheet" href="assets/css/polish.css">
+<style>
+  /* Tokenized elevation stack wired from assets/css/polish.css */
+  .chip,
+  .back {
+    box-shadow: var(--elev-1);
+  }
+  .btn.solid {
+    box-shadow: var(--elev-2);
+  }
+  .btn.solid:hover,
+  .back:hover,
+  .chip:hover {
+    box-shadow: var(--elev-3);
+  }
+</style>
 </head>
 <body>
-<div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering the substrate…<br>if this message stays, the scene could not start — WebGL may be unavailable, or an asset failed to load.</div></div>
-<div class="vig"></div>
+<div id="stage"><canvas id="scene"></canvas><div class="fb" id="fb">rendering substrate…<br>if stuck, WebGL or scene assets failed.</div></div>
+<div class="vig" data-parallax data-speed="0.06"></div>
 <div class="grain"></div>
 
 <nav>
   <a class="brand" href="index.html"><img class="mk" src="/assets/brand/oko-mark.svg" alt="" width="22" height="22"> OKO</a>
-  <a class="back" href="index.html">← okoholding.com</a>
+  <a class="back hover-lift" href="index.html">← okoholding.com</a>
 </nav>
 <div class="prog"><b id="pv">the substrate</b> · scroll to descend</div>
 
@@ -87,42 +103,42 @@
   <section class="panel mid" data-i="0"><div class="cap">
     <div class="eye">OKO Holding · the substrate</div>
     <h1>A substrate that <em>thinks.</em></h1>
-    <p>This is a Thunderblock — one sovereign cell of a machine grown from local rules, keeping its own memory and its own law.</p>
-    <span class="chip">scroll to descend ↓</span>
+    <p>A ThunderBlock: one sovereign cell grown from local rules, holding its own memory and law.</p>
+    <span class="chip hover-lift">scroll to descend ↓</span>
   </div></section>
 
   <section class="panel" data-i="1"><div class="cap">
     <div class="eye">Look closer</div>
-    <h2>Every block is a <em>world.</em></h2>
-    <p>Past the shell it stops being an icon. Inside, thousands of small machines are already at work.</p>
+    <h2 class="fade-up">Every block is a <em>world.</em></h2>
+    <p>Past the shell, thousands of small machines fire inside.</p>
   </div></section>
 
   <section class="panel right" data-i="2"><div class="cap">
     <div class="eye">The little machines</div>
-    <h2>Thunderbits, <em>firing.</em></h2>
-    <p>Each follows one local rule. No bit sees the whole picture — yet a burst propagates across the lattice, one tick at a time, and coordination emerges.</p>
-    <span class="chip gold">cell → bit → creature → world</span>
+    <h2 class="fade-up">Thunderbits, <em>firing.</em></h2>
+    <p>Each bit obeys one local rule; bursts propagate tick-by-tick and coordination emerges.</p>
+    <span class="chip gold hover-lift">cell → bit → creature → world</span>
   </div></section>
 
   <section class="panel" data-i="3"><div class="cap">
     <div class="eye">The substrate, thinking</div>
-    <h2>A burst runs.<br>A receipt <em>seals.</em></h2>
-    <p>Fast loops run locally and deterministically. Every burst is seeded and fingerprinted — computation you can replay and prove.</p>
-    <span class="chip">seed 0x7d73 · sha256 bd21…e5b</span>
+    <h2 class="fade-up">A burst runs.<br>A receipt <em>seals.</em></h2>
+    <p>Deterministic local loops seed and fingerprint every burst for verifiable replay.</p>
+    <span class="chip hover-lift">seed 0x7d73 · sha256 bd21…e5b</span>
   </div></section>
 
   <section class="panel mid" data-i="4"><div class="cap">
     <div class="eye">And back out</div>
-    <h2>One block.<br>Then a <em>thousand.</em></h2>
-    <p>Compose sovereign blocks into an operating system for emergent intelligence.</p>
+    <h2 class="fade-up">One block.<br>Then a <em>thousand.</em></h2>
+    <p>Compose sovereign blocks into governed intelligence.</p>
   </div></section>
 </div>
 
 <section class="end">
-  <h2>Millions of machines. One emergent mind.</h2>
-  <p>Identity, memory, transport, planning and law — inherited from the substrate itself, so every station built on it is governed from its first breath.</p>
-  <div class="btnrow">
-    <a class="btn solid" href="index.html#contact">Talk to OKO →</a>
+  <h2 class="fade-up">Millions of machines. One emergent mind.</h2>
+  <p class="fade-up">Every station inherits identity, memory, transport, planning, and law from first breath.</p>
+  <div class="btnrow fade-up">
+    <a class="btn solid hover-lift" href="index.html#contact">Talk to OKO →</a>
   </div>
 </section>
 
@@ -335,6 +351,20 @@ function loop(){
 }
 loop();
 }catch(error){ showFallback(error); }
+</script>
+<script defer src="assets/vendor/gsap-3.x/gsap.min.js"></script>
+<script defer src="assets/vendor/gsap-3.x/ScrollTrigger.min.js"></script>
+<script defer src="assets/vendor/gsap-3.x/Flip.min.js"></script>
+<script defer src="assets/vendor/lenis-1.x/lenis.min.js"></script>
+<script defer src="assets/js/polish.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (window.OKOPolish) {
+      window.OKOPolish.reveal('.fade-up');
+      window.OKOPolish.parallax('[data-parallax]', 0.06);
+      window.OKOPolish.hover('.hover-lift');
+    }
+  });
 </script>
 </body>
 </html>
