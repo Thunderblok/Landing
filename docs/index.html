@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en" class="oko-dark" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation — 10 Thunderline Spine Snippets | OKO Holding Corporation</title>
+  <meta name="description" content="Ten copyable Elixir and SQL snippets from the Thunderline governed runtime: PolicyGate, 17-field ActionReceipt seal, LineageEdge verification, K1WasmCell, Thunderflow EventBus, and ACORN seal classification.">
+  <link rel="canonical" href="https://okoholding.com/docs/">
+  <meta property="og:title" content="Documentation — 10 Thunderline Spine Snippets | OKO Holding Corporation">
+  <meta property="og:description" content="Ten copyable code snippets showing how Thunderline enforces capability tiers, seals 17-field ActionReceipts, and verifies lineage edges.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://okoholding.com/docs/">
+  <meta property="og:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation — 10 Thunderline Spine Snippets | OKO Holding Corporation">
+  <meta name="twitter:description" content="Ten copyable code snippets from the Thunderline governed runtime.">
+  <meta name="twitter:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="theme-color" content="#0b1117">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+  <link rel="stylesheet" href="/assets/css/polish.css">
+</head>
+<body class="oko-page">
+  <a href="#main-content" class="oko-skip-link">Skip to content</a>
+
+  <nav class="oko-nav" aria-label="Primary navigation">
+    <div class="oko-nav-inner">
+      <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
+        <span class="oko-nav-brand-word">OKO</span>
+      </a>
+      <ul class="oko-nav-links">
+        <li><a href="/product/">Product</a></li>
+        <li><a href="/platform/">Platform</a></li>
+        <li><a href="/docs/" aria-current="page">Docs</a></li>
+        <li><a href="/security/">Security</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/company/">Company</a></li>
+      </ul>
+      <div class="oko-nav-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta hover-lift">Get a ThunderBlock</a>
+        <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
+          <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
+      <ul class="oko-mobile-drawer-links">
+        <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
+        <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
+        <li><a href="/docs/" aria-current="page">Docs <span aria-hidden="true">→</span></a></li>
+        <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
+        <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
+        <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
+        <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
+        <li><a href="/investors/">Investors <span aria-hidden="true">→</span></a></li>
+      </ul>
+      <div class="oko-mobile-drawer-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <header class="oko-page-hero">
+      <div class="oko-container">
+        <p class="oko-eyebrow oko-eyebrow--teal">DEVELOPER DOCUMENTATION · RUNTIME REFERENCE</p>
+        <h1 class="oko-display-h1">Ten real snippets from the<br>Thunderline <em>spine.</em></h1>
+        <p class="oko-lead">
+          Grounded in the actual Elixir/OTP modules and SQL tables powering Thunderline. Private platform modules are marked <code>source: private — contact for access</code>; this site's source is public at <a href="https://github.com/Thunderblok/Landing" rel="noopener">github.com/Thunderblok/Landing</a>.
+        </p>
+      </div>
+    </header>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <div class="oko-docs-layout">
+          <aside class="oko-docs-sidebar" aria-label="Documentation snippets navigation">
+            <h4>10 Spine Snippets</h4>
+            <ol>
+              <li><a href="#snippet-1">01 · Provisioning a ThunderBlock</a></li>
+              <li><a href="#snippet-2">02 · Crown Action Definition</a></li>
+              <li><a href="#snippet-3">03 · PolicyGate.validate_and_execute/2</a></li>
+              <li><a href="#snippet-4">04 · ActionReceipt @seal_fields (17)</a></li>
+              <li><a href="#snippet-5">05 · LineageEdge.compute_seal_hash/1</a></li>
+              <li><a href="#snippet-6">06 · Receipt Replay SQL Query</a></li>
+              <li><a href="#snippet-7">07 · K1WasmCell.execute/3</a></li>
+              <li><a href="#snippet-8">08 · Thunderflow EventBus Publish</a></li>
+              <li><a href="#snippet-9">09 · MessageReceipt.seal/2</a></li>
+              <li><a href="#snippet-10">10 · AcornReceiptSealClassification</a></li>
+            </ol>
+          </aside>
+
+          <div>
+            <!-- SNIPPET 1 -->
+            <article id="snippet-1" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">01 · Provisioning a ThunderBlock (<code>mix new</code> &amp; Blockstrap)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20SDK%20Access">lib/mix/tasks/thunderblock.init.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Public SDK scaffolding via <code>mix thunderblock.new</code> is in beta cutover; during the current design-partner window, new ThunderBlock workspaces are provisioned through the hosted <a href="https://thunderline.net/blockstrap">Blockstrap flow</a> and bound to a local workspace config.
+              </p>
+              <pre class="oko-pre"><code># Local workspace bootstrap (CLI preview —coming soon for general SDK)
+# Provision a managed cell today at https://thunderline.net/blockstrap
+$ mix new my_governed_hive --sup
+$ cd my_governed_hive
+
+# config/runtime.exs — bind your ThunderBlock cell &amp; operator grant
+import Config
+
+config :thunderblock, :cell,
+  block_id: System.fetch_env!("THUNDERBLOCK_ID"),
+  blockstrap_endpoint: "https://thunderline.net/blockstrap",
+  default_capability_floor: :read,
+  require_receipt_seal: true</code></pre>
+            </article>
+
+            <!-- SNIPPET 2 -->
+            <article id="snippet-2" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">02 · Crown Action Definition (4 Capability Tiers)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thundercrown/lib/thundercrown/actions/catalog/manual/case_packet_commit.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Every governed operation in <code>Thundercrown.Actions.Catalog.Manual.*</code> declares an explicit capability tier (<code>:read</code>, <code>:mutate</code>, <code>:admin</code>, or <code>:execute</code>) so the policy gate can reject unauthorized calls before any executor code runs.
+              </p>
+              <pre class="oko-pre"><code>defmodule Thundercrown.Actions.Catalog.Manual.CasePacketCommit do
+  @moduledoc """
+  Commits a reviewed case packet to workspace state.
+  Capability tier must be one of :read | :mutate | :admin | :execute.
+  """
+  alias Thundercrown.Actions.Action
+
+  @spec definition() :: Action.t()
+  def definition do
+    %Action{
+      id: "crown.manual.case_packet_commit",
+      domain: :acorn,
+      capability: :mutate,
+      executor: Thundercrown.Executors.CasePacketExecutor,
+      require_evidence_refs?: true,
+      seal_receipt?: true,
+      schema: %{
+        mission_id: {:required, :uuid},
+        packet_sha256: {:required, :string},
+        disposition: {:required, {:enum, [:approved, :escalated, :rejected]}}
+      }
+    }
+  end
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 3 -->
+            <article id="snippet-3" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">03 · <code>PolicyGate.validate_and_execute/2</code></h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thundercrown/lib/thundercrown/policy_gate.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                <code>PolicyGate.validate_and_execute/2</code> resolves the authorization actor (kept strictly distinct from telemetry actor claims), checks capability grants against the action tier, and seals both the <code>ActionReceipt</code> and <code>LineageEdge</code> before returning.
+              </p>
+              <pre class="oko-pre"><code>alias Thundercrown.PolicyGate
+alias Thundercrown.Actions.Catalog.Manual.CasePacketCommit
+
+action = CasePacketCommit.definition()
+
+context = %{
+  authz_actor: %{principal_id: "op_91a4", role: :operator, capabilities: [:read, :mutate]},
+  telemetry_actor: %{agent_id: "agt_synthesis_02"},
+  mission_id: "c3a8d104-7d4b-4e11-9c20-8a1f00e44b19",
+  saga_run_id: "f1208b6e-2c91-44a8-8b10-0019c871d2e0",
+  step_id: "step_04_commit",
+  evidence_refs: [
+    %{kind: :source_bundle, sha256: "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+  ],
+  inputs: %{
+    mission_id: "c3a8d104-7d4b-4e11-9c20-8a1f00e44b19",
+    packet_sha256: "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    disposition: :approved
+  }
+}
+
+case PolicyGate.validate_and_execute(action, context) do
+  {:ok, %{result: result, receipt: receipt, lineage_edge: edge}} ->
+    {:ok, receipt.receipt_id, receipt.seal_hash, edge.edge_id, result}
+
+  {:error, {:policy_denied, reason, denial_receipt}} ->
+    {:denied, reason, denial_receipt.receipt_id}
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 4 -->
+            <article id="snippet-4" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">04 · <code>ActionReceipt</code> 17-Field <code>@seal_fields</code> Doctrine</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thundercrown/lib/thundercrown/receipts/action_receipt.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Every <code>ActionReceipt</code> computes its deterministic hash across 17 canonical <code>@seal_fields</code> in fixed order. Three operational columns (<code>governance</code>, <code>output_redacted</code>, <code>input_redacted</code>) sit outside the seal and are protected via the lineage-edge cross-check.
+              </p>
+              <pre class="oko-pre"><code>defmodule Thundercrown.Receipts.ActionReceipt do
+  use Ecto.Schema
+
+  # Verbatim 17-field seal specification. Order is canonical and immutable.
+  # Note: governance, output_redacted, and input_redacted sit outside @seal_fields.
+  @seal_fields [
+    :receipt_id,
+    :envelope_version,
+    :action_id,
+    :domain,
+    :mission_id,
+    :saga_run_id,
+    :step_id,
+    :correlation_id,
+    :causation_id,
+    :actor,
+    :inputs_hash,
+    :status,
+    :attempt,
+    :traceparent,
+    :timing,
+    :cost,
+    :artifacts
+  ]
+
+  @spec seal_fields() :: [atom()]
+  def seal_fields, do: @seal_fields
+
+  @spec compute_seal_hash(map() | t()) :: String.t()
+  def compute_seal_hash(receipt) do
+    canonical_payload =
+      @seal_fields
+      |> Enum.map(fn field -&gt; {Atom.to_string(field), Map.get(receipt, field)} end)
+      |> :erlang.term_to_binary([:deterministic])
+
+    :crypto.hash(:sha256, canonical_payload)
+    |> Base.encode16(case: :lower)
+  end
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 5 -->
+            <article id="snippet-5" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">05 · Lineage Edge Persistence (<code>LineageEdge.compute_seal_hash/1</code>)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thundervine/lib/thundervine/resources/lineage_edge.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                <code>Thundervine.Resources.LineageEdge</code> persists the causal link between parent evidence, the authorization decision, and the resulting <code>ActionReceipt</code>. Because both tables carry independent seal hashes, a single-table UPDATE cannot forge a valid authority correlation.
+              </p>
+              <pre class="oko-pre"><code>defmodule Thundervine.Resources.LineageEdge do
+  @moduledoc """
+  Causal lineage edge binding an ActionReceipt to its parent mission and authority decision.
+  """
+
+  @edge_seal_fields [
+    :edge_id,
+    :mission_id,
+    :source_ref,
+    :target_receipt_id,
+    :target_receipt_seal_hash,
+    :relationship,
+    :authority_decision_status,
+    :recorded_at_unix_us
+  ]
+
+  @spec compute_seal_hash(map()) :: String.t()
+  def compute_seal_hash(attrs) when is_map(attrs) do
+     canonical =
+      Enum.map(@edge_seal_fields, fn k -&gt;
+        {Atom.to_string(k), Map.get(attrs, k)}
+      end)
+      |> :erlang.term_to_binary([:deterministic])
+
+    :crypto.hash(:sha256, canonical)
+    |> Base.encode16(case: :lower)
+  end
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 6 -->
+            <article id="snippet-6" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">06 · Receipt Replay Query (SQL Provenance Chain)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thundervine/priv/repo/queries/mission_receipt_replay.sql</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                When an auditor asks "who authorized this action, what inputs did it see, and does the causal chain hold?", the answer is a deterministic query joining <code>action_receipts</code> to <code>thundervine_lineage_edges</code> ordered by step and causation chain.
+              </p>
+              <pre class="oko-pre"><code>-- Replay the full governed receipt + lineage chain for mission $1
+WITH RECURSIVE receipt_chain AS (
+  SELECT
+    r.receipt_id,
+    r.causation_id,
+    r.step_id,
+    r.action_id,
+    r.domain,
+    r.actor,
+    r.inputs_hash,
+    r.status,
+    r.seal_hash,
+    e.edge_id,
+    e.authority_decision_status,
+    e.edge_seal_hash,
+    1 AS chain_depth
+  FROM action_receipts r
+  INNER JOIN thundervine_lineage_edges e
+    ON e.target_receipt_id = r.receipt_id
+   AND e.target_receipt_seal_hash = r.seal_hash
+  WHERE r.mission_id = $1
+    AND r.causation_id IS NULL
+
+  UNION ALL
+
+  SELECT
+    child.receipt_id,
+    child.causation_id,
+    child.step_id,
+    child.action_id,
+    child.domain,
+    child.actor,
+    child.inputs_hash,
+    child.status,
+    child.seal_hash,
+    ce.edge_id,
+    ce.authority_decision_status,
+    ce.edge_seal_hash,
+    parent.chain_depth + 1
+  FROM action_receipts child
+  INNER JOIN receipt_chain parent
+    ON child.causation_id = parent.receipt_id
+  INNER JOIN thundervine_lineage_edges ce
+    ON ce.target_receipt_id = child.receipt_id
+   AND ce.target_receipt_seal_hash = child.seal_hash
+  WHERE child.mission_id = $1
+)
+SELECT * FROM receipt_chain ORDER BY chain_depth ASC, step_id ASC;</code></pre>
+            </article>
+
+            <!-- SNIPPET 7 -->
+            <article id="snippet-7" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">07 · K1 WASM Hermetic Cell (<code>K1WasmCell.execute/3</code>)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thunderblock/lib/thunderblock/runtime/k1_wasm_cell.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Untrusted or synthesized skill modules run inside <code>Thunderblock.Runtime.K1WasmCell.execute/3</code> via a wasmtime NIF that rejects any WASM binary with host imports (zero-import verification) and enforces strict instruction fuel and wall-clock budgets.
+              </p>
+              <pre class="oko-pre"><code>alias Thunderblock.Runtime.K1WasmCell
+
+wasm_bytes = File.read!("priv/skills/normalize_field_intake.wasm")
+
+opts = [
+  max_fuel: 2_500_000,
+  wall_clock_timeout_ms: 150,
+  allow_host_imports: false,
+  memory_limit_bytes: 16 * 1024 * 1024
+]
+
+case K1WasmCell.execute(wasm_bytes, %{notes: raw_notes}, opts) do
+  {:ok, %{output: normalized, fuel_consumed: fuel, module_sha256: mod_hash}} ->
+    {:ok, normalized, %{fuel: fuel, wasm_sha256: mod_hash}}
+
+  {:error, :non_zero_imports_rejected} ->
+    {:error, :hermetic_violation}
+
+  {:error, :fuel_exhausted} ->
+    {:error, :budget_exceeded}
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 8 -->
+            <article id="snippet-8" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">08 · Thunderflow Mnesia-Backed <code>EventBus.publish/3</code></h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thunderflow/lib/thunderflow/event_bus.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Intra-workspace events travel over <code>Thunderflow.EventBus</code>, which persists envelopes to a local Mnesia transaction log and rejects unsealed or capability-mismatched publications at the bus gate.
+              </p>
+              <pre class="oko-pre"><code>defmodule Thunderflow.EventBus do
+  @moduledoc """
+  Mnesia-backed event bus with pre-publish receipt &amp; capability gate.
+  """
+
+  @spec publish(atom(), map(), keyword()) :: {:ok, reference()} | {:error, term()}
+  def publish(topic, %Messages.Envelope{} = envelope, opts \\ []) do
+    with :ok &lt;- verify_message_seal(envelope),
+         :ok &lt;- verify_topic_capability(envelope.actor, topic) do
+      :mnesia.transaction(fn -&gt;
+        :mnesia.write({:thunderflow_bus_log, envelope.message_id, topic, envelope, System.monotonic_time()})
+      end)
+      |> case do
+        {:atomic, :ok} -&gt;
+          Phoenix.PubSub.broadcast(Thunderflow.PubSub, Atom.to_string(topic), {:bus_event, envelope})
+          {:ok, make_ref()}
+
+        {:aborted, reason} -&gt;
+          {:error, {:mnesia_abort, reason}}
+      end
+    end
+  end
+end</code></pre>
+            </article>
+
+            <!-- SNIPPET 9 -->
+            <article id="snippet-9" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">09 · Per-Message Sealing (<code>MessageReceipt.seal/2</code>)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/thunderlink/lib/thunderline/thunderlink/message_receipt.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Before an inter-agent message crosses a link boundary, <code>Thunderline.Thunderlink.MessageReceipt.seal/2</code> binds the message payload to its exact <code>step_id</code>, <code>domain</code>, and <code>action_id</code> so messages cannot be replayed into a different domain or saga step.
+              </p>
+              <pre class="oko-pre"><code>alias Thunderline.Thunderlink.MessageReceipt
+
+envelope_meta = %{
+  step_id: "step_02_evidence_gather",
+  domain: :acorn,
+  action_id: "crown.manual.evidence_collect",
+  sender_actor: "agt_researcher_01",
+  correlation_id: "corr_88412a"
+}
+
+payload = %{
+  findings: ["tower_sector_b_azimuth_drift", "ground_lug_corrosion_photo_04"],
+  source_count: 2
+}
+
+{:ok, sealed_msg} = MessageReceipt.seal(payload, envelope_meta)
+# =&gt; %MessageReceipt{
+#      step_id: "step_02_evidence_gather",
+#      domain: :acorn,
+#      action_id: "crown.manual.evidence_collect",
+#      payload_hash: "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+#      message_seal: "a91f03c8...e721"
+#    }</code></pre>
+            </article>
+
+            <!-- SNIPPET 10 -->
+            <article id="snippet-10" class="oko-snippet-block">
+              <div class="oko-snippet-header">
+                <h2 class="oko-h3" style="margin: 0;">10 · Honest Non-Claim Classification (<code>AcornReceiptSealClassification.classify/1</code>)</h2>
+                <span class="oko-snippet-source"><a href="mailto:mo@okoholding.com?subject=Thunderline%20Source%20Access">apps/acorn/lib/acorn/receipt_seal_classification.ex</a> · source: private — contact for access</span>
+              </div>
+              <p style="color: var(--ink-dim); margin: 0 0 0.5rem;">
+                Rather than silently treating legacy or unverified rows as valid, <code>AcornReceiptSealClassification.classify/1</code> returns one of four explicit atoms—distinguishing current verified 17-field seals from legacy v0 encodings and invalid/tampered records.
+              </p>
+              <pre class="oko-pre"><code>defmodule AcornReceiptSealClassification do
+  @moduledoc """
+  Classifies persisted ActionReceipt rows without inflating legacy records to current validity.
+  """
+
+  @type classification ::
+          :current_valid
+          | :legacy_v0_consistent
+          | :legacy_k1_v0_consistent
+          | :invalid
+
+  @spec classify(ActionReceipt.t()) :: classification()
+  def classify(%ActionReceipt{envelope_version: 2} = receipt) do
+    expected = ActionReceipt.compute_seal_hash(receipt)
+
+    if Plug.Crypto.secure_compare(expected, receipt.seal_hash || "") do
+      :current_valid
+    else
+      :invalid
+    end
+  end
+
+  def classify(%ActionReceipt{envelope_version: 1, domain: :k1_wasm} = receipt) do
+    if LegacyK1V0Verifier.consistent?(receipt), do: :legacy_k1_v0_consistent, else: :invalid
+  end
+
+  def classify(%ActionReceipt{envelope_version: 1} = receipt) do
+    if LegacyV0Verifier.consistent?(receipt), do: :legacy_v0_consistent, else: :invalid
+  end
+
+  def classify(_), do: :invalid
+end</code></pre>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="oko-footer">
+    <div class="oko-footer-inner">
+      <div class="oko-footer-grid">
+        <div>
+          <a href="/" class="oko-footer-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
+            <span>OKO</span>
+          </a>
+          <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
+          <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Product &amp; Platform</h5>
+          <ul>
+            <li><a href="/product/">ThunderBlock (beta)</a></li>
+            <li><a href="/platform/">Thunderline Substrate</a></li>
+            <li><a href="/observatory/">Observatory Walkthrough</a></li>
+            <li><a href="/substrate.html">Substrate 3D Scene</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Engineering &amp; Trust</h5>
+          <ul>
+            <li><a href="/docs/" aria-current="page">Documentation (10 Snippets)</a></li>
+            <li><a href="/security/">Security &amp; Receipt Spine</a></li>
+            <li><a href="/status/">System Status</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+            <li><a href="https://github.com/Thunderblok/Landing" rel="noopener">GitHub (Site · Apache 2.0) ↗</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="/company/">About OKO</a></li>
+            <li><a href="/team/">Leadership Team</a></li>
+            <li><a href="/jobs/">Careers</a></li>
+            <li><a href="/investors/">Investor Materials</a></li>
+            <li><a href="mailto:mo@okoholding.com">mo@okoholding.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="oko-footer-bottom">
+        <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+        <div class="oko-footer-legal">Thunderline platform source is private pending launch; contact <a href="mailto:mo@okoholding.com">mo@okoholding.com</a> for design-partner repository access.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/vendor/gsap-3.x/gsap.min.js"></script>
+  <script src="/assets/vendor/gsap-3.x/ScrollTrigger.min.js"></script>
+  <script src="/assets/vendor/gsap-3.x/Flip.min.js"></script>
+  <script src="/assets/vendor/lenis-1.x/lenis.min.js"></script>
+  <script src="/assets/js/polish.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.OKOPolish) {
+        window.OKOPolish.reveal(".fade-up");
+        window.OKOPolish.hover(".hover-lift");
+      }
+    });
+  </script>
+</body>
+</html>

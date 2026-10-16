@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en" class="oko-artwork">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Architecture — OKO Holding Corporation</title>
+<meta name="description" content="Thunderline's trust model in full: the 17-field receipt seal, lineage-edge cross-check, policy gate, K1 WASM hermetic cell, COMSEC traffic-budget pattern, and 2026-07-30 adversarial anneal findings. For your security team.">
+<meta property="og:title" content="Security Architecture — OKO / Thunderline">
+<meta property="og:description" content="The receipt spine, in detail. Sealed receipts, lineage edges, and the policy gate that governs them. Every claim grounded in the codebase.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://okoholding.com/security/">
+<meta property="og:image" content="/assets/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Security Architecture — OKO / Thunderline">
+<meta name="twitter:description" content="17-field sealed receipts, lineage-edge cross-check, policy gate, K1 WASM hermetic cell. Zero marketing. For your security team.">
+<meta name="twitter:image" content="/assets/og-image.svg">
+<link rel="canonical" href="https://okoholding.com/security/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="alternate icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+<!-- Shared token sheet — must load; defines --oko-* variables -->
+<link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+
+<style>
+/* ============================================================
+ * OKO Security page — /security/index.html
+ * Dark-only (oko-artwork class on <html>). No scripts. No CDN.
+ * Standalone inline styles with site-token fallbacks.
+ * ============================================================ */
+
+/* ------ Fallback token definitions (work even if oko-tokens.css fails) -- */
+:root {
+  --bg:          #0b1117;
+  --bg-elevated: #141b23;
+  --bg-code:     #0d1520;
+  --ink:         #f4f0e7;
+  --ink-dim:     #b3b9bc;
+  --ink-faint:   #8e989e;
+  --gold:        #dfba89;
+  --gold-warm:   #e6c59b;
+  --teal:        #2d8a86;
+  --hairline:    rgba(224, 230, 231, 0.17);
+  --max-w:       1200px;
+  --max-w-prose: 740px;
+  --font-sans:   -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-serif:  Georgia, "Times New Roman", serif;
+  --font-mono:   ui-monospace, "SF Mono", "Cascadia Code", "Courier New", monospace;
+}
+
+/* ------ Reset + base --------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: #0b1117;
+  color: #f4f0e7;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  background: var(--bg, #0b1117);
+  color: var(--ink, #f4f0e7);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Force artwork ground regardless of system preference */
+html.oko-artwork {
+  background: #0b1117 !important;
+  color: #f4f0e7 !important;
+}
+html.oko-artwork body {
+  background: #0b1117 !important;
+  color: #f4f0e7 !important;
+}
+
+/* ------ Typography ------------------------------------------------------ */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.12;
+  color: var(--ink, #f4f0e7);
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); }
+h2 { font-size: clamp(1.6rem, 3.2vw, 2.2rem); margin-bottom: 1rem; }
+h3 { font-size: 1.25rem; font-family: var(--font-sans); font-weight: 600; margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+h4 { font-size: 1rem; font-family: var(--font-sans); font-weight: 600; margin-bottom: 0.4rem; }
+
+p { margin-bottom: 1rem; color: var(--ink-dim, #b3b9bc); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--ink, #f4f0e7); font-weight: 600; }
+
+a {
+  color: var(--teal, #2d8a86);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(45, 138, 134, 0.45);
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+a:hover {
+  color: var(--gold, #dfba89);
+  text-decoration-color: rgba(223, 186, 137, 0.6);
+}
+a:focus-visible {
+  outline: 3px solid rgba(223, 186, 137, 0.9);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+button:focus-visible {
+  outline: 3px solid rgba(223, 186, 137, 0.9);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ------ Layout ---------------------------------------------------------- */
+.container       { max-width: var(--max-w, 1200px);       margin: 0 auto; padding: 0 2rem; }
+.container-prose { max-width: var(--max-w-prose, 740px);  margin: 0 auto; padding: 0 2rem; }
+
+.skip-link {
+  position: fixed;
+  left: 1rem; top: 1rem;
+  z-index: 200;
+  transform: translateY(-140%);
+  border-radius: 999px;
+  background: var(--gold, #dfba89);
+  color: #1a1208;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: transform 0.2s ease;
+}
+.skip-link:focus-visible { transform: translateY(0); }
+
+/* ------ NAV ------------------------------------------------------------- */
+nav.top {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(11, 17, 23, 0.92);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  height: 68px;
+}
+nav.top .nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  max-width: var(--max-w, 1200px);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+nav.top .brand {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  color: var(--ink, #f4f0e7);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+nav.top .brand img {
+  width: 28px; height: 28px;
+  display: block;
+}
+nav.top .nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  align-items: center;
+}
+nav.top .nav-links a {
+  color: var(--ink-dim, #b3b9bc);
+  text-decoration: none;
+  font-size: 0.9rem;
+  letter-spacing: 0.005em;
+  transition: color 0.18s ease;
+}
+nav.top .nav-links a:hover { color: var(--gold, #dfba89); }
+nav.top .nav-links a[aria-current="page"] {
+  color: var(--gold, #dfba89);
+  font-weight: 600;
+}
+nav.top .nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+.btn-nav-secondary {
+  color: var(--ink-dim, #b3b9bc);
+  text-decoration: none;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 100px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.18s ease, color 0.18s ease;
+}
+.btn-nav-secondary:hover { border-color: var(--gold, #dfba89); color: var(--gold, #dfba89); }
+.btn-nav-cta {
+  background: linear-gradient(135deg, var(--gold, #dfba89), var(--gold-warm, #e6c59b));
+  color: #1a1208;
+  padding: 0.55rem 1.1rem;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  text-decoration: none;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 4px 14px rgba(223, 186, 137, 0.22);
+}
+.btn-nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(223, 186, 137, 0.38);
+  color: #1a1208;
+}
+
+/* CSS-only mobile nav — <details>/<summary> pattern, no JS required */
+.nav-mobile-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  width: 44px; height: 44px;
+  border-radius: 100px;
+  cursor: pointer;
+  color: var(--ink, #f4f0e7);
+  font-size: 1.1rem;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  transition: border-color 0.18s ease;
+}
+.nav-mobile-toggle:hover { border-color: var(--gold, #dfba89); }
+.nav-mobile-details {
+  display: none;
+  position: fixed;
+  top: 68px; left: 0; right: 0;
+  background: rgba(11, 17, 23, 0.98);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  padding: 1.25rem 2rem 2rem;
+  z-index: 99;
+}
+details.mobile-nav[open] .nav-mobile-details { display: block; }
+.nav-mobile-details ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-mobile-details ul a {
+  display: block;
+  color: var(--ink, #f4f0e7);
+  text-decoration: none;
+  font-size: 1.05rem;
+  min-height: 48px;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.07));
+}
+.nav-mobile-details ul a:hover { color: var(--gold, #dfba89); }
+.nav-mobile-details .mob-cta {
+  display: inline-block;
+  margin-top: 1.25rem;
+  background: linear-gradient(135deg, var(--gold, #dfba89), var(--gold-warm, #e6c59b));
+  color: #1a1208;
+  padding: 0.75rem 1.4rem;
+  border-radius: 100px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 960px) {
+  nav.top .nav-links       { display: none; }
+  nav.top .btn-nav-secondary { display: none; }
+  details.mobile-nav       { display: flex; align-items: center; }
+  .nav-mobile-toggle       { display: inline-flex; }
+}
+@media (max-width: 480px) {
+  nav.top .nav-inner       { padding: 0 1.25rem; }
+}
+
+/* ------ HERO ------------------------------------------------------------ */
+.sec-hero {
+  padding: 6rem 0 5rem;
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  position: relative;
+}
+.sec-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 60% 30%, rgba(45,138,134,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(223,186,137,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.eyebrow {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--teal, #2d8a86);
+  margin-bottom: 1.25rem;
+  font-family: var(--font-sans);
+}
+.sec-hero h1 {
+  max-width: 760px;
+  margin-bottom: 1.5rem;
+}
+.sec-hero .subhead {
+  font-size: 1.12rem;
+  color: var(--ink-dim, #b3b9bc);
+  max-width: 620px;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+.toc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+}
+.toc-nav a {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 100px;
+  font-size: 0.8rem;
+  color: var(--ink-faint, #8e989e);
+  text-decoration: none;
+  transition: border-color 0.18s, color 0.18s;
+  font-family: var(--font-sans);
+}
+.toc-nav a:hover { border-color: var(--teal, #2d8a86); color: var(--teal, #2d8a86); }
+
+/* ------ SECTIONS -------------------------------------------------------- */
+.sec-block {
+  padding: 5rem 0;
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.17));
+}
+.sec-block:last-of-type { border-bottom: none; }
+
+.sec-block.alt {
+  background: var(--bg-elevated, #141b23);
+}
+
+.section-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal, #2d8a86);
+  margin-bottom: 1.5rem;
+}
+
+/* ------ FIELD TABLE ----------------------------------------------------- */
+.field-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.88rem;
+}
+.field-table thead th {
+  text-align: left;
+  padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  color: var(--ink-faint, #8e989e);
+  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.field-table tbody td {
+  padding: 0.65rem 1rem 0.65rem 0;
+  border-bottom: 1px solid rgba(224,230,231,0.07);
+  vertical-align: top;
+  color: var(--ink-dim, #b3b9bc);
+  line-height: 1.5;
+}
+.field-table tbody tr:last-child td { border-bottom: none; }
+.field-table .fname {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  color: var(--gold, #dfba89);
+  white-space: nowrap;
+  width: 180px;
+}
+.field-table .outside-seal {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  color: var(--ink-faint, #8e989e);
+  text-decoration: line-through;
+  white-space: nowrap;
+  width: 180px;
+}
+.field-table tbody tr:hover td { background: rgba(224,230,231,0.03); }
+
+/* ------ CODE BLOCKS ----------------------------------------------------- */
+pre {
+  background: var(--bg-code, #0d1520);
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+pre code {
+  font-family: var(--font-mono);
+  color: var(--ink-dim, #b3b9bc);
+  background: none;
+  padding: 0;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.87em;
+  color: var(--gold, #dfba89);
+  background: rgba(223, 186, 137, 0.09);
+  padding: 0.1em 0.38em;
+  border-radius: 3px;
+}
+pre code { color: var(--ink-dim, #b3b9bc); background: none; padding: 0; }
+
+/* Elixir-like token colouring — approximated via span classes, no JS */
+.kw  { color: #7ec4cf; }  /* keyword — def, do, end, fn */
+.at  { color: #dfba89; }  /* module attribute — @seal_fields */
+.mod { color: #c59be0; }  /* module name */
+.fn  { color: #a3d4a5; }  /* function name */
+.at2 { color: #e9b87a; }  /* atom literal */
+.str { color: #9ecf7a; }  /* string */
+.cm  { color: #5c7080; font-style: italic; }  /* comment */
+.num { color: #b5d4f7; }  /* number */
+
+/* ------ CALLOUT BOXES --------------------------------------------------- */
+.callout {
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  border-left: 3px solid;
+  margin: 1.75rem 0;
+  font-size: 0.93rem;
+}
+.callout-warn {
+  background: rgba(223, 186, 137, 0.07);
+  border-color: var(--gold, #dfba89);
+  color: var(--ink-dim, #b3b9bc);
+}
+.callout-warn strong { color: var(--gold, #dfba89); }
+.callout-info {
+  background: rgba(45, 138, 134, 0.07);
+  border-color: var(--teal, #2d8a86);
+  color: var(--ink-dim, #b3b9bc);
+}
+.callout-info strong { color: var(--teal, #2d8a86); }
+.callout-danger {
+  background: rgba(200, 80, 80, 0.07);
+  border-color: #c85050;
+  color: var(--ink-dim, #b3b9bc);
+}
+.callout-danger strong { color: #e07070; }
+
+/* ------ CAPABILITY GRID ------------------------------------------------- */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+.cap-card {
+  background: var(--bg-elevated, #141b23);
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+.cap-card .cap-name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--gold, #dfba89);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.cap-card p { font-size: 0.88rem; margin: 0; }
+
+/* ------ CLASSIFIER GRID ------------------------------------------------- */
+.classifier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+.cls-card {
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+.cls-card.valid    { border-top: 3px solid var(--teal, #2d8a86); }
+.cls-card.legacy   { border-top: 3px solid #c9a961; }
+.cls-card.k1legacy { border-top: 3px solid #a07c42; }
+.cls-card.invalid  { border-top: 3px solid #c85050; }
+.cls-card .cls-atom {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  color: var(--ink, #f4f0e7);
+  display: block;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+.cls-card p { font-size: 0.86rem; margin: 0; }
+
+/* ------ ANNEAL FINDINGS ------------------------------------------------- */
+.anneal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+.anneal-stat {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 6px;
+}
+.anneal-stat .count {
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.anneal-stat.critical .count { color: #c85050; }
+.anneal-stat.high     .count { color: #e07070; }
+.anneal-stat.med      .count { color: var(--gold, #dfba89); }
+.anneal-stat.low      .count { color: var(--ink-dim, #b3b9bc); }
+.anneal-stat p { font-size: 0.78rem; margin: 0; color: var(--ink-faint, #8e989e); text-transform: uppercase; letter-spacing: 0.1em; }
+
+.finding-row {
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 6px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+.finding-row .finding-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.finding-row .finding-head h4 { font-size: 0.95rem; margin: 0; }
+.badge-status {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-fixed  { background: rgba(45,138,134,0.18); color: #5cc9c4; border: 1px solid rgba(45,138,134,0.35); }
+.badge-partly { background: rgba(223,186,137,0.14); color: #dfba89; border: 1px solid rgba(223,186,137,0.3); }
+.badge-open   { background: rgba(200,80,80,0.14); color: #e07070; border: 1px solid rgba(200,80,80,0.3); }
+.finding-row p { font-size: 0.88rem; margin: 0; }
+
+/* ------ NON-CLAIMS ------------------------------------------------------ */
+.non-claims-list {
+  list-style: none;
+  margin: 1.5rem 0;
+}
+.non-claims-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(224,230,231,0.08);
+  font-size: 0.93rem;
+  color: var(--ink-dim, #b3b9bc);
+  line-height: 1.5;
+}
+.non-claims-list li:last-child { border-bottom: none; }
+.non-claims-list li::before {
+  content: "×";
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: #c85050;
+  flex-shrink: 0;
+  margin-top: 0.05em;
+  font-weight: 700;
+}
+
+/* ------ CONTACT BLOCK --------------------------------------------------- */
+.contact-block {
+  background: var(--bg-elevated, #141b23);
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 8px;
+  padding: 2rem 2.5rem;
+  margin-top: 2rem;
+}
+.contact-block h3 { margin-bottom: 0.75rem; }
+.contact-block .email-address {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold, #dfba89);
+  text-decoration: none;
+  display: inline-block;
+  margin: 0.5rem 0 1rem;
+}
+.contact-block .email-address:hover { color: var(--ink, #f4f0e7); }
+.pgp-stub {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-faint, #8e989e);
+  margin-top: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--bg-code, #0d1520);
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* ------ SVG DIAGRAMS ---------------------------------------------------- */
+.diagram-wrap {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  border-radius: 8px;
+  background: #0d1520;
+  padding: 1.5rem;
+}
+.diagram-wrap svg {
+  display: block;
+  min-width: 600px;
+  margin: 0 auto;
+}
+
+/* ------ FOOTER ---------------------------------------------------------- */
+footer {
+  background: #070d12;
+  border-top: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  padding: 3rem 0 2rem;
+}
+.footer-inner {
+  max-width: var(--max-w, 1200px);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.footer-brand {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--ink, #f4f0e7);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  margin-bottom: 0.5rem;
+}
+.footer-brand img { width: 22px; height: 22px; }
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+.footer-links a {
+  font-size: 0.85rem;
+  color: var(--ink-faint, #8e989e);
+  text-decoration: none;
+}
+.footer-links a:hover { color: var(--gold, #dfba89); }
+.footer-meta {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--ink-faint, #8e989e);
+  font-family: var(--font-sans);
+  max-width: var(--max-w, 1200px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.reviewed-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint, #8e989e);
+  border: 1px solid var(--hairline, rgba(224,230,231,0.17));
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+}
+
+/* ------ RESPONSIVE ------------------------------------------------------ */
+@media (max-width: 720px) {
+  .sec-block { padding: 3.5rem 0; }
+  .sec-hero  { padding: 4rem 0 3rem; }
+  pre        { font-size: 0.78rem; }
+  .field-table { font-size: 0.82rem; }
+  .field-table .fname { width: 140px; }
+  .container, .container-prose { padding: 0 1.25rem; }
+  .contact-block { padding: 1.5rem; }
+  .diagram-wrap { padding: 1rem; }
+}
+
+/* ------ REDUCED MOTION -------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  NAV — sticky, zero JS; mobile uses <details>/<summary> CSS-only toggle
+ ══════════════════════════════════════════════════════════════════════════ -->
+<nav class="top" aria-label="Primary navigation">
+  <div class="nav-inner">
+    <a href="/" class="brand" aria-label="OKO Holding Corporation — home">
+      <img src="/assets/brand/oko-mark.svg" alt="" width="28" height="28" loading="eager">
+      OKO
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="/product/">Product</a></li>
+      <li><a href="/platform/">Platform</a></li>
+      <li><a href="/docs/">Docs</a></li>
+      <li><a href="/security/" aria-current="page">Security</a></li>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/company/">Company</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="https://thunderline.net/sign-in" class="btn-nav-secondary">Sign in</a>
+      <a href="https://thunderline.net/blockstrap" class="btn-nav-cta">Get a ThunderBlock</a>
+      <!-- Mobile toggle: CSS-only via <details>; no script needed -->
+      <details class="mobile-nav" aria-label="Navigation menu">
+        <summary class="nav-mobile-toggle" aria-label="Toggle navigation menu">☰</summary>
+        <div class="nav-mobile-details">
+          <ul role="list">
+            <li><a href="/product/">Product</a></li>
+            <li><a href="/platform/">Platform</a></li>
+            <li><a href="/docs/">Docs</a></li>
+            <li><a href="/security/" aria-current="page">Security</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/company/">Company</a></li>
+            <li><a href="https://thunderline.net/sign-in">Sign in</a></li>
+          </ul>
+          <a href="https://thunderline.net/blockstrap" class="mob-cta">Get a ThunderBlock</a>
+        </div>
+      </details>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 1 — HERO
+ ══════════════════════════════════════════════════════════════════════════ -->
+<header class="sec-hero">
+  <div class="container-prose">
+    <span class="eyebrow">Security — Architecture</span>
+    <h1>The receipt spine, in detail.</h1>
+    <p class="subhead">
+      You can't audit what you can't verify. Thunderline's trust is one
+      cryptographic chain: sealed receipts, lineage edges, and the policy
+      gate that governs them. This page is for your security team.
+    </p>
+    <nav aria-label="On this page">
+      <ul class="toc-nav" role="list">
+        <li><a href="#receipt-spine">Receipt spine</a></li>
+        <li><a href="#keyed-vs-unkeyed">Keyed vs unkeyed</a></li>
+        <li><a href="#seal-classifier">Seal classifier</a></li>
+        <li><a href="#policy-gate">Policy gate</a></li>
+        <li><a href="#k1-cell">K1 WASM cell</a></li>
+        <li><a href="#comsec">COMSEC lane</a></li>
+        <li><a href="#adversarial-anneal">Anneal 2026-07-30</a></li>
+        <li><a href="#non-claims">Non-claims</a></li>
+        <li><a href="#report">Report an issue</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 2 — THE RECEIPT SPINE
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="receipt-spine" class="sec-block">
+  <div class="container">
+    <span class="section-label">§ 1 — Receipt spine</span>
+    <h2>The 17-field seal</h2>
+    <p>
+      Every consequential agent action in Thunderline produces one
+      <code>ActionReceipt</code> row, written by
+      <code>Thunderline.Thunderbolt.ExecutionRecorder</code>.
+      The seal is computed over exactly 17 fields. Any post-write modification
+      of those fields changes the hash. The sealed hash is stored in the same
+      row and checked on every lineage-edge traversal.
+    </p>
+    <p>
+      The write path: the recorder calls
+      <code>compute_seal_hash/1</code> before inserting the row.
+      After insertion, <code>Thundervine.Resources.LineageEdge</code>
+      persists a lineage edge linking the receipt into the causal chain.
+      On read, <code>verify_receipt_seal/1</code> recomputes the hash and
+      compares; then <code>AcornAuthorityDecisionCorrelation.verify_persisted_edge/4</code>
+      cross-checks the lineage edge itself.
+    </p>
+
+    <!-- SVG DIAGRAM 1: Receipt Spine Flow -->
+    <div class="diagram-wrap" role="img" aria-label="Receipt spine flow: writer to compute_seal_hash to ActionReceipt row to verify_receipt_seal to lineage edge to verify_persisted_edge">
+      <svg viewBox="0 0 780 220" width="780" height="220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#2d8a86"/>
+          </marker>
+          <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#dfba89"/>
+          </marker>
+        </defs>
+
+        <!-- Box styles -->
+        <!-- Writer -->
+        <rect x="10" y="80" width="120" height="52" rx="5" fill="none" stroke="#2d8a86" stroke-width="1.4"/>
+        <text x="70" y="103" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#b3b9bc">ExecutionRecorder</text>
+        <text x="70" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">(Thunderbolt)</text>
+
+        <!-- Arrow 1 -->
+        <line x1="130" y1="106" x2="165" y2="106" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr)"/>
+        <text x="147" y="100" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#5c7080">call</text>
+
+        <!-- compute_seal_hash/1 -->
+        <rect x="167" y="80" width="130" height="52" rx="5" fill="none" stroke="#2d8a86" stroke-width="1.4"/>
+        <text x="232" y="103" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#dfba89">compute_seal_hash/1</text>
+        <text x="232" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">17-field Blake2/SHA256</text>
+
+        <!-- Arrow 2 -->
+        <line x1="297" y1="106" x2="335" y2="106" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr)"/>
+        <text x="316" y="100" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#5c7080">insert</text>
+
+        <!-- ActionReceipt row -->
+        <rect x="337" y="72" width="128" height="68" rx="5" fill="rgba(45,138,134,0.08)" stroke="#2d8a86" stroke-width="1.8"/>
+        <text x="401" y="96" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#f4f0e7">ActionReceipt</text>
+        <text x="401" y="112" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#dfba89">seal_hash stored</text>
+        <text x="401" y="128" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">17 sealed fields</text>
+
+        <!-- Arrow 3: verify path -->
+        <line x1="465" y1="106" x2="500" y2="106" stroke="#dfba89" stroke-width="1.4" marker-end="url(#arr2)"/>
+        <text x="483" y="100" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#5c7080">verify</text>
+
+        <!-- verify_receipt_seal -->
+        <rect x="502" y="80" width="126" height="52" rx="5" fill="none" stroke="#dfba89" stroke-width="1.4"/>
+        <text x="565" y="103" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#dfba89">verify_receipt_seal</text>
+        <text x="565" y="120" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">recompute + compare</text>
+
+        <!-- Arrow 4: lineage edge -->
+        <line x1="401" y1="140" x2="401" y2="168" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr)"/>
+        <text x="412" y="158" font-family="ui-monospace,monospace" font-size="8" fill="#5c7080">persist</text>
+
+        <!-- LineageEdge -->
+        <rect x="317" y="170" width="168" height="42" rx="5" fill="none" stroke="#2d8a86" stroke-width="1.4"/>
+        <text x="401" y="188" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#b3b9bc">LineageEdge</text>
+        <text x="401" y="204" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">Thundervine.Resources</text>
+
+        <!-- Arrow 5: verify_persisted_edge -->
+        <line x1="485" y1="191" x2="520" y2="170" stroke="#dfba89" stroke-width="1.4" marker-end="url(#arr2)"/>
+
+        <!-- verify_persisted_edge/4 -->
+        <rect x="522" y="152" width="248" height="52" rx="5" fill="none" stroke="#dfba89" stroke-width="1.4"/>
+        <text x="646" y="175" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#dfba89">verify_persisted_edge/4</text>
+        <text x="646" y="192" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">AcornAuthorityDecisionCorrelation</text>
+
+        <!-- Legend labels at top -->
+        <text x="10" y="22" font-family="ui-monospace,monospace" font-size="9" fill="#2d8a86">── write path</text>
+        <text x="130" y="22" font-family="ui-monospace,monospace" font-size="9" fill="#dfba89">── verify path</text>
+        <text x="250" y="22" font-family="ui-monospace,monospace" font-size="9" fill="#5c7080">Thunderline receipt spine — /security §1</text>
+      </svg>
+    </div>
+
+    <h3>The 17 sealed fields (<code>@seal_fields</code>)</h3>
+    <p>
+      These fields are passed to <code>compute_seal_hash/1</code> in the order
+      below. Three additional fields on the receipt row sit
+      <em>outside the seal</em> — noted at the end of the table.
+    </p>
+
+    <table class="field-table" aria-label="The 17 sealed fields in ActionReceipt">
+      <thead>
+        <tr>
+          <th scope="col">Field</th>
+          <th scope="col">Role in the receipt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="fname">receipt_id</td>
+          <td>UUID v4 primary key. Uniquely identifies this receipt row. Included in the seal so the hash binds to this exact row, not a copy.</td>
+        </tr>
+        <tr>
+          <td class="fname">envelope_version</td>
+          <td>Schema version integer. Lets the classifier know which hash algorithm and field-set to expect. Mismatches route to legacy paths, not false positives.</td>
+        </tr>
+        <tr>
+          <td class="fname">action_id</td>
+          <td>Identifies the Crown executor module that produced this receipt. Links the receipt to the policy-gate action definition.</td>
+        </tr>
+        <tr>
+          <td class="fname">domain</td>
+          <td>The Thunderline domain that owns this action (e.g., <code>:acorn</code>, <code>:comsec</code>). Part of the authorization perimeter.</td>
+        </tr>
+        <tr>
+          <td class="fname">mission_id</td>
+          <td>Parent mission UUID. Anchors the receipt to its operational context. Required for the lineage-edge cross-check.</td>
+        </tr>
+        <tr>
+          <td class="fname">saga_run_id</td>
+          <td>Saga run UUID if this action belongs to a multi-step saga. Enables saga-level replay and rollback verification.</td>
+        </tr>
+        <tr>
+          <td class="fname">step_id</td>
+          <td>Monotonically ordered step within the saga. Together with <code>saga_run_id</code>, identifies position in the causal chain.</td>
+        </tr>
+        <tr>
+          <td class="fname">correlation_id</td>
+          <td>Request correlation token propagated from the inbound event. Links to distributed traces and audit logs outside Thunderline.</td>
+        </tr>
+        <tr>
+          <td class="fname">causation_id</td>
+          <td>The <code>receipt_id</code> of the receipt that caused this action. Enables full causal graph traversal without external log correlation.</td>
+        </tr>
+        <tr>
+          <td class="fname">actor</td>
+          <td>Identity of the principal that authorized this action. Bound by the policy gate's <code>ActorProvenance</code> resolution — not the raw request actor claim. See §4.</td>
+        </tr>
+        <tr>
+          <td class="fname">inputs_hash</td>
+          <td>SHA-256 of the canonicalized input payload. Locks what evidence the action saw. Tampered inputs change this hash and break the seal.</td>
+        </tr>
+        <tr>
+          <td class="fname">status</td>
+          <td>Terminal outcome atom (<code>:completed</code>, <code>:failed</code>, <code>:compensated</code>, etc.). Sealed so status cannot be upgraded post-write without detection.</td>
+        </tr>
+        <tr>
+          <td class="fname">attempt</td>
+          <td>Retry count integer. Part of the seal so idempotency keys are replay-safe — a replayed attempt at a different count produces a different seal.</td>
+        </tr>
+        <tr>
+          <td class="fname">traceparent</td>
+          <td>W3C Trace Context header value. Included in the seal to bind the receipt to a specific distributed trace span.</td>
+        </tr>
+        <tr>
+          <td class="fname">timing</td>
+          <td>Map of wall-clock timestamps (started_at, completed_at). Seals the observed execution window; retroactive timestamp edits break the seal.</td>
+        </tr>
+        <tr>
+          <td class="fname">cost</td>
+          <td>Token or compute cost record for AI invocations. Sealed so cost cannot be scrubbed from the audit trail.</td>
+        </tr>
+        <tr>
+          <td class="fname">artifacts</td>
+          <td>List of artifact references (hashes + storage keys) produced by the action. Seals the output set so artifacts cannot be silently swapped.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+      <strong>Three fields outside the seal:</strong>
+      <code>governance</code>, <code>output_redacted</code>, and
+      <code>input_redacted</code> are stored on the receipt row but are
+      not included in <code>@seal_fields</code>. This is the design basis
+      for the authority-decision cross-check described in §2: because
+      <code>output_redacted</code> sits outside the seal, a one-column
+      update of <code>authority_decision_status</code> to
+      <code>:current_valid</code> would not break the seal hash — only the
+      lineage-edge cross-check catches it.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 3 — KEYED VS UNKEYED (HONEST)
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="keyed-vs-unkeyed" class="sec-block alt">
+  <div class="container-prose">
+    <span class="section-label">§ 2 — Honest discussion</span>
+    <h2>Keyed vs unkeyed seals</h2>
+
+    <div class="callout callout-danger">
+      <strong>Seals are unkeyed</strong> per the open issue
+      <code>AUTHORITY_LINEAGE_KEYED_SEAL_V0</code> (GH #3173).
+      They raise the price of tampering — they do not forbid it.
+      A party with write access to the receipts table can recompute a valid
+      seal after editing a sealed field.
+    </div>
+
+    <p>
+      The current design hashes the 17 fields using a deterministic canonical
+      encoding without a secret key. The hash proves internal consistency:
+      the receipt row has not been modified since <code>compute_seal_hash/1</code>
+      ran. It does not prove authenticity against an adversary who has
+      database write access.
+    </p>
+
+    <h3>What actually defends ACORN authority status</h3>
+    <p>
+      The lineage-edge cross-check at
+      <code>AcornAuthorityDecisionCorrelation.verify_persisted_edge/4</code>
+      is the primary defense for ACORN authority decisions — not the seal alone.
+    </p>
+    <p>
+      Here is why the distinction matters:
+      <code>output_redacted</code> sits outside the seal. A single-column
+      UPDATE of <code>authority_decision_status</code> to
+      <code>:current_valid</code> on an ActionReceipt row would not change
+      the <code>seal_hash</code> — because that field is not in
+      <code>@seal_fields</code>. The seal check would still pass. The
+      cross-check does not: it verifies the lineage edge independently.
+      An authority decision without a corresponding, valid lineage edge is
+      rejected regardless of the seal status.
+    </p>
+    <p>
+      The defense model is therefore: <strong>seal</strong> as tamper
+      evidence for the 17 sealed fields, plus <strong>lineage edge</strong>
+      as an independent structural proof that the decision was produced by
+      the governed flow, not injected post-hoc.
+    </p>
+
+    <div class="callout callout-info">
+      <strong>GH #3173 (open):</strong>
+      Adding a server-side HMAC key to <code>compute_seal_hash/1</code>
+      would make the seal unforgeable without the key. This is tracked but
+      not shipped. Keyed seals would close the write-access gap; they are
+      not a replacement for the lineage cross-check.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 4 — SEAL CLASSIFIER
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="seal-classifier" class="sec-block">
+  <div class="container">
+    <span class="section-label">§ 3 — Seal classifier</span>
+    <h2><code>AcornReceiptSealClassification.classify/1</code></h2>
+    <p>
+      Not all receipts in the database were written by the current encoder.
+      The Thunderline codebase has gone through at least two distinct seal
+      encoding regimes. The classifier returns one of four atoms to
+      distinguish them:
+    </p>
+
+    <div class="classifier-grid">
+      <div class="cls-card valid">
+        <span class="cls-atom">:current_valid</span>
+        <p>
+          The receipt was written by the current encoder. The seal hash
+          recomputes correctly against the stored fields using the current
+          canonical encoding. This is the only value that means the record
+          has been verified against the current standard.
+        </p>
+      </div>
+      <div class="cls-card legacy">
+        <span class="cls-atom">:legacy_v0_consistent</span>
+        <p>
+          The seal is internally consistent with the V0 encoding that was
+          in force when the row was written. The row has not been modified
+          since it was written — but it was written under a different
+          encoding than the current standard.
+        </p>
+      </div>
+      <div class="cls-card k1legacy">
+        <span class="cls-atom">:legacy_k1_v0_consistent</span>
+        <p>
+          The same as <code>:legacy_v0_consistent</code> but written by
+          the K1 cell's own receipt writer under the K1-specific V0
+          encoding. Structurally consistent with the encoding in use at
+          write time.
+        </p>
+      </div>
+      <div class="cls-card invalid">
+        <span class="cls-atom">:invalid</span>
+        <p>
+          The seal hash does not match under any known encoding. The row
+          has been modified after the seal was computed, the encoder used
+          at write time is unknown, or the row is corrupted.
+        </p>
+      </div>
+    </div>
+
+    <h3>Three rules your security team must enforce</h3>
+
+    <div class="callout callout-warn">
+      <strong>The legacy list is closed.</strong>
+      <code>:legacy_v0_consistent</code> and <code>:legacy_k1_v0_consistent</code>
+      are not extensible verdict classes. New encoding dialects go through
+      a migration, not through adding a new legacy arm. An open legacy list
+      would let a tampered row claim "consistent with unknown encoding X."
+    </div>
+
+    <div class="callout callout-warn">
+      <strong><code>unavailable</code> is not <code>:invalid</code>.</strong>
+      If the classifier cannot run — because the receipt row is missing
+      fields, the hashing module is unavailable, or the database query
+      times out — the result is <em>unavailable</em>, not
+      <code>:invalid</code>. Treat unavailable as a circuit breaker:
+      surface the error, do not route to a fallback that silently accepts
+      the record.
+    </div>
+
+    <div class="callout callout-danger">
+      <strong>A legacy verdict must never render as VERIFIED.</strong>
+      <code>:legacy_v0_consistent</code> means "internally consistent with
+      the encoding in force when the row was written." It does not mean
+      authentic. It does not mean the row is unmodified relative to the
+      current standard. Operator UI must display legacy receipts with a
+      clearly distinct label — not the same green checkmark used for
+      <code>:current_valid</code>.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 5 — POLICY GATE FLOW
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="policy-gate" class="sec-block alt">
+  <div class="container">
+    <span class="section-label">§ 4 — Policy gate</span>
+    <h2>Policy gate flow</h2>
+    <p>
+      All agent actions in Thunderline pass through
+      <code>Thundercrown.PolicyGate.validate_and_execute/2</code>.
+      The gate enforces the 4-tier capability model, resolves actor
+      provenance, and emits a sealed ActionReceipt on success or failure.
+    </p>
+
+    <h3>The 4 capability tiers</h3>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <span class="cap-name">:read</span>
+        <p>
+          Observe state. No mutations. Permitted to all authenticated
+          principals within their scope. Read receipts are still sealed
+          to prove what evidence the agent saw.
+        </p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-name">:mutate</span>
+        <p>
+          Modify durable state (write to memory, update records).
+          Requires explicit grant in the action's capability declaration.
+          Each mutation produces a sealed receipt.
+        </p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-name">:admin</span>
+        <p>
+          Modify policy, role, or boundary configuration.
+          Restricted to operator-level principals. Admin actions require
+          the <code>:admin</code> capability and go through the authority
+          decision path.
+        </p>
+      </div>
+      <div class="cap-card">
+        <span class="cap-name">:execute</span>
+        <p>
+          Run code in a hermetic execution cell (K1 WASM or equivalent).
+          The most constrained tier. Zero network, bounded compute, sealed
+          I/O manifest. See §5 for the K1 cell constraints.
+        </p>
+      </div>
+    </div>
+
+    <h3>42 executor modules — the real count</h3>
+    <p>
+      As of the codebase canon, Thundercrown contains 42 executor modules
+      under <code>Thundercrown.Actions.Catalog</code>. Each module
+      declares its capability tier, required actor claims, evidence
+      references it consumes, and the receipt shape it produces.
+      The policy gate loads this catalog at startup and refuses to execute
+      any action not in the catalog. Undeclared actions cannot produce
+      receipts; they simply do not run.
+    </p>
+
+    <h3>Actor provenance: the authz vs telemetry distinction</h3>
+    <p>
+      The <code>actor:</code> field in an ActionReceipt is resolved by
+      <code>ActorProvenance</code> inside the policy gate. It is
+      <strong>not</strong> taken from <code>request.actor</code> as
+      supplied by the caller. A caller claiming to be a different principal
+      does not change the sealed actor field: the gate resolves provenance
+      from the verified session context, then stamps the result.
+    </p>
+    <p>
+      This matters for telemetry correlation. A telemetry event may carry
+      a session-scoped actor label that differs from the governance-grade
+      actor in the receipt. The sealed actor in the receipt is the
+      governance truth. Telemetry actor labels are for operational
+      visibility, not audit.
+    </p>
+
+    <!-- SVG DIAGRAM 2: Policy Gate Flow -->
+    <div class="diagram-wrap" role="img" aria-label="Policy gate flow: request enters, actor provenance is resolved, capability is checked, action executes, receipt is sealed and emitted">
+      <svg viewBox="0 0 780 200" width="780" height="200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#2d8a86"/>
+          </marker>
+          <marker id="arr4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#c85050"/>
+          </marker>
+        </defs>
+
+        <!-- Request -->
+        <rect x="8" y="74" width="90" height="44" rx="5" fill="none" stroke="#5c7080" stroke-width="1.2"/>
+        <text x="53" y="94" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#b3b9bc">Agent</text>
+        <text x="53" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#8e989e">request</text>
+
+        <!-- Arrow -->
+        <line x1="98" y1="96" x2="128" y2="96" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr3)"/>
+
+        <!-- ActorProvenance -->
+        <rect x="130" y="68" width="120" height="56" rx="5" fill="none" stroke="#2d8a86" stroke-width="1.4"/>
+        <text x="190" y="91" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#b3b9bc">ActorProvenance</text>
+        <text x="190" y="107" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">resolve from session</text>
+        <text x="190" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">not request.actor</text>
+
+        <!-- Arrow -->
+        <line x1="250" y1="96" x2="280" y2="96" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr3)"/>
+
+        <!-- Capability check -->
+        <rect x="282" y="68" width="120" height="56" rx="5" fill="none" stroke="#2d8a86" stroke-width="1.4"/>
+        <text x="342" y="91" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#b3b9bc">Capability check</text>
+        <text x="342" y="107" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">:read|:mutate</text>
+        <text x="342" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">:admin|:execute</text>
+
+        <!-- Arrow pass -->
+        <line x1="402" y1="96" x2="432" y2="96" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr3)"/>
+        <text x="417" y="90" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#2d8a86">pass</text>
+
+        <!-- Executor (42 modules) -->
+        <rect x="434" y="68" width="130" height="56" rx="5" fill="rgba(45,138,134,0.08)" stroke="#2d8a86" stroke-width="1.8"/>
+        <text x="499" y="91" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#f4f0e7">Executor module</text>
+        <text x="499" y="107" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#dfba89">42 in catalog</text>
+        <text x="499" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">undeclared → refused</text>
+
+        <!-- Arrow to receipt -->
+        <line x1="564" y1="96" x2="594" y2="96" stroke="#2d8a86" stroke-width="1.4" marker-end="url(#arr3)"/>
+
+        <!-- Sealed receipt -->
+        <rect x="596" y="68" width="130" height="56" rx="5" fill="none" stroke="#dfba89" stroke-width="1.4"/>
+        <text x="661" y="91" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9.5" fill="#dfba89">ActionReceipt</text>
+        <text x="661" y="107" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">sealed · 17 fields</text>
+        <text x="661" y="118" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8.5" fill="#8e989e">actor from provenance</text>
+
+        <!-- Reject branch from cap check -->
+        <line x1="342" y1="124" x2="342" y2="165" stroke="#c85050" stroke-width="1.2" marker-end="url(#arr4)"/>
+        <rect x="280" y="167" width="124" height="28" rx="4" fill="none" stroke="#c85050" stroke-width="1.2"/>
+        <text x="342" y="185" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#e07070">:unauthorized error</text>
+        <text x="342" y="147" font-family="ui-monospace,monospace" font-size="8" fill="#c85050">reject</text>
+
+        <!-- Label -->
+        <text x="8" y="18" font-family="ui-monospace,monospace" font-size="9" fill="#5c7080">Thundercrown.PolicyGate.validate_and_execute/2 — /security §4</text>
+      </svg>
+    </div>
+
+    <h3>The <code>validate_and_execute/2</code> contract</h3>
+    <pre><code><span class="cm"># Simplified call shape (Thundercrown.PolicyGate)</span>
+<span class="kw">def</span> <span class="fn">validate_and_execute</span>(action_ref, opts) <span class="kw">do</span>
+  <span class="cm"># opts[:actor] → resolved via ActorProvenance, not trusted verbatim</span>
+  <span class="cm"># opts[:evidence_refs] → hashed into inputs_hash for the seal</span>
+  <span class="cm"># opts[:mission_id] → required; gates lineage-edge creation</span>
+  <span class="cm">#</span>
+  <span class="cm"># Returns {:ok, %ActionReceipt{}} or {:error, reason}</span>
+  <span class="cm"># Never raises; all failures produce a sealed failure receipt</span>
+<span class="kw">end</span></code></pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 6 — K1 WASM HERMETIC EXECUTION CELL
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="k1-cell" class="sec-block">
+  <div class="container-prose">
+    <span class="section-label">§ 5 — K1 WASM hermetic cell</span>
+    <h2>K1: hermetic WASM execution</h2>
+    <p>
+      The K1 cell runs untrusted WASM modules in a hermetic execution
+      environment. It is implemented as a wasmtime Rustler NIF — not
+      wasmex. The distinction matters: wasmtime gives us direct control
+      over <code>StoreLimits</code>, fuel metering, and epoch interruption
+      from the host side.
+    </p>
+
+    <h3>Zero-import verification</h3>
+    <p>
+      Before a WASM module executes, the K1 cell verifies that the module
+      declares zero imports. A module that requests host functions is
+      refused at load time with <code>:wasm_imports_present</code>. This
+      is a hard gate: there is no allowlist of "safe" imports. Zero imports
+      means zero surface area for a guest module to reach host state.
+    </p>
+
+    <h3>Resource bounds</h3>
+    <p>The <code>StoreLimits</code> applied to every execution:</p>
+    <pre><code><span class="cm"># K1WasmCell — StoreLimits configuration</span>
+<span class="at">@max_memory_pages</span>  <span class="num">17</span>         <span class="cm"># 17 pages × 64 KB = 1,088 KB max linear memory</span>
+<span class="at">@max_memories</span>     <span class="num">1</span>          <span class="cm"># one Memory instance; multiple is a vector for side-channels</span>
+<span class="at">@max_instances</span>    <span class="num">1</span>          <span class="cm"># one module instance per execution; no recursive spawning</span>
+<span class="at">@fuel_limit</span>       <span class="num">10_000_000</span> <span class="cm"># wasmtime instruction fuel; exhaustion = :fuel_exhausted</span>
+<span class="at">@wall_clock_ms</span>    <span class="num">5_000</span>      <span class="cm"># epoch_interruption deadline in ms; hit = :wall_clock_exhausted</span></code></pre>
+
+    <h3>Interruption and termination atoms</h3>
+    <p>
+      The K1 cell distinguishes four terminal error conditions. Each maps
+      to a distinct atom. Collapsing them to a single generic error would
+      hide whether a module was malicious (importing, trapping) or merely
+      expensive (fuel, wall-clock):
+    </p>
+    <ul style="list-style: none; padding: 0; margin: 1.5rem 0;">
+      <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(224,230,231,0.08);">
+        <code>:wasm_imports_present</code> — module declared imports; refused at load, before any execution.
+      </li>
+      <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(224,230,231,0.08);">
+        <code>:fuel_exhausted</code> — instruction fuel consumed before completion; execution halted by wasmtime.
+      </li>
+      <li style="padding: 0.75rem 0; border-bottom: 1px solid rgba(224,230,231,0.08);">
+        <code>:wall_clock_exhausted</code> — epoch interruption deadline exceeded; execution halted by host epoch tick.
+      </li>
+      <li style="padding: 0.75rem 0;">
+        <code>:wasm_trap</code> — the module produced a WASM trap (unreachable, out-of-bounds, etc.); the module itself signaled failure.
+      </li>
+    </ul>
+
+    <div class="callout callout-danger">
+      <strong>Guest-entry refusal is a TERMINAL state.</strong>
+      A K1 execution that returns any of the four error atoms above is not
+      retried, not reclassified, and not routed to a fallback executor.
+      The policy gate seals a failure receipt with the error atom as the
+      status. There is no "try again with lower bounds" path: the module
+      is either safe and compliant, or it is not run.
+    </div>
+
+    <h3>Entry point: <code>Thunderblock.Runtime.K1WasmCell.execute/3</code></h3>
+    <pre><code><span class="cm"># K1WasmCell.execute/3 — surface contract</span>
+<span class="mod">Thunderblock.Runtime.K1WasmCell</span><span class="kw">.</span><span class="fn">execute</span>(
+  wasm_binary,     <span class="cm"># <<bytes>> — the WASM module; imports checked first</span>
+  input_payload,   <span class="cm"># map — serialised to linear memory; included in inputs_hash</span>
+  opts             <span class="cm"># [fuel: integer, wall_clock_ms: integer] — override limits</span>
+)
+<span class="cm"># Returns:</span>
+<span class="cm">#   {:ok, output_payload}</span>
+<span class="cm">#   {:error, :wasm_imports_present}</span>
+<span class="cm">#   {:error, :fuel_exhausted}</span>
+<span class="cm">#   {:error, :wall_clock_exhausted}</span>
+<span class="cm">#   {:error, :wasm_trap}</span></code></pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 7 — COMSEC TRAFFIC-BUDGET AS GOVERNED-RECOMMENDATION PATTERN
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="comsec" class="sec-block alt">
+  <div class="container-prose">
+    <span class="section-label">§ 6 — COMSEC traffic-budget lane</span>
+    <h2>COMSEC: recommendation-only governance</h2>
+    <p>
+      The COMSEC traffic-budget lane is the canonical example of a
+      governed-recommendation pattern in Thunderline. It demonstrates
+      a key architectural constraint: an agent lane can produce governance
+      evidence without being permitted to act on it.
+    </p>
+
+    <h3>What the lane does — and does not do</h3>
+    <p>
+      The COMSEC budget lane computes a traffic recommendation based on
+      fixed-point basis-point arithmetic applied to current traffic state.
+      It persists governance evidence (one sealed ActionReceipt, one
+      Thundervine <code>:used</code> lineage edge). It does not — by
+      design — mutate traffic, keys, sessions, or topology.
+    </p>
+
+    <div class="callout callout-info">
+      <strong>Recommendation-only is not a weaker pattern.</strong>
+      It is a deliberate authority boundary. The operator retains the
+      mutate step; the agent lane proves what it recommended and why.
+      This is the pattern for any lane where the blast radius of an
+      incorrect automated action is unacceptable.
+    </div>
+
+    <h3>Determinism properties</h3>
+    <p>
+      The budget computation uses fixed-point basis-point arithmetic
+      (not floating-point) so the result is reproducible across nodes and
+      versions. The input payload is canonicalized deterministically before
+      hashing so the <code>inputs_hash</code> in the sealed receipt is
+      stable for identical inputs.
+    </p>
+    <p>
+      Idempotency is enforced at the database level via
+      <code>pg_advisory_xact_lock</code> on the budget key. A duplicate
+      computation for the same budget period acquires the same lock,
+      finds the existing receipt, and returns it without writing a second
+      row.
+    </p>
+
+    <h3>Evidence footprint per execution</h3>
+    <ul style="list-style: none; padding: 0; margin: 1rem 0;">
+      <li style="padding: 0.6rem 0; border-bottom: 1px solid rgba(224,230,231,0.08);">
+        One sealed <code>ActionReceipt</code> with the full 17-field seal.
+      </li>
+      <li style="padding: 0.6rem 0;">
+        One Thundervine lineage edge with relationship type <code>:used</code>,
+        linking the budget computation receipt to the traffic-state evidence
+        it consumed.
+      </li>
+    </ul>
+    <p>
+      An auditor querying for all COMSEC budget decisions in a time window
+      gets both the recommendation and the exact state snapshot the
+      recommendation was based on, via the lineage edge. Nothing is
+      implicit.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 8 — ADVERSARIAL ANNEAL 2026-07-30
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="adversarial-anneal" class="sec-block">
+  <div class="container">
+    <span class="section-label">§ 7 — Adversarial anneal · 2026-07-30</span>
+    <h2>29-agent refute-by-default sweep</h2>
+    <p>
+      On 2026-07-30, Thunderline's trust spine was subjected to a
+      29-agent adversarial anneal with a refute-by-default mandate:
+      each agent tried to break, bypass, or falsify some part of the
+      receipt chain. The full run surfaced 31 real defects.
+    </p>
+
+    <div class="anneal-grid">
+      <div class="anneal-stat" style="border-top: 3px solid #5c7080;">
+        <span class="count" style="color: #b3b9bc;">29</span>
+        <p>Agents</p>
+      </div>
+      <div class="anneal-stat" style="border-top: 3px solid #5c7080;">
+        <span class="count" style="color: #b3b9bc;">31</span>
+        <p>Real defects</p>
+      </div>
+      <div class="anneal-stat critical">
+        <span class="count">0</span>
+        <p>Critical</p>
+      </div>
+      <div class="anneal-stat high">
+        <span class="count">11</span>
+        <p>High</p>
+      </div>
+      <div class="anneal-stat med">
+        <span class="count">14</span>
+        <p>Medium</p>
+      </div>
+      <div class="anneal-stat low">
+        <span class="count" style="color: #b3b9bc;">6</span>
+        <p>Low</p>
+      </div>
+    </div>
+
+    <h3>Defect classes and current trunk status</h3>
+
+    <div class="finding-row">
+      <div class="finding-head">
+        <h4>Seal-hash multi-dialect inconsistency</h4>
+        <span class="badge-status badge-partly">PARTLY FIXED</span>
+      </div>
+      <p>
+        Multiple writers were computing seal hashes using different
+        serialization methods (<code>:erlang.term_to_binary/1</code>,
+        <code>Kernel.inspect/1</code>, canonical JSON). Only the first
+        three produced identical hashes for identical inputs. As of trunk,
+        the three main writers have been normalized to the canonical encoder.
+        Two open hazards remain:
+        <code>thunderwall/seal.ex</code> still uses <code>term_to_binary/1</code>
+        (non-portable across node versions);
+        <code>thunderchief/receipts/agent_action_receipt.ex</code> still
+        uses <code>inspect/1</code> (non-deterministic for maps with
+        floating-point values).
+      </p>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-head">
+        <h4>CI authorization coverage</h4>
+        <span class="badge-status badge-partly">PARTLY CLOSED</span>
+      </div>
+      <p>
+        The anneal found <code>authorize?: false</code> widespread in the
+        test suite, meaning test-time actions bypassed the policy gate entirely.
+        The lean merge gate now enforces: 5 governed-path steps with
+        <code>authorize?: true</code> plus a negative canary test that
+        asserts rejection. The wider test suite still has widespread
+        <code>authorize?: false</code> outside the lean gate. This is an
+        open coverage gap, not a production runtime gap — but it means
+        tests can pass while covering ungoverned paths. See also §8
+        non-claims.
+      </p>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-head">
+        <h4>Upserts carrying authority into <code>ON CONFLICT</code></h4>
+        <span class="badge-status badge-open">OPEN · GH #3073</span>
+      </div>
+      <p>
+        Several upsert patterns were using <code>ON CONFLICT DO UPDATE</code>
+        clauses that included authority-status or state columns. This means
+        a race-write could overwrite a valid authority decision with a
+        conflicting one without triggering the lineage cross-check, because
+        the upsert bypasses the Ecto changeset pipeline. GH #3073 is open.
+      </p>
+    </div>
+
+    <div class="finding-row">
+      <div class="finding-head">
+        <h4>Fail-open at membranes</h4>
+        <span class="badge-status badge-open">OPEN · GH #3081</span>
+      </div>
+      <p>
+        Several membrane enforcement points returned <code>:ok</code> when
+        the boundary check raised an exception rather than returning an
+        explicit verdict. A boundary that fails open under error conditions
+        is not a boundary. GH #3081 tracks the systematic fix across all
+        membrane modules.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 9 — HONEST NON-CLAIMS
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="non-claims" class="sec-block alt">
+  <div class="container-prose">
+    <span class="section-label">§ 8 — Non-claims</span>
+    <h2>What we are not claiming</h2>
+    <p>
+      The following are verbatim non-claims. They are here because a
+      security team doing diligence deserves to know the limits of the
+      model before they see its strengths.
+    </p>
+
+    <ul class="non-claims-list" role="list">
+      <li>Seals are not unforgeable (unkeyed; GH #3173).</li>
+      <li>No formal verification claim.</li>
+      <li>No SOC2 Type II audit. Roadmap target: Q1 2027.</li>
+      <li><code>authorize?: false</code> is still widespread in the wider test suite outside the lean merge gate.</li>
+      <li>Fail-open at membranes remains an open hazard class (GH #3081).</li>
+      <li>Upserts carrying authority into ON CONFLICT remains open (GH #3073).</li>
+      <li>Thunderline is not AGI. It governs agent actions, not agent reasoning.</li>
+      <li>A legacy seal verdict means internally consistent with the encoding in force when the row was written — not verified, not authentic. It must never render as VERIFIED to an operator.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 10 — REPORT A SECURITY ISSUE
+ ══════════════════════════════════════════════════════════════════════════ -->
+<section id="report" class="sec-block">
+  <div class="container-prose">
+    <span class="section-label">§ 9 — Responsible disclosure</span>
+    <h2>Report a security issue</h2>
+    <p>
+      If you find a vulnerability in Thunderline's receipt spine,
+      policy gate, K1 cell, membrane enforcement, or any component
+      described on this page, contact us directly.
+    </p>
+
+    <div class="contact-block">
+      <h3>Security contact</h3>
+      <a href="mailto:security@okoholding.com" class="email-address">security@okoholding.com</a>
+      <p>
+        We aim to acknowledge within 2 business days. Do not publish
+        details publicly until we have had a chance to assess and remediate.
+        There is no current bug-bounty program.
+      </p>
+      <div class="pgp-stub">PGP key fingerprint: TBA — email first; we'll exchange keys out-of-band.</div>
+    </div>
+
+    <p style="margin-top: 1.75rem; font-size: 0.9rem;">
+      For general inquiries, reach Mo at
+      <a href="mailto:mo@okoholding.com">mo@okoholding.com</a>.
+      For platform access and ThunderBlock onboarding, see
+      <a href="https://thunderline.net/blockstrap">thunderline.net/blockstrap</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  § 11 — LAST REVIEWED
+ ══════════════════════════════════════════════════════════════════════════ -->
+<div style="padding: 2rem 0; border-top: 1px solid rgba(224,230,231,0.17);">
+  <div class="container-prose">
+    <span class="reviewed-badge">Last reviewed: 2026-10-16</span>
+    <p style="margin-top: 0.75rem; font-size: 0.82rem; color: #5c7080;">
+      This page is grounded in Thunderline codebase canon and adversarial
+      anneal findings as of the review date. Claims are updated when the
+      underlying architecture changes. Open issues are tracked in the
+      private Thunderline repository; GH numbers reference that tracker.
+    </p>
+  </div>
+</div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+  FOOTER
+ ══════════════════════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="/" class="footer-brand">
+        <img src="/assets/brand/oko-mark.svg" alt="" width="22" height="22" loading="lazy">
+        OKO
+      </a>
+      <p style="font-size: 0.84rem; color: #5c7080; margin: 0; max-width: 280px; line-height: 1.55;">
+        OKO Holding Corporation — Jupiter, Florida.<br>
+        Governed agent operations.
+      </p>
+    </div>
+    <ul class="footer-links" role="list">
+      <li><a href="/product/">Product</a></li>
+      <li><a href="/platform/">Platform</a></li>
+      <li><a href="/docs/">Docs</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/company/">Company</a></li>
+      <li><a href="https://thunderline.net/sign-in">Sign in</a></li>
+      <li><a href="mailto:security@okoholding.com">security@okoholding.com</a></li>
+    </ul>
+  </div>
+  <div class="footer-meta">
+    <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+    <div>
+      Thunderline, ThunderBlock, and Prism are OKO Holding Corporation
+      initiatives with explicit maturity labels. We make no claim of
+      SOC2, HIPAA, FedRAMP, or formal verification at this time.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
