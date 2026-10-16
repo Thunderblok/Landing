@@ -1,0 +1,1 @@
+OKO Holding Corporation is a Delaware C-corporation headquartered in Jupiter, Florida. OKO builds Thunderline, a governed operating substrate for human-agent teams. Every consequential agent action passes a 4-tier policy gate and emits a 17-field sealed receipt paired with a persisted lineage edge — auditable with deterministic SQL queries.

@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en" class="oko-dark" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Press &amp; Brand Kit — OKO Holding Corporation</title>
+  <meta name="description" content="Press and brand assets for OKO Holding Corporation. Logos (SVG + PNG), Inter + Fraunces OFL fonts, colour palette, three-length boilerplate, founder bios, honest non-claims. One ZIP or individual files.">
+  <link rel="canonical" href="https://okoholding.com/press/">
+  <meta property="og:title" content="Press &amp; Brand Kit — OKO Holding Corporation">
+  <meta property="og:description" content="Press and brand assets for OKO Holding Corporation. One ZIP or individual files. For editorial use.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://okoholding.com/press/">
+  <meta property="og:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Press &amp; Brand Kit — OKO Holding Corporation">
+  <meta name="twitter:description" content="Logos, fonts, palette, boilerplate, founder bios, honest non-claims.">
+  <meta name="twitter:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="theme-color" content="#0b1117">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+  <link rel="stylesheet" href="/assets/css/polish.css">
+  <style>
+    .press-primary-card {
+      background: linear-gradient(135deg, rgba(223, 186, 137, 0.08), rgba(45, 138, 134, 0.05));
+      border: 1px solid rgba(223, 186, 137, 0.25);
+      border-radius: 14px;
+      padding: 2.5rem 2.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+    .press-primary-card h2 { margin: 0 0 0.35rem; }
+    .press-primary-card .meta { font-family: ui-monospace, "SF Mono", monospace; font-size: 0.78rem; color: var(--ink-faint, #8e989e); margin: 0.4rem 0 0; letter-spacing: 0.02em; word-break: break-all; }
+    .press-primary-card .cta-stack { display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end; min-width: 220px; }
+    .press-dl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .press-dl-grid .oko-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; }
+    .press-dl-grid .oko-eyebrow { margin-bottom: 0.4rem; }
+    .press-dl-grid h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; margin: 0 0 0.5rem; letter-spacing: -0.005em; }
+    .press-dl-grid p { font-size: 0.86rem; color: var(--ink-dim, #b3b9bc); margin: 0 0 0.75rem; }
+    .press-dl-grid .filename { font-family: ui-monospace, "SF Mono", monospace; font-size: 0.78rem; color: var(--ink-faint, #8e989e); margin-bottom: 0.75rem; display: block; }
+    .boilerplate-block { background: var(--bg-code, #0d1520); border: 1px solid var(--hairline, rgba(224,230,231,0.17)); border-radius: 6px; padding: 1.25rem 1.5rem; margin-top: 1rem; font-family: var(--font-serif), Georgia, serif; font-size: 0.97rem; line-height: 1.6; color: var(--ink, #f4f0e7); white-space: pre-wrap; }
+    .boilerplate-head { display: flex; justify-content: space-between; align-items: baseline; margin-top: 1.75rem; }
+    .boilerplate-head .size-badge { font-family: ui-monospace, monospace; font-size: 0.76rem; color: var(--ink-faint, #8e989e); letter-spacing: 0.06em; text-transform: uppercase; }
+    .founder-mini-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .founder-mini-grid .oko-card { display: flex; flex-direction: column; gap: 0.8rem; }
+    .founder-mini-grid svg.monogram { width: 64px; height: 64px; display: block; border-radius: 8px; }
+    .founder-mini-grid .fname { font-family: var(--font-serif); font-weight: 500; font-size: 1.1rem; margin: 0; }
+    .founder-mini-grid .frole { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--gold, #dfba89); letter-spacing: 0.1em; text-transform: uppercase; margin: 0.1rem 0 0.5rem; }
+    .founder-mini-grid .fbio { font-size: 0.86rem; color: var(--ink-dim, #b3b9bc); margin: 0; }
+    .palette-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-top: 1.25rem; }
+    .swatch { border: 1px solid var(--hairline, rgba(224,230,231,0.17)); border-radius: 8px; padding: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .swatch .chip { height: 54px; border-radius: 5px; border: 1px solid rgba(0,0,0,0.3); }
+    .swatch .name { font-size: 0.82rem; color: var(--ink, #f4f0e7); font-weight: 600; }
+    .swatch .hex { font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--ink-faint, #8e989e); }
+    .typography-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+    .typography-pair .tface { border: 1px solid var(--hairline, rgba(224,230,231,0.17)); border-radius: 8px; padding: 1.5rem; }
+    .typography-pair .sample-fraunces { font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 2.2rem; line-height: 1; letter-spacing: -0.01em; margin: 0 0 0.4rem; }
+    .typography-pair .sample-inter { font-family: "Inter", -apple-system, sans-serif; font-weight: 500; font-size: 1.4rem; line-height: 1.25; letter-spacing: -0.005em; margin: 0 0 0.4rem; }
+    .typography-pair .tface .meta { font-family: ui-monospace, monospace; font-size: 0.78rem; color: var(--ink-faint, #8e989e); }
+    .nonclaims-list { list-style: none; padding: 0; margin: 1.25rem 0 0; }
+    .nonclaims-list li { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.5rem 0; font-size: 0.9rem; color: var(--ink-dim, #b3b9bc); line-height: 1.5; }
+    .nonclaims-list li::before { content: "×"; font-family: ui-monospace, monospace; color: #c85050; font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+    .contact-card { background: var(--bg-elevated, #141b23); border: 1px solid var(--hairline, rgba(224,230,231,0.17)); border-radius: 8px; padding: 2rem 2.5rem; margin-top: 2rem; }
+    .contact-card .email { font-family: ui-monospace, monospace; font-size: 1.05rem; color: var(--gold, #dfba89); display: block; margin: 0.5rem 0 1rem; text-decoration: none; }
+    .contact-card .email:hover { color: var(--ink, #f4f0e7); }
+    @media (max-width: 720px) {
+      .press-primary-card { padding: 1.75rem; }
+      .press-primary-card .cta-stack { align-items: stretch; min-width: 0; width: 100%; }
+      .typography-pair { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="oko-page">
+  <a href="#main-content" class="oko-skip-link">Skip to content</a>
+
+  <nav class="oko-nav" aria-label="Primary navigation">
+    <div class="oko-nav-inner">
+      <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
+        <span class="oko-nav-brand-word">OKO</span>
+      </a>
+      <ul class="oko-nav-links">
+        <li><a href="/product/">Product</a></li>
+        <li><a href="/platform/">Platform</a></li>
+        <li><a href="/docs/">Docs</a></li>
+        <li><a href="/security/">Security</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/company/">Company</a></li>
+      </ul>
+      <div class="oko-nav-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta hover-lift">Get a ThunderBlock</a>
+        <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
+          <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
+      <ul class="oko-mobile-drawer-links">
+        <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
+        <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
+        <li><a href="/docs/">Docs <span aria-hidden="true">→</span></a></li>
+        <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
+        <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
+        <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
+        <li><a href="/press/" aria-current="page">Press <span aria-hidden="true">→</span></a></li>
+        <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
+        <li><a href="/investors/">Investors <span aria-hidden="true">→</span></a></li>
+      </ul>
+      <div class="oko-mobile-drawer-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <header class="oko-page-hero">
+      <div class="oko-container">
+        <p class="oko-eyebrow">PRESS &amp; BRAND</p>
+        <h1 class="oko-display-h1">Press &amp; brand <em>assets.</em></h1>
+        <p class="oko-lead">
+          Logos, fonts, palette, three-length boilerplate, founder bios, and honest non-claims. One downloadable ZIP or browse individual files. For editorial, conference, and panel-programme use.
+        </p>
+
+        <div class="press-primary-card fade-up">
+          <div style="flex: 1; min-width: 240px;">
+            <p class="oko-eyebrow oko-eyebrow--mono" style="margin-bottom: 0.4rem;">DOWNLOAD</p>
+            <h2 class="oko-h2">oko-press-kit.zip</h2>
+            <p style="margin: 0.4rem 0 0; color: var(--ink-dim, #b3b9bc);">28 files · ~1 MB · logos, fonts, palette, boilerplate, bios, fact-sheet.</p>
+            <p class="meta">sha256: <a href="/press/oko-press-kit.zip.sha256" style="color: inherit; text-decoration: underline;">published alongside</a></p>
+          </div>
+          <div class="cta-stack">
+            <a class="oko-btn-gold hover-lift" href="/press/oko-press-kit.zip" download>Download ZIP</a>
+            <a class="oko-arrow-link" href="/press/oko-press-kit.zip.sha256">Verify sha256 →</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <p class="oko-eyebrow oko-eyebrow--teal">INDIVIDUAL ASSETS</p>
+        <h2 class="oko-h2">If you only need one file.</h2>
+        <p style="color: var(--ink-dim, #b3b9bc); max-width: 600px;">
+          Prefer not to download the ZIP for one asset? Everything below is linked individually.
+        </p>
+
+        <div class="press-dl-grid">
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">LOGO · 01</p>
+              <h3>Bolt mark (SVG)</h3>
+              <span class="filename">oko-mark.svg</span>
+              <p>Primary mark. Source SVG with gradient. Scales to any size.</p>
+            </div>
+            <a class="oko-arrow-link" href="/assets/brand/oko-mark.svg" download>Download SVG →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">LOGO · 02</p>
+              <h3>Bolt mark (PNG, dark)</h3>
+              <span class="filename">oko-mark-dark.png · 1024×1024</span>
+              <p>Rasterised on #0b1117 background. For dark-theme press layouts.</p>
+            </div>
+            <a class="oko-arrow-link" href="/press/oko-press-kit.zip">Inside the ZIP →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">LOGO · 03</p>
+              <h3>Bolt mark (PNG, light)</h3>
+              <span class="filename">oko-mark-light.png · 1024×1024</span>
+              <p>Rasterised on #f4f0e7 background. For light-theme print and web layouts.</p>
+            </div>
+            <a class="oko-arrow-link" href="/press/oko-press-kit.zip">Inside the ZIP →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">LOGO · 04</p>
+              <h3>Wordmark (SVG)</h3>
+              <span class="filename">oko-wordmark.svg</span>
+              <p>Typeset "OKO" wordmark in Fraunces with system-serif fallbacks.</p>
+            </div>
+            <a class="oko-arrow-link" href="/press/oko-press-kit.zip">Inside the ZIP →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono oko-eyebrow--teal">COPY · 01</p>
+              <h3>Fact sheet</h3>
+              <span class="filename">fact-sheet.md</span>
+              <p>Company, product spine, maturity labels, honest non-claims, contact — on one page.</p>
+            </div>
+            <a class="oko-arrow-link" href="/press/oko-press-kit.zip">Inside the ZIP →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono oko-eyebrow--teal">COPY · 02</p>
+              <h3>Boilerplate (3 lengths)</h3>
+              <span class="filename">boilerplate/*.txt</span>
+              <p>One-liner · 50-word · 150-word. Pick what fits your column.</p>
+            </div>
+            <a class="oko-arrow-link" href="#boilerplate">Read inline below →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">BRAND · 01</p>
+              <h3>Colour palette</h3>
+              <span class="filename">brand/oko-colors.{txt,css}</span>
+              <p>Hex, CSS custom properties. Swatches shown below.</p>
+            </div>
+            <a class="oko-arrow-link" href="#brand">Swatches below →</a>
+          </div>
+          <div class="oko-card hover-lift">
+            <div>
+              <p class="oko-eyebrow oko-eyebrow--mono">BRAND · 02</p>
+              <h3>Typography · Inter + Fraunces</h3>
+              <span class="filename">brand/fonts/*.woff2 + OFL</span>
+              <p>Both faces ship under the SIL Open Font Licence 1.1. Bundled OFL.txt is authoritative.</p>
+            </div>
+            <a class="oko-arrow-link" href="#brand">Typography below →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="boilerplate" class="oko-section oko-section--elevated" style="scroll-margin-top: 88px;">
+      <div class="oko-container">
+        <p class="oko-eyebrow">BOILERPLATE</p>
+        <h2 class="oko-h2">Three lengths. All honest.</h2>
+        <p style="color: var(--ink-dim, #b3b9bc); max-width: 640px;">
+          Grounded in the live site content. No fabricated metrics, no customer logos, no certifications we haven't earned. Pick what fits your column.
+        </p>
+
+        <div class="boilerplate-head">
+          <h3 style="font-family: var(--font-sans); font-weight: 600; margin: 0;">One-liner</h3>
+          <span class="size-badge">~30 words</span>
+        </div>
+        <blockquote class="boilerplate-block">OKO Holding Corporation (Jupiter, Florida) builds Thunderline — a governed operating substrate where every consequential agent action becomes a byte-verifiable receipt your auditor can replay.</blockquote>
+
+        <div class="boilerplate-head">
+          <h3 style="font-family: var(--font-sans); font-weight: 600; margin: 0;">Short</h3>
+          <span class="size-badge">~50 words</span>
+        </div>
+        <blockquote class="boilerplate-block">OKO Holding Corporation is a Delaware C-corporation headquartered in Jupiter, Florida. OKO builds Thunderline, a governed operating substrate for human-agent teams. Every consequential agent action passes a 4-tier policy gate and emits a 17-field sealed receipt paired with a persisted lineage edge — auditable with deterministic SQL queries.</blockquote>
+
+        <div class="boilerplate-head">
+          <h3 style="font-family: var(--font-sans); font-weight: 600; margin: 0;">Long</h3>
+          <span class="size-badge">~150 words</span>
+        </div>
+        <blockquote class="boilerplate-block">OKO Holding Corporation is a Delaware C-corporation headquartered in Jupiter, Florida, founded by Mo Perez, David Thrower, and Jonathan Castoire. OKO builds Thunderline, a governed operating substrate for human-agent teams where every consequential action produces a byte-verifiable receipt an auditor can replay.
+
+Thunderline's trust model is one cryptographic chain: a 4-tier policy gate (:read, :mutate, :admin, :execute) across 42 executor modules, a 17-field sealed ActionReceipt per authorised action, and a persisted lineage edge cross-checked on every traversal. Untrusted code runs in a hermetic WASM cell with zero imports, bounded fuel, and a wall-clock deadline — four distinct termination atoms, no silent fallbacks.
+
+OKO's first live application, ACORN, is a reference workflow built on the substrate. Prism is the operator surface. ThunderBlock is the beta managed workspace. IVAR is the design-partner-stage vision-analysis application for field operations. All maturity labels are published, not aspirational.</blockquote>
+      </div>
+    </section>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <p class="oko-eyebrow oko-eyebrow--teal">FOUNDERS</p>
+        <h2 class="oko-h2">Named roster.</h2>
+        <p style="color: var(--ink-dim, #b3b9bc); max-width: 600px;">Three founders. One role: Founder. Bios match <a href="/team/">/team</a> verbatim. Monogram placeholders shown; studio portrait photography pending.</p>
+
+        <div class="founder-mini-grid">
+          <div class="oko-card">
+            <svg class="monogram" viewBox="0 0 72 72" aria-label="MP monogram placeholder for Mo Perez"><rect width="72" height="72" rx="8" fill="#0b1117" stroke="#dfba89" stroke-width="1.5"/><text x="36" y="42" text-anchor="middle" fill="#dfba89" font-family="Georgia, serif" font-size="22" font-weight="600">MP</text><text x="36" y="61" text-anchor="middle" fill="#8e989e" font-family="monospace" font-size="6.5" letter-spacing="0.8">PHOTO COMING</text></svg>
+            <div>
+              <p class="fname">Mo Perez</p>
+              <p class="frole">Founder</p>
+              <p class="fbio">U.S. Army veteran and systems builder working on OKO's vision, product doctrine, governance architecture, and company strategy.</p>
+            </div>
+            <a class="oko-arrow-link" href="/team/#mo-perez">Full profile on /team →</a>
+          </div>
+          <div class="oko-card">
+            <svg class="monogram" viewBox="0 0 72 72" aria-label="DT monogram placeholder for David Thrower"><rect width="72" height="72" rx="8" fill="#0b1117" stroke="#2d8a86" stroke-width="1.5"/><text x="36" y="42" text-anchor="middle" fill="#8ee3de" font-family="Georgia, serif" font-size="22" font-weight="600">DT</text><text x="36" y="61" text-anchor="middle" fill="#8e989e" font-family="monospace" font-size="6.5" letter-spacing="0.8">PHOTO COMING</text></svg>
+            <div>
+              <p class="fname">David Thrower</p>
+              <p class="frole">Founder</p>
+              <p class="fbio">Machine-learning researcher working on technical architecture, model search, and the Cerebros–Thunderline runtime boundary.</p>
+            </div>
+            <a class="oko-arrow-link" href="/team/#david-thrower">Full profile on /team →</a>
+          </div>
+          <div class="oko-card">
+            <svg class="monogram" viewBox="0 0 72 72" aria-label="JC monogram placeholder for Jonathan Castoire"><rect width="72" height="72" rx="8" fill="#0b1117" stroke="#8a857d" stroke-width="1.5"/><text x="36" y="42" text-anchor="middle" fill="#e9e3d6" font-family="Georgia, serif" font-size="22" font-weight="600">JC</text><text x="36" y="61" text-anchor="middle" fill="#8e989e" font-family="monospace" font-size="6.5" letter-spacing="0.8">PHOTO COMING</text></svg>
+            <div>
+              <p class="fname">Jonathan Castoire</p>
+              <p class="frole">Founder</p>
+              <p class="fbio">Project manager with experience in telecom infrastructure.</p>
+            </div>
+            <a class="oko-arrow-link" href="/team/#jonathan-castoire">Full profile on /team →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="brand" class="oko-section oko-section--elevated" style="scroll-margin-top: 88px;">
+      <div class="oko-container">
+        <p class="oko-eyebrow">BRAND</p>
+        <h2 class="oko-h2">Palette &amp; typography.</h2>
+        <p style="color: var(--ink-dim, #b3b9bc); max-width: 600px;">Full palette and font files in the ZIP. Below is the primary set.</p>
+
+        <div class="palette-grid">
+          <div class="swatch"><div class="chip" style="background:#dfba89;"></div><div class="name">OKO Gold</div><div class="hex">#dfba89</div></div>
+          <div class="swatch"><div class="chip" style="background:#2d8a86;"></div><div class="name">OKO Teal</div><div class="hex">#2d8a86</div></div>
+          <div class="swatch"><div class="chip" style="background:#0b1117;"></div><div class="name">Ground</div><div class="hex">#0b1117</div></div>
+          <div class="swatch"><div class="chip" style="background:#f4f0e7;"></div><div class="name">Ink (on dark)</div><div class="hex">#f4f0e7</div></div>
+        </div>
+
+        <div class="typography-pair">
+          <div class="tface">
+            <p class="sample-fraunces">Fraunces · display serif</p>
+            <p class="meta">Variable axes: SOFT · WONK · opsz · wght · italic. SIL OFL 1.1. For headlines, section titles, display quotes.</p>
+          </div>
+          <div class="tface">
+            <p class="sample-inter">Inter · UI sans</p>
+            <p class="meta">Variable axis: wght (roman). SIL OFL 1.1. For body text, UI controls, metadata.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <p class="oko-eyebrow oko-eyebrow--teal">EDITORIAL POSTURE</p>
+        <h2 class="oko-h2">What we are not claiming.</h2>
+        <p style="color: var(--ink-dim, #b3b9bc); max-width: 640px;">If you're writing about OKO or Thunderline, we'd rather you have this list up front than correct it in a retraction.</p>
+        <ul class="nonclaims-list" role="list">
+          <li>No SOC2 Type II audit. Roadmap target: Q1 2027.</li>
+          <li>No formal verification claim.</li>
+          <li>No customer logos or case studies — we do not have them yet.</li>
+          <li>No fabricated metrics (revenue, call counts, user counts, latency SLAs).</li>
+          <li>Receipt seals are tamper-evident, not tamper-proof (unkeyed; see <a href="/security/">/security</a>).</li>
+          <li>Thunderline is not AGI. It governs agent actions, not agent reasoning.</li>
+          <li>Every product name carries a mandatory maturity label (research substrate / beta / live / design-partner stage). Dropping the label implies production readiness we have not claimed.</li>
+        </ul>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--ink-faint, #8e989e);">
+          Full technical posture for engineering reviewers: <a href="/security/">/security</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="oko-section oko-section--elevated">
+      <div class="oko-container">
+        <p class="oko-eyebrow">PRESS CONTACT</p>
+        <h2 class="oko-h2">Get in touch.</h2>
+
+        <div class="contact-card">
+          <p style="margin: 0; color: var(--ink-dim, #b3b9bc); font-size: 0.9rem;">PRESS CONTACT</p>
+          <a href="mailto:press@okoholding.com?subject=OKO%20Press%20Enquiry" class="email">press@okoholding.com</a>
+          <p style="margin: 0; font-size: 0.9rem; color: var(--ink-dim, #b3b9bc);">
+            Routes to Mo Perez during the pre-institutional stage. Response within 2 business days.
+            For technical verification before publication, point your editor at <a href="/security/">/security</a>.
+            PGP key available on request.
+          </p>
+        </div>
+
+        <p style="margin-top: 1.5rem; font-size: 0.82rem; color: var(--ink-faint, #8e989e);">
+          Last reviewed: 2026-10-16 · Press kit version: <code style="font-family: ui-monospace, monospace; background: rgba(223,186,137,0.09); padding: 0.1em 0.4em; border-radius: 3px; color: var(--gold, #dfba89);">d1a74e1</code>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="oko-footer">
+    <div class="oko-footer-inner">
+      <div class="oko-footer-grid">
+        <div>
+          <a href="/" class="oko-footer-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
+            <span>OKO</span>
+          </a>
+          <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
+          <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Product &amp; Platform</h5>
+          <ul>
+            <li><a href="/product/">ThunderBlock (beta)</a></li>
+            <li><a href="/platform/">Thunderline Substrate</a></li>
+            <li><a href="/observatory/">Observatory Walkthrough</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Engineering &amp; Trust</h5>
+          <ul>
+            <li><a href="/docs/">Documentation</a></li>
+            <li><a href="/security/">Security &amp; Receipt Spine</a></li>
+            <li><a href="/status/">System Status</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="/company/">About OKO</a></li>
+            <li><a href="/team/">Leadership Team</a></li>
+            <li><a href="/jobs/">Careers</a></li>
+            <li><a href="/press/" aria-current="page">Press &amp; Brand</a></li>
+            <li><a href="/investors/">Investor Materials</a></li>
+            <li><a href="mailto:press@okoholding.com">press@okoholding.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="oko-footer-bottom">
+        <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+        <div class="oko-footer-legal">Logos and brand assets available for editorial use with attribution. Font files ship under SIL OFL 1.1.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/vendor/gsap-3.x/gsap.min.js"></script>
+  <script src="/assets/vendor/gsap-3.x/ScrollTrigger.min.js"></script>
+  <script src="/assets/vendor/gsap-3.x/Flip.min.js"></script>
+  <script src="/assets/vendor/lenis-1.x/lenis.min.js"></script>
+  <script src="/assets/js/polish.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.OKOPolish) {
+        window.OKOPolish.reveal(".fade-up");
+        window.OKOPolish.hover(".hover-lift");
+      }
+    });
+  </script>
+</body>
+</html>

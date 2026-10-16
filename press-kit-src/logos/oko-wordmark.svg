@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 140" width="440" height="140" role="img" aria-label="OKO wordmark">
+  <title>OKO</title>
+  <desc>OKO Holding Corporation wordmark. Rendered in Fraunces serif with fallbacks to Georgia and the host system's default serif.</desc>
+  <style>
+    .word {
+      font-family: "Fraunces", "Georgia", "Times New Roman", serif;
+      font-weight: 500;
+      font-size: 112px;
+      letter-spacing: 0.04em;
+      font-feature-settings: "ss01" on;
+    }
+  </style>
+  <text x="50%" y="98" text-anchor="middle" class="word" fill="currentColor">OKO</text>
+</svg>

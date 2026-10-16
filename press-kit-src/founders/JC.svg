@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="JC monogram placeholder for Jonathan Castoire — portrait photography coming soon">
+  <title>Jonathan Castoire — monogram placeholder</title>
+  <desc>Monogram placeholder for Jonathan Castoire, Founder of OKO Holding Corporation. Portrait photography pending.</desc>
+  <rect width="512" height="512" rx="48" fill="#0b1117" stroke="#8a857d" stroke-width="4"/>
+  <text x="256" y="300" text-anchor="middle" fill="#e9e3d6" font-family="Georgia, serif" font-size="156" font-weight="600">JC</text>
+  <text x="256" y="420" text-anchor="middle" fill="#8e989e" font-family="ui-monospace, monospace" font-size="22" letter-spacing="4">PHOTO COMING</text>
+</svg>

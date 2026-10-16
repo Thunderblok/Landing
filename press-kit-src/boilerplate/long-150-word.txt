@@ -1,0 +1,5 @@
+OKO Holding Corporation is a Delaware C-corporation headquartered in Jupiter, Florida, founded by Mo Perez, David Thrower, and Jonathan Castoire. OKO builds Thunderline, a governed operating substrate for human-agent teams where every consequential action produces a byte-verifiable receipt an auditor can replay.
+
+Thunderline's trust model is one cryptographic chain: a 4-tier policy gate (:read, :mutate, :admin, :execute) across 42 executor modules, a 17-field sealed ActionReceipt per authorised action, and a persisted lineage edge cross-checked on every traversal. Untrusted code runs in a hermetic WASM cell with zero imports, bounded fuel, and a wall-clock deadline — four distinct termination atoms, no silent fallbacks.
+
+OKO's first live application, ACORN, is a reference workflow built on the substrate. Prism is the operator surface. ThunderBlock is the beta managed workspace. IVAR is the design-partner-stage vision-analysis application for field operations. All maturity labels are published, not aspirational.

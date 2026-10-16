@@ -1,0 +1,25 @@
+OKO Holding Corporation — brand palette
+Last reviewed: 2026-10-16
+
+Primary
+  --oko-gold        #dfba89     (warm gold; primary accent)
+  --oko-gold-warm   #e6c59b     (gold tint, hover states)
+  --oko-teal        #2d8a86     (differentiator; links, info)
+  --oko-teal-bright #8ee3de     (teal tint, highlights)
+
+Ground
+  --oko-ground      #0b1117     (deep night, dark page background)
+  --oko-elevated    #141b23     (elevated surface on dark)
+  --oko-code        #0d1520     (code block background on dark)
+
+Ink
+  --oko-ink         #f4f0e7     (primary text on dark)
+  --oko-ink-dim     #b3b9bc     (secondary text)
+  --oko-ink-faint   #8e989e     (tertiary text, metadata)
+
+Hairline
+  --oko-hairline    rgba(224,230,231,0.17)   (borders, dividers)
+
+Accents (used sparingly)
+  --oko-danger      #c85050     (errors, destructive actions)
+  --oko-danger-soft #e07070     (danger text)

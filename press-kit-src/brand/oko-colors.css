@@ -1,0 +1,23 @@
+/* OKO Holding Corporation — brand palette (CSS custom properties)
+ * Last reviewed: 2026-10-16
+ * For editorial use. Pair every colour with the typography system in typography.md.
+ */
+:root {
+  --oko-gold:         #dfba89;
+  --oko-gold-warm:    #e6c59b;
+  --oko-teal:         #2d8a86;
+  --oko-teal-bright:  #8ee3de;
+
+  --oko-ground:       #0b1117;
+  --oko-elevated:     #141b23;
+  --oko-code:         #0d1520;
+
+  --oko-ink:          #f4f0e7;
+  --oko-ink-dim:      #b3b9bc;
+  --oko-ink-faint:    #8e989e;
+
+  --oko-hairline:     rgba(224, 230, 231, 0.17);
+
+  --oko-danger:       #c85050;
+  --oko-danger-soft:  #e07070;
+}
