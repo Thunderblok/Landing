@@ -65,6 +65,45 @@
 <style>.oko-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--oko-ink);font:600 17px/1 Georgia,serif;letter-spacing:.02em;margin-bottom:26px}.oko-brand img{display:block}.oko-brand:hover{color:var(--oko-accent)}.gate-form{box-shadow:var(--elev-2)}.doc-link{box-shadow:var(--elev-1)}</style>
 </head>
 <body>
+<nav class="oko-nav" aria-label="Primary navigation">
+  <div class="oko-nav-inner">
+    <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
+      <span class="oko-nav-brand-word">OKO</span>
+    </a>
+    <ul class="oko-nav-links">
+      <li><a href="/product/">Product</a></li>
+      <li><a href="/platform/">Platform</a></li>
+      <li><a href="/docs/">Docs</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/company/">Company</a></li>
+    </ul>
+    <div class="oko-nav-actions">
+      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta hover-lift">Get a ThunderBlock</a>
+      <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
+        <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
+    <ul class="oko-mobile-drawer-links">
+      <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
+      <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
+      <li><a href="/docs/">Docs <span aria-hidden="true">→</span></a></li>
+      <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
+      <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
+      <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
+      <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
+      <li><a href="/investors/" aria-current="page">Investors <span aria-hidden="true">→</span></a></li>
+    </ul>
+    <div class="oko-mobile-drawer-actions">
+      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
+    </div>
+  </div>
+</nav>
 <main>
 <a class="oko-brand" href="/" aria-label="OKO Holding Corporation"><img src="/assets/brand/oko-mark.svg" alt="" width="26" height="26"><span>OKO</span></a>
 
@@ -99,12 +138,55 @@
       </a>
     </div>
   </form>
-
-  <footer class="fade-up">
-    OKOHOLDING.COM &middot; INVESTOR MATERIALS &middot; V2<br>
-    AES-256-GCM ENCRYPTED &middot; BROWSER DECRYPTED &middot; STAKEHOLDER REVIEW ONLY
-  </footer>
 </main>
+<footer class="oko-footer">
+  <div class="oko-footer-inner">
+    <div class="oko-footer-grid">
+      <div>
+        <a href="/" class="oko-footer-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
+          <span>OKO</span>
+        </a>
+        <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
+        <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Product &amp; Platform</h5>
+        <ul>
+          <li><a href="/product/">ThunderBlock (beta)</a></li>
+          <li><a href="/platform/">Thunderline Substrate</a></li>
+          <li><a href="/observatory/">Observatory Walkthrough</a></li>
+          <li><a href="/substrate.html">Substrate 3D Scene</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Engineering &amp; Trust</h5>
+        <ul>
+          <li><a href="/docs/">Documentation (10 Snippets)</a></li>
+          <li><a href="/security/">Security &amp; Receipt Spine</a></li>
+          <li><a href="/status/">System Status</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+          <li><a href="https://github.com/Thunderblok/Landing" rel="noopener">GitHub (Site · Apache 2.0) ↗</a></li>
+        </ul>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/company/">About OKO</a></li>
+          <li><a href="/team/">Leadership Team</a></li>
+          <li><a href="/jobs/">Careers</a></li>
+          <li><a href="/investors/">Investor Materials</a></li>
+          <li><a href="mailto:mo@okoholding.com">mo@okoholding.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="oko-footer-bottom">
+      <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+      <div class="oko-footer-legal">OKO Holding Corporation investor materials.</div>
+    </div>
+  </div>
+</footer>
 
 <script>
 

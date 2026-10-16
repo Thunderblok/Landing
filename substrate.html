@@ -28,7 +28,7 @@
     background:radial-gradient(120% 90% at 50% 42%, transparent 40%, rgba(3,6,12,.55) 78%, rgba(2,4,9,.9) 100%);}
   .grain{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-  nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:22px 40px}
+  nav.legacy-sub-nav{position:fixed; top:0; left:0; right:0; z-index:30; display:flex; justify-content:space-between; align-items:center; padding:22px 40px}
   .brand{font-family:var(--serif); font-size:1.3rem; display:flex; align-items:center; gap:11px; color:var(--ink); text-decoration:none; letter-spacing:.02em}
   .brand .mk{width:22px;height:22px;display:block}
   .back{font-family:var(--mono); font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--soft); text-decoration:none; border:1px solid rgba(255,255,255,.14); padding:8px 13px; border-radius:100px; transition:.2s}
@@ -94,17 +94,52 @@
 <div class="vig" data-parallax data-speed="0.06"></div>
 <div class="grain"></div>
 
-<nav>
-  <a class="brand" href="index.html"><img class="mk" src="/assets/brand/oko-mark.svg" alt="" width="22" height="22"> OKO</a>
-  <a class="back hover-lift" href="index.html">← okoholding.com</a>
+<nav class="oko-nav" aria-label="Primary navigation">
+  <div class="oko-nav-inner">
+    <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
+      <span class="oko-nav-brand-word">OKO</span>
+    </a>
+    <ul class="oko-nav-links">
+      <li><a href="/product/">Product</a></li>
+      <li><a href="/platform/">Platform</a></li>
+      <li><a href="/docs/">Docs</a></li>
+      <li><a href="/security/">Security</a></li>
+      <li><a href="/pricing/">Pricing</a></li>
+      <li><a href="/company/">Company</a></li>
+    </ul>
+    <div class="oko-nav-actions">
+      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta hover-lift">Get a ThunderBlock</a>
+      <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
+        <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+  <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
+    <ul class="oko-mobile-drawer-links">
+      <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
+      <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
+      <li><a href="/docs/">Docs <span aria-hidden="true">→</span></a></li>
+      <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
+      <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
+      <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
+      <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
+      <li><a href="/investors/">Investors <span aria-hidden="true">→</span></a></li>
+    </ul>
+    <div class="oko-mobile-drawer-actions">
+      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
+    </div>
+  </div>
 </nav>
 <div class="prog"><b id="pv">the substrate</b> · scroll to descend</div>
 
 <div class="track">
   <section class="panel mid" data-i="0"><div class="cap">
-    <div class="eye">OKO Holding · the substrate</div>
+    <div class="eye">SUBSTRATE VISUALIZATION · ARCHITECTURAL DEMO</div>
     <h1>A substrate that <em>thinks.</em></h1>
-    <p>A ThunderBlock: one sovereign cell grown from local rules, holding its own memory and law.</p>
+    <p>What you are looking at: an interactive 3D visualization of a single ThunderBlock workspace cell inside the Thunderline substrate. As you scroll, the outer policy shell opens to reveal the internal lattice where bounded agent actions execute, propagate, and seal into a byte-verifiable receipt.</p>
     <span class="chip hover-lift">scroll to descend ↓</span>
   </div></section>
 
@@ -139,9 +174,59 @@
   <h2 class="fade-up">Millions of machines. One emergent mind.</h2>
   <p class="fade-up">Every station inherits identity, memory, transport, planning, and law from first breath.</p>
   <div class="btnrow fade-up">
-    <a class="btn solid hover-lift" href="index.html#contact">Talk to OKO →</a>
+    <a class="btn solid hover-lift" href="/platform/">Explore the Platform →</a>
+    <a class="btn ghost hover-lift" href="/security/">Receipt Spine Architecture →</a>
   </div>
 </section>
+
+<footer class="oko-footer">
+  <div class="oko-footer-inner">
+    <div class="oko-footer-grid">
+      <div>
+        <a href="/" class="oko-footer-brand">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
+          <span>OKO</span>
+        </a>
+        <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
+        <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Product &amp; Platform</h5>
+        <ul>
+          <li><a href="/product/">ThunderBlock (beta)</a></li>
+          <li><a href="/platform/">Thunderline Substrate</a></li>
+          <li><a href="/observatory/">Observatory Walkthrough</a></li>
+          <li><a href="/substrate.html">Substrate 3D Scene</a></li>
+          <li><a href="/pricing/">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Engineering &amp; Trust</h5>
+        <ul>
+          <li><a href="/docs/">Documentation (10 Snippets)</a></li>
+          <li><a href="/security/">Security &amp; Receipt Spine</a></li>
+          <li><a href="/status/">System Status</a></li>
+          <li><a href="/changelog/">Changelog</a></li>
+          <li><a href="https://github.com/Thunderblok/Landing" rel="noopener">GitHub (Site · Apache 2.0) ↗</a></li>
+        </ul>
+      </div>
+      <div class="oko-footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/company/">About OKO</a></li>
+          <li><a href="/team/">Leadership Team</a></li>
+          <li><a href="/jobs/">Careers</a></li>
+          <li><a href="/investors/">Investor Materials</a></li>
+          <li><a href="mailto:mo@okoholding.com">mo@okoholding.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="oko-footer-bottom">
+      <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+      <div class="oko-footer-legal">Interactive Three.js visualization of a ThunderBlock cell and receipt seal ring. Conceptual architectural rendering, not live production telemetry.</div>
+    </div>
+  </div>
+</footer>
 
 <script type="module">
 import * as THREE from "three";

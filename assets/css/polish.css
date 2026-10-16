@@ -242,3 +242,470 @@
   --oko-serif: var(--font-serif);
 }
 
+/* ==========================================================================
+ * Global Sticky Nav & Full-Viewport Mobile Drawer (VISION §Nav design)
+ * ========================================================================== */
+body.oko-nav-open {
+  overflow: hidden !important;
+}
+
+.oko-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  height: 68px;
+  background: rgba(11, 17, 23, 0.32);
+  border-bottom: 1px solid rgba(224, 230, 231, 0.09);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    backdrop-filter 0.22s ease;
+}
+
+.oko-nav.is-scrolled,
+body.oko-nav-open .oko-nav {
+  background: rgba(11, 17, 23, 0.88);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  border-bottom-color: var(--hairline);
+  box-shadow: var(--elev-2);
+}
+
+.oko-nav-inner {
+  max-width: 1280px;
+  height: 68px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.oko-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 44px;
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+
+.oko-nav-brand svg,
+.oko-nav-brand img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.oko-nav-brand-word {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.oko-nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.1rem, 2.2vw, 2rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oko-nav-links li {
+  margin: 0;
+  padding: 0;
+}
+
+.oko-nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink-dim) !important;
+  text-decoration: none !important;
+  border-bottom: 2px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.oko-nav-links a:hover,
+.oko-nav-links a:focus-visible {
+  color: var(--ink) !important;
+}
+
+.oko-nav-links a[aria-current="page"] {
+  color: var(--ink) !important;
+  border-bottom-color: var(--teal);
+}
+
+.oko-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.oko-nav-signin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink-dim) !important;
+  text-decoration: none !important;
+  transition: color 0.16s ease;
+}
+
+.oko-nav-signin:hover,
+.oko-nav-signin:focus-visible {
+  color: var(--ink) !important;
+}
+
+.oko-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1.15rem;
+  border-radius: 6px;
+  background: var(--gold);
+  color: #0b1117 !important;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none !important;
+  box-shadow: var(--elev-1);
+  transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.oko-nav-cta:hover,
+.oko-nav-cta:focus-visible {
+  background: var(--signal);
+  color: #0b1117 !important;
+  transform: translateY(-1px);
+  box-shadow: var(--elev-3);
+}
+
+.oko-nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: rgba(20, 27, 35, 0.75);
+  color: var(--ink);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.oko-nav-toggle:hover,
+.oko-nav-toggle:focus-visible {
+  border-color: var(--gold);
+}
+
+.oko-nav-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.oko-nav-toggle-bar::before,
+.oko-nav-toggle-bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), top 0.22s ease;
+}
+
+.oko-nav-toggle-bar::before {
+  top: -6px;
+}
+
+.oko-nav-toggle-bar::after {
+  top: 6px;
+}
+
+body.oko-nav-open .oko-nav-toggle {
+  border-color: var(--gold);
+}
+
+body.oko-nav-open .oko-nav-toggle-bar {
+  background: transparent;
+}
+
+body.oko-nav-open .oko-nav-toggle-bar::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+body.oko-nav-open .oko-nav-toggle-bar::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.oko-mobile-drawer {
+  display: none;
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: calc(100vh - 68px);
+  height: calc(100dvh - 68px);
+  z-index: 149;
+  background: rgba(11, 17, 23, 0.98);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  padding: 1.5rem clamp(1.25rem, 5vw, 2.5rem) 2.5rem;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.oko-mobile-drawer.is-open {
+  display: flex;
+}
+
+.oko-mobile-drawer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.oko-mobile-drawer-links li {
+  margin: 0;
+  padding: 0;
+}
+
+.oko-mobile-drawer-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 0.75rem 0.25rem;
+  font-family: var(--font-sans);
+  font-size: 1.12rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.oko-mobile-drawer-links a:hover,
+.oko-mobile-drawer-links a:focus-visible {
+  color: var(--gold) !important;
+}
+
+.oko-mobile-drawer-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.oko-mobile-drawer-actions .oko-nav-signin {
+  min-height: 48px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  color: var(--ink) !important;
+  font-size: 0.98rem;
+}
+
+.oko-mobile-drawer-actions .oko-nav-cta {
+  min-height: 48px;
+  font-size: 0.98rem;
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .oko-nav-links,
+  .oko-nav-actions .oko-nav-signin {
+    display: none;
+  }
+  .oko-nav-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 520px) {
+  .oko-nav-actions .oko-nav-cta {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+ * Global Footer (VISION §Information architecture)
+ * ========================================================================== */
+.oko-footer {
+  background: #070d12;
+  color: var(--ink-dim);
+  border-top: 1px solid var(--hairline);
+  padding: 4.5rem 0 2.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 20;
+}
+
+.oko-footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.oko-footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.oko-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.85rem;
+}
+
+.oko-footer-brand svg,
+.oko-footer-brand img {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.oko-footer-summary {
+  color: var(--ink-dim);
+  font-size: 0.88rem;
+  max-width: 36ch;
+  margin: 0 0 0.75rem;
+}
+
+.oko-footer-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.oko-footer-col h5 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem;
+}
+
+.oko-footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oko-footer-col li {
+  margin: 0 0 0.45rem;
+}
+
+.oko-footer-col a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--ink-dim) !important;
+  text-decoration: none !important;
+  font-size: 0.88rem;
+  transition: color 0.16s ease;
+}
+
+.oko-footer-col a:hover,
+.oko-footer-col a:focus-visible {
+  color: var(--teal) !important;
+}
+
+.oko-footer-bottom {
+  padding-top: 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+.oko-footer-legal {
+  max-width: 72ch;
+  line-height: 1.55;
+}
+
+.oko-footer-legal a {
+  color: var(--ink-dim) !important;
+  text-decoration: underline !important;
+  text-decoration-color: var(--teal) !important;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  .oko-footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .oko-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

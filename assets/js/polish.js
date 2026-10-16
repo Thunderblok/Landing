@@ -66,6 +66,87 @@
   }
 
   /* -------------------------------------------------------------------------
+   * Global Nav Controller (>48px scroll state + mobile drawer A11y + scroll-lock)
+   * Runs regardless of prefers-reduced-motion.
+   * ----------------------------------------------------------------------- */
+  function initGlobalNav() {
+    var nav = document.querySelector(".oko-nav");
+    if (!nav || nav.__okoNavBound) return;
+    nav.__okoNavBound = true;
+
+    function updateScrollState() {
+      var y = window.scrollY !== undefined ? window.scrollY : window.pageYOffset || 0;
+      if (y > 48) {
+        nav.classList.add("is-scrolled");
+      } else {
+        nav.classList.remove("is-scrolled");
+      }
+    }
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+
+    var toggle = nav.querySelector(".oko-nav-toggle");
+    var drawer = document.getElementById("oko-mobile-drawer") || nav.querySelector(".oko-mobile-drawer");
+    if (!toggle || !drawer) return;
+
+    function setDrawer(open, restoreFocus) {
+      document.body.classList.toggle("oko-nav-open", open);
+      drawer.classList.toggle("is-open", open);
+      drawer.setAttribute("aria-hidden", String(!open));
+      toggle.setAttribute("aria-expanded", String(open));
+      if (window.lenis) {
+        if (open && typeof window.lenis.stop === "function") {
+          window.lenis.stop();
+        } else if (!open && typeof window.lenis.start === "function") {
+          window.lenis.start();
+        }
+      }
+      if (!open && restoreFocus) {
+        toggle.focus();
+      }
+    }
+
+    toggle.addEventListener("click", function () {
+      var isOpen = toggle.getAttribute("aria-expanded") === "true";
+      setDrawer(!isOpen, false);
+    });
+
+    var links = drawer.querySelectorAll("a");
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener("click", function () {
+        setDrawer(false, false);
+      });
+    }
+
+    document.addEventListener("keydown", function (e) {
+      if ((e.key === "Escape" || e.key === "Esc") && document.body.classList.contains("oko-nav-open")) {
+        e.preventDefault();
+        setDrawer(false, true);
+      }
+    });
+
+    try {
+      var desktopMq = window.matchMedia("(min-width: 961px)");
+      var onMq = function (ev) {
+        if (ev.matches && document.body.classList.contains("oko-nav-open")) {
+          setDrawer(false, false);
+        }
+      };
+      if (desktopMq.addEventListener) desktopMq.addEventListener("change", onMq);
+      else if (desktopMq.addListener) desktopMq.addListener(onMq);
+    } catch (err) {
+      /* ignore matchMedia error */
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initGlobalNav);
+  } else {
+    initGlobalNav();
+  }
+
+  /* -------------------------------------------------------------------------
    * Reduced-motion branch: skip Lenis + scroll-driven motion, show reveal
    * targets at rest, and export a safe no-op API on window.OKOPolish.
    * ----------------------------------------------------------------------- */
@@ -81,6 +162,7 @@
     window.OKOPolish = {
       reducedMotion: true,
       lenis: null,
+      initNav: initGlobalNav,
       reveal: function (selector) {
         showAtRest(selector || ".fade-up");
         return [];
@@ -347,6 +429,7 @@
   window.OKOPolish = {
     reducedMotion: false,
     lenis: lenis,
+    initNav: initGlobalNav,
     reveal: reveal,
     parallax: parallax,
     morph: morph,
