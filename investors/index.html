@@ -41,6 +41,25 @@
       <div class="oko-nav-actions">
         <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
         <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
+        <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
+          <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
+      <ul class="oko-mobile-drawer-links">
+        <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
+        <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
+        <li><a href="/docs/">Docs <span aria-hidden="true">→</span></a></li>
+        <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
+        <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
+        <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
+        <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
+        <li><a href="/investors/" aria-current="page">Investors <span aria-hidden="true">→</span></a></li>
+      </ul>
+      <div class="oko-mobile-drawer-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
       </div>
     </div>
   </nav>
@@ -243,5 +262,7 @@
       </div>
     </div>
   </footer>
+  <!-- Shared nav runtime only (drawer toggle, Esc, scroll-lock). No password gate, no decryption. -->
+  <script src="/assets/js/polish.js" defer></script>
 </body>
 </html>
