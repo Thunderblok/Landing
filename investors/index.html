@@ -1,258 +1,243 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="oko-dark" data-theme="dark">
 <head>
-<script>(function(){try{var t=localStorage.getItem('oko-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>OKO / Thunderline — Investor Materials</title>
-<style>
-  :root { --paper:#F7F3EB; --ink:#1C1815; --muted:#6D6660; --accent:#6E2E38; --accent-soft:#9A5A64; --rule:#E0D9CC; --code-bg:#EDE7DA; --danger:#8B1E3F; }
-  @media (prefers-color-scheme: dark) { :root { --paper:#17140F; --ink:#E9E3D6; --muted:#8A857D; --accent:#D89AA6; --accent-soft:#B37C87; --rule:#2A2620; --code-bg:#1E1B17; --danger:#F49AA6; } }
-  :root[data-theme="dark"]  { --paper:#17140F; --ink:#E9E3D6; --muted:#8A857D; --accent:#D89AA6; --accent-soft:#B37C87; --rule:#2A2620; --code-bg:#1E1B17; --danger:#F49AA6; }
-  :root[data-theme="light"] { --paper:#F7F3EB; --ink:#1C1815; --muted:#6D6660; --accent:#6E2E38; --accent-soft:#9A5A64; --rule:#E0D9CC; --code-bg:#EDE7DA; --danger:#8B1E3F; }
-  html { color-scheme: light dark; }
-  body { font-family:"Iowan Old Style","Charter","Palatino Linotype","Palatino",Georgia,"Times New Roman",serif;
-    font-size:17px; line-height:1.6; color:var(--ink); background:var(--paper); margin:0; -webkit-font-smoothing:antialiased; }
-  main { max-width:580px; margin:0 auto; padding:5rem 1.5rem 4rem; }
-  .kicker { font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1.25rem; }
-  h1 { font-size:clamp(2rem, 4.8vw, 2.6rem); font-weight:600; letter-spacing:-0.015em;
-    line-height:1.1; margin:0 0 1.25rem; text-wrap:balance; }
-  p { margin:1rem 0; }
-  em { font-style:italic; }
-  strong { font-weight:600; color:var(--ink); }
-  a { color:var(--accent); text-decoration:none; border-bottom:1px solid transparent; transition:border-color 0.12s; }
-  a:hover { border-bottom-color:var(--accent); }
-  hr { width:3.5rem; height:1px; background:var(--accent); border:0; margin:2.5rem 0; }
-  .storyline { font-style:italic; border-left:2px solid var(--accent); padding:0.15rem 1.2rem;
-    margin:1.5rem 0; color:var(--ink); line-height:1.4; text-wrap:balance; }
-  .gate-form { margin:2.5rem 0; padding:1.75rem 1.5rem; border:1px solid var(--rule); border-radius:4px; }
-  .gate-form label { display:block; font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem; }
-  .gate-form input[type=password] { width:100%; padding:0.7rem 0.9rem; font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:1rem; background:var(--code-bg); color:var(--ink); border:1px solid var(--rule); border-radius:3px; box-sizing:border-box; }
-  .gate-form input[type=password]:focus { outline:2px solid var(--accent); outline-offset:0; border-color:var(--accent); }
-  .gate-form button { margin-top:0.85rem; padding:0.65rem 1.5rem; font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; font-weight:600;
-    background:var(--accent); color:var(--paper); border:0; border-radius:3px; cursor:pointer; transition:opacity 0.15s; }
-  .gate-form button:hover { opacity:0.88; }
-  .gate-form .msg { margin-top:0.85rem; font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:0.78rem; letter-spacing:0.04em; color:var(--danger); min-height:1.2em; }
-  .unlocked { display:none; margin-top:1.5rem; padding-top:1.25rem; border-top:1px dashed var(--rule); }
-  .unlocked.show { display:block; }
-  .doc-link { display:block; padding:1rem 1.25rem; margin:0.75rem 0; border:1px solid var(--rule); border-radius:3px;
-    color:var(--ink); text-decoration:none; transition:border-color 0.15s, background 0.15s; }
-  /* The tint is derived from the accent, not a second hardcoded colour.
-     This rule kept rgba(110,46,56,...) — the MAROON of the palette that was
-     replaced — so it alone never migrated, and it was gated on
-     prefers-color-scheme while the rest of the page obeys [data-theme],
-     which meant an explicit dark choice on a light OS reverted this one
-     hover to the old colour. color-mix follows the token in every state. */
-  .doc-link:hover { border-color:var(--accent); background:color-mix(in srgb, var(--accent) 6%, transparent); border-bottom-color:var(--accent); }
-  .doc-link .n { font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent-soft); display:block; margin-bottom:0.3rem; }
-  .doc-link .t { font-weight:600; font-size:1.05rem; color:var(--ink); }
-  footer { margin-top:4rem; padding-top:1.5rem; border-top:1px solid var(--rule);
-    color:var(--muted); font-size:0.78rem;
-    font-family:ui-monospace,"SF Mono","Berkeley Mono",Menlo,Consolas,monospace;
-    letter-spacing:0.05em; line-height:1.8; }
-</style>
-<link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/brand/oko-tokens.css">
-<link rel="stylesheet" href="../assets/css/polish.css">
-<script defer src="/assets/brand/oko-theme.js"></script>
-<style>.oko-brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--oko-ink);font:600 17px/1 Georgia,serif;letter-spacing:.02em;margin-bottom:26px}.oko-brand img{display:block}.oko-brand:hover{color:var(--oko-accent)}.gate-form{box-shadow:var(--elev-2)}.doc-link{box-shadow:var(--elev-1)}</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Materials — OKO Holding Corporation</title>
+  <meta name="description" content="OKO Holding Corporation is an early-stage Delaware C-corp headquartered in Jupiter, Florida. Request the investor packet from Founder &amp; CEO Mo Perez.">
+  <link rel="canonical" href="https://okoholding.com/investors/">
+  <meta property="og:title" content="Investor Materials — OKO Holding Corporation">
+  <meta property="og:description" content="Early-stage. By request. OKO Holding Corporation builds Thunderline, the governed operating environment where every agent action becomes a byte-verifiable receipt.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://okoholding.com/investors/">
+  <meta property="og:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Investor Materials — OKO Holding Corporation">
+  <meta name="twitter:description" content="Early-stage. By request. OKO Holding Corporation builds Thunderline, ThunderBlock, Prism, and ACORN.">
+  <meta name="twitter:image" content="https://okoholding.com/assets/og-image.svg">
+  <meta name="theme-color" content="#0b1117">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preload" href="/assets/vendor/fonts/inter/Inter-roman.var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/brand/oko-tokens.css">
+  <link rel="stylesheet" href="/assets/css/polish.css">
 </head>
-<body>
-<nav class="oko-nav" aria-label="Primary navigation">
-  <div class="oko-nav-inner">
-    <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
-      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
-      <span class="oko-nav-brand-word">OKO</span>
-    </a>
-    <ul class="oko-nav-links">
-      <li><a href="/product/">Product</a></li>
-      <li><a href="/platform/">Platform</a></li>
-      <li><a href="/docs/">Docs</a></li>
-      <li><a href="/security/">Security</a></li>
-      <li><a href="/pricing/">Pricing</a></li>
-      <li><a href="/company/">Company</a></li>
-    </ul>
-    <div class="oko-nav-actions">
-      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
-      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta hover-lift">Get a ThunderBlock</a>
-      <button class="oko-nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="oko-mobile-drawer">
-        <span class="oko-nav-toggle-bar" aria-hidden="true"></span>
-      </button>
-    </div>
-  </div>
-  <div class="oko-mobile-drawer" id="oko-mobile-drawer" aria-hidden="true">
-    <ul class="oko-mobile-drawer-links">
-      <li><a href="/product/">Product <span aria-hidden="true">→</span></a></li>
-      <li><a href="/platform/">Platform <span aria-hidden="true">→</span></a></li>
-      <li><a href="/docs/">Docs <span aria-hidden="true">→</span></a></li>
-      <li><a href="/security/">Security <span aria-hidden="true">→</span></a></li>
-      <li><a href="/pricing/">Pricing <span aria-hidden="true">→</span></a></li>
-      <li><a href="/company/">Company <span aria-hidden="true">→</span></a></li>
-      <li><a href="/observatory/">Observatory <span aria-hidden="true">→</span></a></li>
-      <li><a href="/investors/" aria-current="page">Investors <span aria-hidden="true">→</span></a></li>
-    </ul>
-    <div class="oko-mobile-drawer-actions">
-      <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
-      <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
-    </div>
-  </div>
-</nav>
-<main>
-<a class="oko-brand" href="/" aria-label="OKO Holding Corporation"><img src="/assets/brand/oko-mark.svg" alt="" width="26" height="26"><span>OKO</span></a>
+<body class="oko-page">
+  <a href="#main-content" class="oko-skip-link">Skip to content</a>
 
-  <div class="kicker">Investor Materials · Password-Gated</div>
-  <h1>OKO / Thunderline</h1>
-
-  <blockquote class="storyline">Every AI produces answers. Thunderline proves the governed chain behind its actions.</blockquote>
-
-  <p>OKO Holding builds <strong>Thunderline</strong> — a governed agent runtime where every action yields a byte-verifiable receipt.</p>
-
-  <p>Briefings and technical diligence require a stakeholder password.</p>
-
-  <p>Need access? Email <a href="mailto:hello@okoholding.com">hello@okoholding.com</a> with your affiliation.</p>
-
-  <form class="gate-form" onsubmit="return handleUnlock(event)">
-    <label for="pw">Access Password</label>
-    <input type="password" id="pw" name="pw" autocomplete="current-password" spellcheck="false" required>
-    <button type="submit" class="hover-lift">Unlock Materials</button>
-    <div class="msg" id="msg"></div>
-    <div class="unlocked" id="unlocked">
-      <a class="doc-link hover-lift" href="./thunderline-briefing.html" onclick="return persistAndGo(event, this.href)">
-        <span class="n">01 · Briefing</span>
-        <span class="t">Investor Briefing v2</span>
+  <nav class="oko-nav is-scrolled" aria-label="Primary navigation">
+    <div class="oko-nav-inner">
+      <a href="/" class="oko-nav-brand" aria-label="OKO Holding Corporation home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-nav" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-nav)"/></svg>
+        <span class="oko-nav-brand-word">OKO</span>
       </a>
-      <a class="doc-link hover-lift" href="./technical-foundations.html" onclick="return persistAndGo(event, this.href)">
-        <span class="n">02 · Diligence</span>
-        <span class="t">Mathematical &amp; Physical Foundations v3</span>
-      </a>
-      <a class="doc-link hover-lift" href="./preliminary-deck.html" onclick="return persistAndGo(event, this.href)">
-        <span class="n">03 · Overview</span>
-        <span class="t">Investor Overview</span>
-      </a>
-    </div>
-  </form>
-</main>
-<footer class="oko-footer">
-  <div class="oko-footer-inner">
-    <div class="oko-footer-grid">
-      <div>
-        <a href="/" class="oko-footer-brand">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
-          <span>OKO</span>
-        </a>
-        <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
-        <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
-      </div>
-      <div class="oko-footer-col">
-        <h5>Product &amp; Platform</h5>
-        <ul>
-          <li><a href="/product/">ThunderBlock (beta)</a></li>
-          <li><a href="/platform/">Thunderline Substrate</a></li>
-          <li><a href="/observatory/">Observatory Walkthrough</a></li>
-          <li><a href="/substrate.html">Substrate 3D Scene</a></li>
-          <li><a href="/pricing/">Pricing</a></li>
-        </ul>
-      </div>
-      <div class="oko-footer-col">
-        <h5>Engineering &amp; Trust</h5>
-        <ul>
-          <li><a href="/docs/">Documentation (10 Snippets)</a></li>
-          <li><a href="/security/">Security &amp; Receipt Spine</a></li>
-          <li><a href="/status/">System Status</a></li>
-          <li><a href="/changelog/">Changelog</a></li>
-          <li><a href="https://github.com/Thunderblok/Landing" rel="noopener">GitHub (Site · Apache 2.0) ↗</a></li>
-        </ul>
-      </div>
-      <div class="oko-footer-col">
-        <h5>Company</h5>
-        <ul>
-          <li><a href="/company/">About OKO</a></li>
-          <li><a href="/team/">Leadership Team</a></li>
-          <li><a href="/jobs/">Careers</a></li>
-          <li><a href="/investors/">Investor Materials</a></li>
-          <li><a href="mailto:mo@okoholding.com">mo@okoholding.com</a></li>
-        </ul>
+      <ul class="oko-nav-links">
+        <li><a href="/product/">Product</a></li>
+        <li><a href="/platform/">Platform</a></li>
+        <li><a href="/docs/">Docs</a></li>
+        <li><a href="/security/">Security</a></li>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/company/">Company</a></li>
+      </ul>
+      <div class="oko-nav-actions">
+        <a href="https://thunderline.net/sign-in" class="oko-nav-signin">Sign in</a>
+        <a href="https://thunderline.net/blockstrap" class="oko-nav-cta">Get a ThunderBlock</a>
       </div>
     </div>
-    <div class="oko-footer-bottom">
-      <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
-      <div class="oko-footer-legal">OKO Holding Corporation investor materials.</div>
+  </nav>
+
+  <main id="main-content">
+    <header class="oko-page-hero">
+      <div class="oko-container">
+        <p class="oko-eyebrow">INVESTOR MATERIALS</p>
+        <h1 class="oko-display-h1">Early-stage. By <em>request.</em></h1>
+        <p class="oko-lead">
+          OKO Holding Corporation is a Delaware C-corp headquartered in Jupiter, Florida. We're pre-institutional. If you'd like to see our investor packet, email Mo and he'll send a Docsend link.
+        </p>
+
+        <div class="oko-card oko-card--gold" style="max-width: 540px; margin-top: 2rem;">
+          <div>
+            <p class="oko-eyebrow oko-eyebrow--mono" style="margin-bottom: 0.45rem;">DIRECT CONTACT</p>
+            <h2 class="oko-h3" style="margin-bottom: 0.25rem;">Mo Perez, Founder &amp; CEO</h2>
+            <p style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--ink); margin-bottom: 1.25rem;">
+              <a href="mailto:mo@okoholding.com?subject=OKO%20Holding%20%E2%80%94%20Investor%20Packet%20Request">mo@okoholding.com</a>
+            </p>
+          </div>
+          <div class="oko-cta-row" style="margin-top: 0;">
+            <a class="oko-btn-gold" href="mailto:mo@okoholding.com?subject=OKO%20Holding%20%E2%80%94%20Investor%20Packet%20Request">Request packet</a>
+            <a class="oko-arrow-link" href="/security/">Review receipt spine →</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <div class="oko-grid-2">
+          <div>
+            <p class="oko-eyebrow oko-eyebrow--teal">WHAT WE'RE BUILDING</p>
+            <h2 class="oko-h2">Three pillars grounded in running code.</h2>
+            <ul class="oko-kv-list" style="margin-top: 1.25rem;">
+              <li>
+                <strong>1. Governed execution substrate (<code>Thunderline</code> &amp; <code>ThunderBlock</code>)</strong> — Every consequential agent action passes through <code>PolicyGate.validate_and_execute/2</code> across 42 Crown executor modules and 4 explicit capability tiers (<code>:read</code>, <code>:mutate</code>, <code>:admin</code>, <code>:execute</code>).
+              </li>
+              <li>
+                <strong>2. Byte-verifiable receipt &amp; lineage spine</strong> — Every authorized action emits a sealed <code>ActionReceipt</code> over 17 canonical <code>@seal_fields</code> paired with a persisted <code>LineageEdge</code> (<code>verify_persisted_edge/4</code>), turning auditor provenance questions into deterministic SQL queries.
+              </li>
+              <li>
+                <strong>3. Hermetic runtime &amp; live reference stack</strong> — Untrusted skill execution runs inside zero-import <code>K1WasmCell</code> sandboxes (wasmtime NIF with fuel and wall-clock bounds), observed through <code>Prism</code> (<span class="oko-chip oko-chip--live">live</span>) and proven in workflows by <code>ACORN</code> (<span class="oko-chip oko-chip--live">live</span>).
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="oko-eyebrow">WHAT WE'RE NOT</p>
+            <h2 class="oko-h2">Explicit non-claims.</h2>
+            <ul class="oko-kv-list" style="margin-top: 1.25rem;">
+              <li>
+                <strong>No SOC2 Type II audit yet; roadmap targets Q1 2027.</strong> We do not claim third-party compliance certification ahead of audit completion.
+              </li>
+              <li>
+                <strong>Seals are unkeyed; they raise the price of tampering, not forbid it.</strong> Per <code>AUTHORITY_LINEAGE_KEYED_SEAL_V0</code>, receipts and lineage edges cross-verify each other; keyed HMAC/signature sealing is tracked openly (GH #3173).
+              </li>
+              <li>
+                <strong>Thunderline is not AGI; it governs agent actions, not agent reasoning.</strong> No regulatory-compliance guarantee. Thunderline is designed for governed workflows; your compliance posture remains yours.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="oko-section oko-section--elevated">
+      <div class="oko-container">
+        <p class="oko-eyebrow oko-eyebrow--teal">PRODUCT CANON HIERARCHY</p>
+        <h2 class="oko-h2">How the stack fits together.</h2>
+        <p class="oko-lead">
+          Thunderline is the governed operating environment. A ThunderBlock is one managed workspace inside it. Prism is the operator surface. ACORN is the first live application proving the stack.
+        </p>
+
+        <div class="oko-card" style="margin-top: 1.5rem;">
+          <svg viewBox="0 0 920 180" width="100%" height="auto" role="img" aria-label="Product canon hierarchy: Thunderline environment contains ThunderBlock workspace, observed by Prism operator surface, proven by ACORN live application">
+            <rect x="10" y="20" width="205" height="140" rx="6" fill="#0b1117" stroke="#2d8a86" stroke-width="1.5"/>
+            <text x="28" y="48" fill="#2d8a86" font-family="monospace" font-size="10" letter-spacing="1.5">01 · SUBSTRATE</text>
+            <text x="28" y="80" fill="#f4f0e7" font-family="Georgia, serif" font-size="20">Thunderline</text>
+            <text x="28" y="106" fill="#b3b9bc" font-family="sans-serif" font-size="12">Governed operating</text>
+            <text x="28" y="124" fill="#b3b9bc" font-family="sans-serif" font-size="12">environment (13 domains)</text>
+
+            <path d="M215 90 L245 90" stroke="#dfba89" stroke-width="1.5"/>
+            <polygon points="245,86 253,90 245,94" fill="#dfba89"/>
+
+            <rect x="255" y="20" width="205" height="140" rx="6" fill="#0b1117" stroke="#dfba89" stroke-width="1.5"/>
+            <text x="273" y="48" fill="#dfba89" font-family="monospace" font-size="10" letter-spacing="1.5">02 · WORKSPACE [BETA]</text>
+            <text x="273" y="80" fill="#f4f0e7" font-family="Georgia, serif" font-size="20">ThunderBlock</text>
+            <text x="273" y="106" fill="#b3b9bc" font-family="sans-serif" font-size="12">One managed workspace</text>
+            <text x="273" y="124" fill="#b3b9bc" font-family="sans-serif" font-size="12">inside Thunderline</text>
+
+            <path d="M460 90 L490 90" stroke="#2d8a86" stroke-width="1.5"/>
+            <polygon points="490,86 498,90 490,94" fill="#2d8a86"/>
+
+            <rect x="500" y="20" width="195" height="140" rx="6" fill="#0b1117" stroke="#2d8a86" stroke-width="1.5"/>
+            <text x="518" y="48" fill="#8ee3de" font-family="monospace" font-size="10" letter-spacing="1.5">03 · SURFACE [LIVE]</text>
+            <text x="518" y="80" fill="#f4f0e7" font-family="Georgia, serif" font-size="20">Prism</text>
+            <text x="518" y="106" fill="#b3b9bc" font-family="sans-serif" font-size="12">Operator oversight</text>
+            <text x="518" y="124" fill="#b3b9bc" font-family="sans-serif" font-size="12">and receipt inspection</text>
+
+            <path d="M695 90 L725 90" stroke="#2d8a86" stroke-width="1.5"/>
+            <polygon points="725,86 733,90 725,94" fill="#2d8a86"/>
+
+            <rect x="735" y="20" width="175" height="140" rx="6" fill="#0b1117" stroke="#2d8a86" stroke-width="1.5"/>
+            <text x="753" y="48" fill="#8ee3de" font-family="monospace" font-size="10" letter-spacing="1.5">04 · PROOF [LIVE]</text>
+            <text x="753" y="80" fill="#f4f0e7" font-family="Georgia, serif" font-size="20">ACORN</text>
+            <text x="753" y="106" fill="#b3b9bc" font-family="sans-serif" font-size="12">First live application</text>
+            <text x="753" y="124" fill="#b3b9bc" font-family="sans-serif" font-size="12">proving the stack</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="oko-section">
+      <div class="oko-container">
+        <div class="oko-grid-2">
+          <div>
+            <p class="oko-eyebrow">NAMED LEADERSHIP</p>
+            <h2 class="oko-h2">Founding team.</h2>
+            <div class="oko-card" style="margin-top: 1rem;">
+              <h3 class="oko-h3">Mo Perez — Founder &amp; CEO</h3>
+              <p>U.S. Army veteran and systems builder leading OKO Holding Corporation's product doctrine, governance architecture, and company strategy from Jupiter, Florida.</p>
+            </div>
+            <div class="oko-card" style="margin-top: 1rem;">
+              <h3 class="oko-h3">David Thrower — CTO</h3>
+              <p>Principal Machine Learning Scientist leading technical architecture, model search, and the Cerebros–Thunderline runtime boundary.</p>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--ink-dim);">
+              Full profiles on <a href="/team/">/team</a>.
+            </p>
+          </div>
+
+          <div>
+            <p class="oko-eyebrow oko-eyebrow--teal">PUBLIC TECHNICAL DILIGENCE</p>
+            <h2 class="oko-h2">Verify before you email.</h2>
+            <p style="color: var(--ink-dim);">
+              We publish our security architecture, receipt-seal specification, adversarial anneal defect counts, and code patterns openly so technical evaluators can inspect substance directly.
+            </p>
+            <div class="oko-card" style="margin-top: 1.25rem; gap: 0.85rem;">
+              <a class="oko-arrow-link" href="/security/">/security — 17-field ActionReceipt seal &amp; 29-agent adversarial anneal →</a>
+              <a class="oko-arrow-link" href="/docs/">/docs — 10 real Elixir &amp; SQL code snippets from the Thunderline spine →</a>
+              <a class="oko-arrow-link" href="https://github.com/Thunderblok/Landing" rel="noopener">github.com/Thunderblok/Landing — Public site repository (Apache 2.0) ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="oko-footer">
+    <div class="oko-footer-inner">
+      <div class="oko-footer-grid">
+        <div>
+          <a href="/" class="oko-footer-brand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 88 88" aria-hidden="true"><defs><linearGradient id="oko-bolt-foot" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFEB3B"/><stop offset="50%" stop-color="#FFC107"/><stop offset="100%" stop-color="#FF9800"/></linearGradient></defs><circle cx="17" cy="19" r="3.1" fill="#e6b477"/><circle cx="71" cy="19" r="3.1" fill="#e6b477"/><circle cx="17" cy="29" r="3.1" fill="#dc8f78"/><circle cx="71" cy="29" r="3.1" fill="#dc8f78"/><circle cx="17" cy="39" r="3.1" fill="#cc869b"/><circle cx="71" cy="39" r="3.1" fill="#cc869b"/><circle cx="17" cy="49" r="3.1" fill="#a291bd"/><circle cx="71" cy="49" r="3.1" fill="#a291bd"/><circle cx="17" cy="59" r="3.1" fill="#879ab9"/><circle cx="71" cy="59" r="3.1" fill="#879ab9"/><circle cx="17" cy="69" r="3.1" fill="#7eacaf"/><circle cx="71" cy="69" r="3.1" fill="#7eacaf"/><circle cx="44" cy="7" r="3.1" fill="#ead1a7"/><circle cx="44" cy="81" r="3.1" fill="#7eacaf"/><path d="M49 20 30 47h12l-4 22 21-30H46z" fill="url(#oko-bolt-foot)"/></svg>
+            <span>OKO</span>
+          </a>
+          <p class="oko-footer-summary">Thunderline turns every agent action into a byte-verifiable receipt your auditor can replay.</p>
+          <p class="oko-footer-meta">OKO HOLDING CORPORATION · DELAWARE C-CORP · JUPITER, FL</p>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Product &amp; Platform</h5>
+          <ul>
+            <li><a href="/product/">ThunderBlock (beta)</a></li>
+            <li><a href="/platform/">Thunderline Substrate</a></li>
+            <li><a href="/observatory/">Observatory Walkthrough</a></li>
+            <li><a href="/substrate.html">Substrate 3D Scene</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Engineering &amp; Trust</h5>
+          <ul>
+            <li><a href="/docs/">Documentation (10 Snippets)</a></li>
+            <li><a href="/security/">Security &amp; Receipt Spine</a></li>
+            <li><a href="/status/">System Status</a></li>
+            <li><a href="/changelog/">Changelog</a></li>
+            <li><a href="https://github.com/Thunderblok/Landing" rel="noopener">GitHub (Site · Apache 2.0) ↗</a></li>
+          </ul>
+        </div>
+        <div class="oko-footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="/company/">About OKO</a></li>
+            <li><a href="/team/">Leadership Team</a></li>
+            <li><a href="/jobs/">Careers</a></li>
+            <li><a href="/investors/" aria-current="page">Investor Materials</a></li>
+            <li><a href="mailto:mo@okoholding.com">mo@okoholding.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="oko-footer-bottom">
+        <div>© 2026 OKO Holding Corporation. All rights reserved.</div>
+        <div class="oko-footer-legal">Pre-institutional Delaware C-corp. No client-side password gate or encrypted blobs. For diligence materials, contact <a href="mailto:mo@okoholding.com">mo@okoholding.com</a>.</div>
+      </div>
     </div>
-  </div>
-</footer>
-
-<script>
-
-async function _decrypt(password, blob) {
-  const enc = new TextEncoder();
-  const b64 = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
-  const salt = b64(blob.salt);
-  const iv = b64(blob.iv);
-  const tag = b64(blob.tag);
-  const ct = b64(blob.ciphertext);
-  // Web Crypto GCM wants ciphertext || tag concatenated
-  const ctWithTag = new Uint8Array(ct.length + tag.length);
-  ctWithTag.set(ct, 0);
-  ctWithTag.set(tag, ct.length);
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw', enc.encode(password), {name: 'PBKDF2'}, false, ['deriveKey']);
-  const key = await crypto.subtle.deriveKey(
-    {name: 'PBKDF2', salt: salt, iterations: blob.iterations, hash: 'SHA-256'},
-    keyMaterial, {name: 'AES-GCM', length: 256}, false, ['decrypt']);
-  const plaintext = await crypto.subtle.decrypt(
-    {name: 'AES-GCM', iv: iv}, key, ctWithTag);
-  return new TextDecoder().decode(plaintext);
-}
-
-const CANARY = {"salt": "PIQ5OhBn++owMizYoBFGVQ==", "iv": "cusrChvEUb+hpJ5w", "tag": "fu/ivytwy22EGyoR+RU+sg==", "ciphertext": "NovOONlbQqPQNonzy+xFTC7GXqKT6w==", "iterations": 250000};
-async function handleUnlock(ev) {
-  ev.preventDefault();
-  const pw = document.getElementById('pw').value;
-  const msg = document.getElementById('msg');
-  const unlocked = document.getElementById('unlocked');
-  msg.textContent = 'Verifying…';
-  try {
-    const plaintext = await _decrypt(pw, CANARY);
-    if (plaintext === 'OKO_INVESTOR_ACCESS_v1') {
-      msg.textContent = '';
-      unlocked.classList.add('show');
-      sessionStorage.setItem('oko_investor_pw', pw);
-    } else {
-      msg.textContent = 'Password incorrect.';
-    }
-  } catch (e) {
-    msg.textContent = 'Password incorrect.';
-  }
-  return false;
-}
-function persistAndGo(ev, href) {
-  // sessionStorage already has the password; just navigate.
-  return true;
-}
-// Auto-reveal if user came back with a valid sessionStorage password
-(async () => {
-  const pw = sessionStorage.getItem('oko_investor_pw');
-  if (!pw) return;
-  try {
-    const plaintext = await _decrypt(pw, CANARY);
-    if (plaintext === 'OKO_INVESTOR_ACCESS_v1') {
-      document.getElementById('unlocked').classList.add('show');
-      document.getElementById('msg').textContent = 'Session unlocked.';
-    }
-  } catch (e) { /* stale password, ignore */ }
-})();
-</script>
-<script src="../assets/vendor/gsap-3.x/gsap.min.js"></script>
-<script src="../assets/vendor/gsap-3.x/ScrollTrigger.min.js"></script>
-<script src="../assets/vendor/gsap-3.x/Flip.min.js"></script>
-<script src="../assets/vendor/lenis-1.x/lenis.min.js"></script>
-<script src="../assets/js/polish.js"></script>
+  </footer>
 </body>
 </html>

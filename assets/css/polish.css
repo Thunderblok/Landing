@@ -708,4 +708,491 @@ body.oko-nav-open .oko-nav-toggle-bar::after {
   }
 }
 
+/* ==========================================================================
+ * Shared v3 Page Layout, Cards, Maturity Chips, and Docs (VISION 2026-10-16)
+ * ========================================================================== */
+html.oko-dark,
+body.oko-page {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body.oko-page *,
+body.oko-page *::before,
+body.oko-page *::after {
+  box-sizing: border-box;
+}
+
+body.oko-page a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-color: rgba(45, 138, 134, 0.55);
+  text-underline-offset: 3px;
+  transition: color 0.16s ease, text-decoration-color 0.16s ease;
+}
+
+body.oko-page a:hover,
+body.oko-page a:focus-visible {
+  color: var(--gold);
+  text-decoration-color: var(--gold);
+}
+
+body.oko-page a:focus-visible,
+body.oko-page button:focus-visible,
+body.oko-page summary:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.oko-skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 1rem;
+  z-index: 300;
+  background: var(--gold);
+  color: #0b1117 !important;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none !important;
+  transform: translateY(-200%);
+  transition: transform 0.18s ease;
+}
+
+.oko-skip-link:focus {
+  transform: translateY(0);
+}
+
+.oko-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(1.15rem, 4vw, 2.5rem);
+}
+
+.oko-container-narrow {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 clamp(1.15rem, 4vw, 2.5rem);
+}
+
+.oko-page-hero {
+  padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2.75rem, 5vw, 4.25rem);
+  border-bottom: 1px solid var(--hairline);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(45, 138, 134, 0.09), transparent 70%),
+    var(--bg);
+}
+
+.oko-eyebrow {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.oko-eyebrow--teal {
+  color: var(--teal);
+}
+
+.oko-eyebrow--mono {
+  font-family: var(--font-mono);
+}
+
+.oko-display-h1 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.2vw, 4.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 0 0 1.35rem;
+}
+
+.oko-display-h1 em,
+.oko-h2 em {
+  font-style: italic;
+  color: var(--teal);
+}
+
+.oko-h2 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.4vw, 2.65rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+}
+
+.oko-h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0 0 0.6rem;
+}
+
+.oko-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.6;
+  max-width: 58ch;
+  color: var(--ink-dim);
+  margin: 0 0 1.75rem;
+}
+
+.oko-section {
+  padding: clamp(3.25rem, 6vw, 5.25rem) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.oko-section--elevated {
+  background: var(--bg-elevated);
+}
+
+.oko-cta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.oko-btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.7rem 1.35rem;
+  border-radius: 6px;
+  background: var(--gold);
+  color: #0b1117 !important;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none !important;
+  border: 1px solid transparent;
+  box-shadow: var(--elev-2);
+  transition: background-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.oko-btn-gold:hover,
+.oko-btn-gold:focus-visible {
+  background: var(--signal);
+  color: #0b1117 !important;
+  transform: translateY(-2px);
+  box-shadow: var(--elev-3);
+}
+
+.oko-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 6px;
+  background: rgba(20, 27, 35, 0.7);
+  color: var(--ink) !important;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none !important;
+  border: 1px solid var(--hairline);
+  transition: border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.oko-btn-ghost:hover,
+.oko-btn-ghost:focus-visible {
+  border-color: var(--teal);
+  color: var(--gold) !important;
+  transform: translateY(-1px);
+}
+
+.oko-arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid var(--teal);
+  padding: 0.25rem 0;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.oko-arrow-link:hover,
+.oko-arrow-link:focus-visible {
+  color: var(--gold) !important;
+  border-bottom-color: var(--gold);
+}
+
+/* Maturity Chips */
+.oko-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.oko-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  background: rgba(20, 27, 35, 0.85);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  text-decoration: none !important;
+}
+
+.oko-chip--live {
+  border-color: var(--teal);
+  color: #8ee3de;
+  background: rgba(45, 138, 134, 0.13);
+}
+
+.oko-chip--beta {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(223, 186, 137, 0.11);
+}
+
+.oko-chip--design {
+  border-color: rgba(232, 197, 155, 0.45);
+  color: var(--signal);
+  background: rgba(232, 197, 155, 0.07);
+}
+
+.oko-chip--research {
+  border-color: rgba(179, 185, 188, 0.35);
+  color: var(--ink-dim);
+  background: rgba(179, 185, 188, 0.06);
+}
+
+/* Cards & Grids */
+.oko-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.75rem;
+}
+
+.oko-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.oko-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  box-shadow: var(--elev-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.oko-card--teal {
+  border-top: 2px solid var(--teal);
+}
+
+.oko-card--gold {
+  border-top: 2px solid var(--gold);
+}
+
+.oko-card p {
+  color: var(--ink-dim);
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+}
+
+.oko-card p:last-child {
+  margin-bottom: 0;
+}
+
+.oko-kv-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.oko-kv-list li {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+}
+
+.oko-kv-list li:first-child {
+  border-top: 1px solid var(--hairline);
+}
+
+.oko-kv-list strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.oko-code-inline,
+body.oko-page code {
+  font-family: var(--font-mono);
+  font-size: 0.84em;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--signal);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}
+
+/* Docs Layout & Code Blocks */
+.oko-docs-layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.oko-docs-sidebar {
+  position: sticky;
+  top: 88px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: var(--elev-1);
+}
+
+.oko-docs-sidebar h4 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin: 0 0 0.85rem;
+}
+
+.oko-docs-sidebar ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.oko-docs-sidebar a {
+  display: block;
+  padding: 0.4rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.83rem;
+  color: var(--ink-dim) !important;
+  text-decoration: none !important;
+  line-height: 1.35;
+}
+
+.oko-docs-sidebar a:hover,
+.oko-docs-sidebar a:focus-visible {
+  background: rgba(45, 138, 134, 0.14);
+  color: var(--ink) !important;
+}
+
+.oko-snippet-block {
+  margin-bottom: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid var(--hairline);
+  scroll-margin-top: 88px;
+}
+
+.oko-snippet-block:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.oko-snippet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.oko-snippet-source {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+}
+
+.oko-pre {
+  background: #060a0e;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 1.2rem 1.4rem;
+  overflow-x: auto;
+  margin: 1rem 0 0;
+  box-shadow: var(--elev-1);
+}
+
+.oko-pre code {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  line-height: 1.62;
+  color: #e6edf3 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  display: block;
+  white-space: pre;
+}
+
+@media (max-width: 960px) {
+  .oko-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .oko-docs-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .oko-docs-sidebar {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .oko-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 
