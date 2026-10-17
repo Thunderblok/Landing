@@ -19,10 +19,10 @@
 │   ├── oko-colors.css              (palette, CSS custom properties)
 │   ├── typography.md               (font system)
 │   └── fonts/                      (Inter + Fraunces, OFL)
-├── boilerplate/
-│   ├── one-liner.txt
-│   ├── short-50-word.txt
-│   └── long-150-word.txt
+├── boilerplate/                   (three editorial angles)
+│   ├── business-desk.txt
+│   ├── technology-desk.txt
+│   └── people-desk.txt
 └── founders/
     ├── mo-perez.md
     ├── david-thrower.md

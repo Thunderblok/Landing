@@ -1,0 +1,1 @@
+Thunderline passes consequential agent actions through a 4-tier capability gate (:read, :mutate, :admin, :execute) and records them as sealed receipts bound to a persisted lineage edge. Untrusted code runs in a hermetic WASM cell with zero imports and bounded fuel. Technical architecture is published at /security for engineering review.
