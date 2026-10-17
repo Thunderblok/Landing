@@ -27,7 +27,7 @@
 
 ## Core claim (what we build)
 
-Every consequential agent action in Thunderline passes through a 4-tier policy gate (`:read` · `:mutate` · `:admin` · `:execute`) and emits one 17-field sealed `ActionReceipt` paired with a persisted lineage edge. The receipt-and-lineage pair makes agent operations auditable with deterministic SQL queries — no reconstruction, no third-party log correlation.
+Thunderline is designed to put every consequential agent action through a 4-tier policy gate (`:read` · `:mutate` · `:admin` · `:execute`) and emit one 17-field sealed `ActionReceipt` paired with a persisted lineage edge. The receipt-and-lineage pair is architected to make agent operations auditable with deterministic SQL queries — no reconstruction, no third-party log correlation.
 
 ## What we do not claim
 
