@@ -9,7 +9,7 @@
 | Legal name | OKO Holding Corporation |
 | Entity type | Delaware C-corporation |
 | Headquarters | Jupiter, Florida, USA |
-| Founders | Mo Perez · David Thrower · Jonathan Castoire |
+| Founder | Mo Perez |
 | Stage | Pre-institutional. By-request investor profile at `/investors`. |
 | Website | https://okoholding.com |
 

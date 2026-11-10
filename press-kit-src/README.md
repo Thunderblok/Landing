@@ -25,11 +25,7 @@
 │   └── people-desk.txt
 └── founders/
     ├── mo-perez.md
-    ├── david-thrower.md
-    ├── jonathan-castoire.md
-    ├── MP.svg                      (monogram placeholder; portrait photo coming)
-    ├── DT.svg                      (monogram placeholder; portrait photo coming)
-    └── JC.svg                      (monogram placeholder; portrait photo coming)
+    └── MP.svg                      (monogram placeholder; portrait photo coming)
 ```
 
 ## How to cite OKO
@@ -38,7 +34,7 @@
 - **Headquarters:** Jupiter, Florida, USA
 - **Incorporation:** Delaware C-corporation
 - **Products:** Thunderline (substrate), ThunderBlock (beta workspace), Prism (operator surface), ACORN (reference application), IVAR (vision-analysis application)
-- **Founders:** Mo Perez, David Thrower, Jonathan Castoire
+- **Founder:** Mo Perez
 
 Please pair every product name with its maturity label — `Thunderline (research substrate)`, `ThunderBlock (beta)`, `Prism (live operator surface)`, `ACORN (reference application)`, `IVAR (design-partner stage)`. Dropping the label implies production readiness we have not claimed.
 
